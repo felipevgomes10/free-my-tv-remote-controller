@@ -1104,54 +1104,20 @@
           "children": [
             {
               "type": "frame",
-              "id": "L2y38",
-              "name": "Ícone do Controle web",
+              "id": "jrafi",
+              "name": "Ícone do FMTV Controller",
+              "clip": true,
               "width": 72,
               "height": 72,
-              "fill": [
-                "#1C1C1E",
-                {
-                  "type": "gradient",
-                  "gradientType": "radial",
-                  "enabled": true,
-                  "rotation": 0,
-                  "size": {
-                    "width": 1.6,
-                    "height": 1.2
-                  },
-                  "colors": [
-                    {
-                      "color": "#FFFFFF33",
-                      "position": 0
-                    },
-                    {
-                      "color": "#FFFFFF00",
-                      "position": 1
-                    }
-                  ],
-                  "center": {
-                    "y": 0
-                  }
-                }
-              ],
-              "cornerRadius": 18,
+              "fill": {
+                "type": "image",
+                "enabled": true,
+                "url": "docs/design/app-icon-180.png",
+                "mode": "cover"
+              },
+              "cornerRadius": 16,
               "stroke": "#FFFFFF1F",
-              "strokeWidth": 1,
-              "justifyContent": "center",
-              "alignItems": "center",
-              "children": [
-                {
-                  "type": "icon",
-                  "id": "fNvbZ",
-                  "name": "Controle",
-                  "width": 34,
-                  "height": 34,
-                  "icon": "settings_remote",
-                  "library": "Material Symbols Rounded",
-                  "weight": 500,
-                  "fill": "$text-primary"
-                }
-              ]
+              "strokeWidth": 1
             },
             {
               "type": "frame",
@@ -1168,7 +1134,7 @@
                   "fill": "$text-primary",
                   "textGrowth": "fixed-width",
                   "width": "fill_container",
-                  "content": "Primeiro, adicione o Controle web à Tela de Início",
+                  "content": "Primeiro, adicione o FMTV Controller à Tela de Início",
                   "lineHeight": 1.15,
                   "fontFamily": "$font",
                   "fontSize": 28,
@@ -1349,7 +1315,7 @@
                       "fill": "$text-primary",
                       "textGrowth": "fixed-width",
                       "width": "fill_container",
-                      "content": "Abra o Controle web pelo novo ícone.",
+                      "content": "Abra o FMTV Controller pelo novo ícone.",
                       "lineHeight": 1.35,
                       "fontFamily": "$font",
                       "fontSize": 17,
@@ -1604,7 +1570,7 @@
                   "fill": "$text-secondary",
                   "textGrowth": "fixed-width",
                   "width": "fill_container",
-                  "content": "Na TV, abra Configurações → Controle web → Parear aparelho e digite aqui o código que aparece.",
+                  "content": "Na TV, abra Configurações → FMTV Controller → Parear aparelho e digite aqui o código que aparece.",
                   "lineHeight": 1.4,
                   "fontFamily": "$font",
                   "fontSize": 17,
@@ -1899,7 +1865,7 @@
                   "fill": "$text-secondary",
                   "textGrowth": "fixed-width",
                   "width": "fill_container",
-                  "content": "Na TV, abra Configurações → Controle web → Parear aparelho e digite aqui o código que aparece.",
+                  "content": "Na TV, abra Configurações → FMTV Controller → Parear aparelho e digite aqui o código que aparece.",
                   "lineHeight": 1.4,
                   "fontFamily": "$font",
                   "fontSize": 17,
@@ -2861,7 +2827,7 @@
                       "fill": "$text-secondary",
                       "textGrowth": "fixed-width",
                       "width": "fill_container",
-                      "content": "A TV não respondeu. Ligue-a pelo controle físico; o Controle web volta sozinho em seguida.",
+                      "content": "A TV não respondeu. Ligue-a pelo controle físico; o FMTV Controller volta sozinho em seguida.",
                       "lineHeight": 1.4,
                       "textAlign": "center",
                       "fontFamily": "$font",
@@ -3273,7 +3239,7 @@
                   "fill": "$text-secondary",
                   "textGrowth": "fixed-width",
                   "width": "fill_container",
-                  "content": "Sem isso, as teclas não chegam aos apps. No controle físico, abra Configurações → Controle web e escolha Vincular.",
+                  "content": "Sem isso, as teclas não chegam aos apps. No controle físico, abra Configurações → FMTV Controller e escolha Vincular.",
                   "lineHeight": 1.4,
                   "fontFamily": "$font",
                   "fontSize": 17,
@@ -3396,7 +3362,7 @@
                   "fill": "$text-secondary",
                   "textGrowth": "fixed-width",
                   "width": "fill_container",
-                  "content": "Ele foi removido dos aparelhos pareados da TV. Para voltar a usar o Controle web, pareie de novo com o código da TV.",
+                  "content": "Ele foi removido dos aparelhos pareados da TV. Para voltar a usar o FMTV Controller, pareie de novo com o código da TV.",
                   "lineHeight": 1.4,
                   "fontFamily": "$font",
                   "fontSize": 17,
@@ -7903,6 +7869,111 @@
           "type": "ref",
           "ref": "s4ScFK",
           "name": "Home Indicator"
+        }
+      ]
+    },
+    {
+      "type": "frame",
+      "id": "axuk9",
+      "x": 1500,
+      "y": -600,
+      "name": "App Icon",
+      "reusable": true,
+      "width": 512,
+      "height": 512,
+      "fill": [
+        "#0B0B0D",
+        {
+          "type": "gradient",
+          "gradientType": "radial",
+          "enabled": true,
+          "rotation": 0,
+          "size": {
+            "width": 1.5,
+            "height": 1.15
+          },
+          "colors": [
+            {
+              "color": "#FFFFFF38",
+              "position": 0
+            },
+            {
+              "color": "#FFFFFF0A",
+              "position": 0.55
+            },
+            {
+              "color": "#FFFFFF00",
+              "position": 1
+            }
+          ],
+          "center": {
+            "y": 0.08
+          }
+        }
+      ],
+      "layout": "vertical",
+      "gap": 26,
+      "justifyContent": "center",
+      "alignItems": "center",
+      "children": [
+        {
+          "type": "frame",
+          "id": "urPJ7",
+          "name": "Área de toque",
+          "clip": true,
+          "width": 248,
+          "height": 228,
+          "fill": "#FFFFFF1A",
+          "cornerRadius": 56,
+          "stroke": "#FFFFFF33",
+          "strokeWidth": 4,
+          "layout": "none",
+          "children": [
+            {
+              "type": "ellipse",
+              "id": "cIUjs",
+              "x": 84,
+              "y": 74,
+              "name": "Luz sob o dedo",
+              "fill": {
+                "type": "gradient",
+                "gradientType": "radial",
+                "enabled": true,
+                "rotation": 0,
+                "size": {
+                  "width": 1,
+                  "height": 1
+                },
+                "colors": [
+                  {
+                    "color": "#FFFFFFE6",
+                    "position": 0
+                  },
+                  {
+                    "color": "#FFFFFF40",
+                    "position": 0.5
+                  },
+                  {
+                    "color": "#FFFFFF00",
+                    "position": 1
+                  }
+                ]
+              },
+              "width": 80,
+              "height": 80
+            }
+          ]
+        },
+        {
+          "type": "text",
+          "id": "TjMfE",
+          "name": "FMTV",
+          "fill": "$text-primary",
+          "content": "FMTV",
+          "fontFamily": "$font",
+          "fontSize": 64,
+          "fontWeight": "800",
+          "letterSpacing": 4
         }
       ]
     }
