@@ -6,7 +6,7 @@ import { serviceWorker } from "./plugins/service-worker.ts";
 export default defineConfig({
   plugins: [preact(), fakeBridge(), serviceWorker()],
   server: { host: true },
-  build: { target: "safari16", assetsInlineLimit: 0 },
+  build: { target: "safari16", assetsInlineLimit: 0, emptyOutDir: true },
   test: {
     environment: "jsdom",
     include: ["tests/**/*.test.{ts,tsx}"],

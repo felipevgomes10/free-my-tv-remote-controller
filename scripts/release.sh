@@ -41,6 +41,8 @@ trap 'git checkout --quiet package.json package-lock.json' ERR
 
 npm ci --silent
 npm test --silent
+# A fresh dist/: files left from earlier builds would ride along in the zip, unused.
+rm -rf dist
 npm run build --silent
 
 # The zip holds the built page, which the Home serves, and the protocol's examples, which the
