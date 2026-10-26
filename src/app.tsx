@@ -1,5 +1,6 @@
 import { useState } from "preact/hooks";
 import { AddToHomeScreen } from "./components/AddToHomeScreen";
+import { AppsTab } from "./components/AppsTab";
 import { Controls } from "./components/Controls";
 import { MessageScreen } from "./components/MessageScreen";
 import { type Tab, TabBar } from "./components/TabBar";
@@ -82,7 +83,7 @@ function Connected({ bridgeUrl, credential, onPairAgain }: { bridgeUrl: string; 
         <div class="shell">
           <div class="shell-content">
             {tab === "controls" && <Controls tvName={tvName} status={status} send={send} onTryTurnOn={tryTurnOn} />}
-            {tab === "apps" && <TabPage title="Apps" status={status} />}
+            {tab === "apps" && <AppsTab />}
             {tab === "watch" && <TabPage title="Assistir" status={status} />}
           </div>
           <TabBar tab={tab} onTab={setTab} />

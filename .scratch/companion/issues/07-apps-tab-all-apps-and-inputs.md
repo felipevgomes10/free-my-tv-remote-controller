@@ -6,9 +6,13 @@ The spec is `.scratch/companion/spec.md` in free-my-tv-remote-controller. Ticket
 
 **Blocked by:** 03 (The tabs and protocol version 2)
 
-**Status:** ready-for-agent
+**Status:** resolved
 
-- [ ] The tab matches `design.pen` with the example lists
-- [ ] A tap on an app or an Input sends its `open` example
-- [ ] A pushed list replaces what's shown
-- [ ] The examples exist and the page's tests read them
+- [x] The tab matches `design.pen` with the example lists
+- [x] A tap on an app or an Input sends its `open` example
+- [x] A pushed list replaces what's shown
+- [x] The examples exist and the page's tests read them
+
+## Comments
+
+**2026-10-26, done.** `AppsTab` shows Entradas as cards (name, and port when it differs) and Todos os apps as a grid of App Banners from the Home's pictures, each label under its banner, since an icon-on-colour banner carries no name; a tap opens it with the busy and failed marks of `useActions`; Entradas is left out when the TV lists none. Examples `list-apps`, `list-inputs`, `open-app`, `open-input`, and their rows in the protocol README. The dev bridge serves sample apps, Inputs and coloured banners. A slow first render failed a test once under parallel files: async queries now wait up to 3 s (`tests/setup.ts`). 7 new tests, 63 in all.

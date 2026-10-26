@@ -54,6 +54,8 @@ Each feature's list items and `open` fields. An `open` names its target by exact
 | Feature | List (`of`) | Example | Items | `open` by |
 | --- | --- | --- | --- | --- |
 | Shortcut Buttons | `shortcuts` | [`list-shortcuts.json`](examples/list-shortcuts.json) | `shortcut` (the button: `netflix`, `globoplay`, `prime-video`, `disney-plus`, `youtube`, `input`) and `label` (what the Owner assigned to it) | `shortcut` ([`open-shortcut.json`](examples/open-shortcut.json)): does what the Remote's button does |
+| Todos os apps | `apps` | [`list-apps.json`](examples/list-apps.json) | `package`, `label`, `picture` (its App Banner, or its icon on a colour) and `inTray`; App Tray first, in its order, then the rest by name | `package` ([`open-app.json`](examples/open-app.json)): opens the app, as its tile does |
+| Entradas | `inputs` | [`list-inputs.json`](examples/list-inputs.json) | `input`, `name` (the Owner's, or the device's), `port` and `kind` (`hdmi` or `antenna`); hidden Inputs left out | `input` ([`open-input.json`](examples/open-input.json)): switches the TV to it |
 
 ### Pictures
 

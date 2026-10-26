@@ -640,3 +640,101 @@ body {
 .shell-content > .controls {
   gap: 20px;
 }
+
+/* The Apps tab. */
+
+.tab-section {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+.section-title {
+  margin: 0;
+  font-size: 20px;
+  font-weight: 700;
+}
+
+.input-row {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 10px;
+}
+
+.input-card {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 8px;
+  min-width: 0;
+  padding: 14px;
+  border: 2px solid transparent;
+  border-radius: 18px;
+  background: var(--glass);
+  color: var(--text-primary);
+  font: inherit;
+  text-align: left;
+}
+
+.input-name {
+  font-size: 15px;
+  font-weight: 700;
+  overflow: hidden;
+  max-width: 100%;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.input-port {
+  margin-top: -6px;
+  font-size: 12px;
+  color: var(--text-secondary);
+}
+
+.app-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 12px;
+}
+
+.app-tile {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  min-width: 0;
+  padding: 0;
+  border: 0;
+  background: none;
+  color: var(--text-secondary);
+  font: inherit;
+}
+
+.app-banner {
+  width: 100%;
+  aspect-ratio: 16 / 9;
+  border: 2px solid transparent;
+  border-radius: 14px;
+}
+
+.app-label {
+  overflow: hidden;
+  font-size: 12px;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.input-card.busy,
+.app-tile.busy .app-banner {
+  opacity: 0.6;
+}
+
+.input-card.failed,
+.app-tile.failed .app-banner {
+  border-color: var(--attention);
+}
+
+.input-card:focus-visible,
+.app-tile:focus-visible .app-banner {
+  outline: 2px solid var(--text-primary);
+  outline-offset: 2px;
+}

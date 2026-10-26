@@ -1,0 +1,5 @@
+{ "type": "list", "id": 4, "of": "inputs", "items": [
+  { "input": "hdmi1", "name": "PlayStation", "port": "HDMI 1", "kind": "hdmi" },
+  { "input": "hdmi2", "name": "HDMI 2", "port": "HDMI 2", "kind": "hdmi" },
+  { "input": "tuner", "name": "Antena", "port": "TV aberta", "kind": "antenna" }
+] }

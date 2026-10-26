@@ -1,0 +1,5 @@
+{ "type": "list", "id": 4, "of": "apps", "items": [
+  { "package": "com.netflix.ninja", "label": "Netflix", "picture": "app:com.netflix.ninja", "inTray": true },
+  { "package": "com.google.android.youtube.tv", "label": "YouTube", "picture": "app:com.google.android.youtube.tv", "inTray": true },
+  { "package": "tv.plex.labs", "label": "Plex", "picture": "app:tv.plex.labs", "inTray": false }
+] }

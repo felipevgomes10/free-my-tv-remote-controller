@@ -19,6 +19,32 @@ const SAMPLE_LISTS: Record<string, unknown[]> = {
     { shortcut: "youtube", label: "YouTube" },
     { shortcut: "input", label: "PlayStation" },
   ],
+  inputs: [
+    { input: "hdmi1", name: "PlayStation", port: "HDMI 1", kind: "hdmi" },
+    { input: "hdmi2", name: "HDMI 2", port: "HDMI 2", kind: "hdmi" },
+    { input: "tuner", name: "Antena", port: "TV aberta", kind: "antenna" },
+  ],
+  apps: [
+    ["com.netflix.ninja", "Netflix", true],
+    ["com.google.android.youtube.tv", "YouTube", true],
+    ["com.amazon.amazonvideo.livingroom", "Prime Video", true],
+    ["com.globo.globotv", "Globoplay", false],
+    ["com.disney.disneyplus", "Disney+", false],
+    ["tv.plex.labs", "Plex", false],
+    ["com.spotify.tv.android", "Spotify", false],
+  ].map(([pkg, label, inTray]) => ({ package: pkg, label, picture: `app:${pkg}`, inTray })),
+};
+
+/** A banner for the dev bridge's pictures: the app's name on a colour of its own. */
+const banner: Connect.NextHandleFunction = (request: IncomingMessage, response: ServerResponse) => {
+  const pkg = decodeURIComponent(request.url ?? "").replace(/^\/(app:)?/, "");
+  const app = (SAMPLE_LISTS.apps as { package: string; label: string }[]).find((a) => a.package === pkg);
+  const hue = [...pkg].reduce((h, c) => (h * 31 + c.charCodeAt(0)) % 360, 0);
+  response.setHeader("Content-Type", "image/svg+xml");
+  response.end(
+    `<svg xmlns="http://www.w3.org/2000/svg" width="320" height="180"><rect width="320" height="180" fill="hsl(${hue} 60% 38%)"/>` +
+      `<text x="160" y="100" font-family="sans-serif" font-size="34" font-weight="700" fill="#fff" text-anchor="middle">${app?.label ?? "?"}</text></svg>`,
+  );
 };
 
 export function fakeBridge(tvName = "TV de teste"): Plugin {
@@ -26,10 +52,12 @@ export function fakeBridge(tvName = "TV de teste"): Plugin {
     name: "fmtv-fake-bridge",
     configureServer(server) {
       server.middlewares.use("/pair", pair);
+      server.middlewares.use("/pictures", banner);
       attach(server.httpServer as Server | null, tvName);
     },
     configurePreviewServer(server) {
       server.middlewares.use("/pair", pair);
+      server.middlewares.use("/pictures", banner);
       attach(server.httpServer as Server | null, tvName);
     },
   };
