@@ -11,6 +11,7 @@ beforeEach(() => {
   bridge.lists["up-next"] = examples["list-up-next"].items;
   bridge.lists.trending = examples["list-trending"].items;
   bridge.replies.title = examples.title;
+  bridge.replies.search = examples["search-results"];
   bridge.pictures["app:com.netflix.ninja"] = "png";
   for (const entry of examples["list-up-next"].items) bridge.pictures[entry.picture] = "png";
   vi.stubGlobal("fetch", bridge.fetch);
@@ -150,6 +151,59 @@ describe("The Title screen", () => {
     await openTitle();
     expect(await screen.findByText("A TV está sem internet: não deu para trazer os detalhes desta obra.")).toBeTruthy();
     fireEvent.click(screen.getByRole("button", { name: "Voltar" }));
+    expect(await screen.findByRole("heading", { name: "Em alta hoje" })).toBeTruthy();
+  });
+});
+
+describe("Search", () => {
+  const box = () => screen.getByRole("searchbox", { name: "Buscar filmes e séries" });
+
+  async function type(text: string) {
+    for (let length = 1; length <= text.length; length++) fireEvent.input(box(), { target: { value: text.slice(0, length) } });
+  }
+
+  it("sends search once typing pauses, never for each letter", async () => {
+    await openWatch();
+    await screen.findByRole("heading", { name: "Continuar assistindo" });
+    await type(examples.search.query);
+    await waitFor(() => expect(bridge.received.filter((m) => m.type === "search")).toHaveLength(1));
+    expect({ ...bridge.received.find((m) => m.type === "search"), id: examples.search.id }).toEqual(examples.search);
+  });
+
+  it("shows results with name, year and kind, in place of the lists, and opens the Title screen", async () => {
+    await openWatch();
+    await type(examples.search.query);
+    const results = await screen.findByRole("region", { name: "Resultados da busca" });
+    await waitFor(() => expect(within(results).getAllByRole("button")).toHaveLength(3));
+    expect(within(results).getAllByRole("button").map((b) => b.textContent)).toEqual([
+      "Último tremFilme, 2025",
+      "O Último Trem para CasaSérie, 2019",
+      "Último Trem para BusanFilme",
+    ]);
+    expect(screen.queryByRole("heading", { name: "Em alta hoje" })).toBeNull();
+
+    fireEvent.click(within(results).getByRole("button", { name: "Ver Último trem" }));
+    expect(await screen.findByRole("heading", { name: "Último trem", level: 1 })).toBeTruthy();
+    fireEvent.click(screen.getByRole("button", { name: "Voltar" }));
+    expect((await screen.findByRole("searchbox")) as HTMLInputElement).toHaveProperty("value", examples.search.query);
+  });
+
+  it("says when nothing was found, and why a search failed", async () => {
+    bridge.replies.search = { ...examples["search-results"], results: [] };
+    await openWatch();
+    await type("zzz");
+    expect(await screen.findByText("Nada encontrado para “zzz”.")).toBeTruthy();
+
+    bridge.failing.search = "offline";
+    await type("zzzz");
+    expect(await screen.findByText("A TV está sem internet: não deu para trazer os resultados da busca.")).toBeTruthy();
+  });
+
+  it("goes back to the lists when the box is emptied", async () => {
+    await openWatch();
+    await type("trem");
+    await screen.findByRole("region", { name: "Resultados da busca" });
+    fireEvent.input(box(), { target: { value: "" } });
     expect(await screen.findByRole("heading", { name: "Em alta hoje" })).toBeTruthy();
   });
 });

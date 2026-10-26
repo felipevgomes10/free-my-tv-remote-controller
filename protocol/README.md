@@ -48,6 +48,8 @@ The companion features ask the Home rather than send keys (ADR 0006). A request 
 | `close-app` | [`close-app.json`](examples/close-app.json) | Closes an Open App on the TV, as the App Switcher's ✕ does. The bridge answers `done` once it is closed, or `failed` with `playing` for an app playing music, which can't be closed. |
 | `title` (request) | [`title-request.json`](examples/title-request.json) | Asks for a Title's screen: `kind` and `tmdbId`. |
 | `title` (answer) | [`title.json`](examples/title.json) | The Title's facts (`ageRating`, `year`, `genres`, `runtimeMinutes` for a movie or `seasons` for a series, `rating` out of 10, `overview`, a TMDB `backdrop`), whether it has a `trailer`, and Onde assistir's `services`: each with `service` (its app's package, null when it has no app on Android TV, and then it can't be opened), `name`, `offer` (`subscription` or `rent-or-buy`) and `picture` (its app's banner when installed). `failed` with `missing-token` or `offline` instead. |
+| `search` | [`search.json`](examples/search.json) | Searches movies and series by name: `query`, as typed. |
+| `search-results` | [`search-results.json`](examples/search-results.json) | The `query` searched and its `results`, movies and series only, best first: `kind`, `tmdbId`, `name`, `year` and TMDB's `backdrop` and `poster`, each null when TMDB has none. `failed` with `missing-token` or `offline` instead. |
 | `failed` | [`failed.json`](examples/failed.json) | An action or request couldn't be carried out; `reason` says why. |
 
 ### The companion's lists and actions

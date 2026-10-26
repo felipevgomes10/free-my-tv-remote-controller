@@ -1,0 +1,5 @@
+{ "type": "search-results", "id": 7, "query": "último trem", "results": [
+  { "kind": "movie", "tmdbId": 1084242, "name": "Último trem", "year": 2025, "backdrop": "https://image.tmdb.org/t/p/w780/ultimo-trem.jpg", "poster": "https://image.tmdb.org/t/p/w342/ultimo-trem-poster.jpg" },
+  { "kind": "series", "tmdbId": 81234, "name": "O Último Trem para Casa", "year": 2019, "backdrop": null, "poster": "https://image.tmdb.org/t/p/w342/trem-para-casa.jpg" },
+  { "kind": "movie", "tmdbId": 55001, "name": "Último Trem para Busan", "year": null, "backdrop": null, "poster": null }
+] }
