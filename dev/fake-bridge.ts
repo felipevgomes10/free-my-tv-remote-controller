@@ -9,6 +9,18 @@ import { WebSocketServer } from "ws";
  */
 export const PAIRING_CODE = "4827";
 
+/** What the fake bridge's Home has, for the companion's tabs. */
+const SAMPLE_LISTS: Record<string, unknown[]> = {
+  shortcuts: [
+    { shortcut: "netflix", label: "Netflix" },
+    { shortcut: "globoplay", label: "Globoplay" },
+    { shortcut: "prime-video", label: "Prime Video" },
+    { shortcut: "disney-plus", label: "Disney+" },
+    { shortcut: "youtube", label: "YouTube" },
+    { shortcut: "input", label: "PlayStation" },
+  ],
+};
+
 export function fakeBridge(tvName = "TV de teste"): Plugin {
   return {
     name: "fmtv-fake-bridge",
@@ -36,7 +48,7 @@ function attach(http: Server | null, tvName: string) {
           console.log(`[ponte de teste] ${message.key} ${message.action}`);
           ws.send(JSON.stringify({ type: "ack", id: message.id }));
         } else if (message.type === "list") {
-          ws.send(JSON.stringify({ type: "list", id: message.id, of: message.of, items: [] }));
+          ws.send(JSON.stringify({ type: "list", id: message.id, of: message.of, items: SAMPLE_LISTS[message.of] ?? [] }));
         } else if (message.type !== "hello") {
           console.log(`[ponte de teste] ${message.type} ${JSON.stringify(message)}`);
           ws.send(JSON.stringify({ type: "done", id: message.id }));

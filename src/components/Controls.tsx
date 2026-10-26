@@ -2,6 +2,7 @@ import type { Status } from "../connection";
 import type { Key, KeyAction } from "../protocol";
 import { Icon } from "./Icon";
 import { RemoteButton } from "./RemoteButton";
+import { ShortcutRow } from "./ShortcutRow";
 import { Touchpad } from "./Touchpad";
 
 type Props = {
@@ -27,6 +28,8 @@ export function Controls({ tvName, status, send, onTryTurnOn }: Props) {
       </header>
 
       {outOfReach ? <OutOfReach status={status} onTryTurnOn={onTryTurnOn} /> : <Touchpad send={send} enabled={ready} />}
+
+      <ShortcutRow />
 
       <fieldset class="control-group buttons" disabled={!ready}>
         <div class="button-column">

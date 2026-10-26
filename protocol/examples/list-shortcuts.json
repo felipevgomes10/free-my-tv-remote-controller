@@ -1,0 +1,1 @@
+{ "type": "list", "id": 4, "of": "shortcuts", "items": [{ "shortcut": "netflix", "label": "Netflix" }, { "shortcut": "globoplay", "label": "Globoplay" }, { "shortcut": "prime-video", "label": "Prime Video" }, { "shortcut": "disney-plus", "label": "Disney+" }, { "shortcut": "youtube", "label": "YouTube" }, { "shortcut": "input", "label": "PlayStation" }] }
