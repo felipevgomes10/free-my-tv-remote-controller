@@ -9,10 +9,14 @@ The spec is `.scratch/web-remote/spec.md` in free-my-tv-remote-controller. Ticke
 
 **Blocked by:** 03 (The Web Remote's controls, against a fake bridge)
 
-**Status:** ready-for-agent
+**Status:** resolved
 
-- [ ] A dry run produces the zip and its checksum without touching git or GitHub
-- [ ] A real run refuses a dirty tree or a branch other than `main`
-- [ ] A real run waits for `sim` before committing, tagging, pushing and publishing
-- [ ] The published release holds the zip, and its checksum matches the one printed
-- [ ] The README documents releasing and pinning
+- [x] A dry run produces the zip and its checksum without touching git or GitHub
+- [x] A real run refuses a dirty tree or a branch other than `main`
+- [x] A real run waits for `sim` before committing, tagging, pushing and publishing
+- [x] The published release holds the zip, and its checksum matches the one printed
+- [x] The README documents releasing and pinning
+
+## Comments
+
+**2026-10-26, done.** The guards were checked with a bad version and a dirty tree, and the dry run built the zip with `page/` and `protocol/`. With the owner's go-ahead, `scripts/release.sh 0.1.0` published [v0.1.0](https://github.com/felipevgomes10/free-my-tv-remote-controller/releases/tag/v0.1.0); the zip downloaded from it has the SHA-256 printed (`30ec302c…`). free-my-tv pins it, and its build downloaded and checked it; the Home's v0.5.0 carries it.
