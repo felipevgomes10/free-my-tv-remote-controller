@@ -19,14 +19,23 @@ export const CompanionContext = createContext<Companion>({
 
 export const useCompanion = () => useContext(CompanionContext);
 
-/** One of the Home's lists: asked for each time the bridge becomes ready, then kept current by its pushes. */
-export function useList<T>(of: ListName): T[] | undefined {
+/**
+ * One of the Home's lists: asked for each time the bridge becomes ready, then kept current by its
+ * pushes; with why the Home couldn't give it, when it couldn't (`offline`, `missing-token`…).
+ */
+export function useListAnswer<T>(of: ListName): { items: T[] | undefined; failed: string | undefined } {
   const { status, lists, request } = useCompanion();
+  const [failed, setFailed] = useState<string>();
   useEffect(() => {
-    if (status === "ready") request({ type: "list", of }).catch(() => {});
+    if (status !== "ready") return;
+    setFailed(undefined);
+    request({ type: "list", of }).catch((error) => setFailed(error instanceof RequestFailed ? error.reason : "error"));
   }, [status, of, request]);
-  return lists[of] as T[] | undefined;
+  return { items: lists[of] as T[] | undefined, failed };
 }
+
+/** One of the Home's lists, as [useListAnswer] keeps it. */
+export const useList = <T,>(of: ListName): T[] | undefined => useListAnswer<T>(of).items;
 
 /** How long a failed action stays marked. */
 export const FAILED_MARK_MS = 2500;

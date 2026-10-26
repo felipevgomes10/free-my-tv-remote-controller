@@ -46,6 +46,8 @@ The companion features ask the Home rather than send keys (ADR 0006). A request 
 | `list` (pushed) | [`list-pushed.json`](examples/list-pushed.json) | The same list again, without an `id`, whenever it changes on the TV. The page replaces what it shows. |
 | `done` | [`done.json`](examples/done.json) | An action (an `open`, a `close-app`…) was carried out on the TV. |
 | `close-app` | [`close-app.json`](examples/close-app.json) | Closes an Open App on the TV, as the App Switcher's ✕ does. The bridge answers `done` once it is closed, or `failed` with `playing` for an app playing music, which can't be closed. |
+| `title` (request) | [`title-request.json`](examples/title-request.json) | Asks for a Title's screen: `kind` and `tmdbId`. |
+| `title` (answer) | [`title.json`](examples/title.json) | The Title's facts (`ageRating`, `year`, `genres`, `runtimeMinutes` for a movie or `seasons` for a series, `rating` out of 10, `overview`, a TMDB `backdrop`), whether it has a `trailer`, and Onde assistir's `services`: each with `service` (its app's package, null when it has no app on Android TV, and then it can't be opened), `name`, `offer` (`subscription` or `rent-or-buy`) and `picture` (its app's banner when installed). `failed` with `missing-token` or `offline` instead. |
 | `failed` | [`failed.json`](examples/failed.json) | An action or request couldn't be carried out; `reason` says why. |
 
 ### The companion's lists and actions
@@ -59,6 +61,7 @@ Each feature's list items and `open` fields. An `open` names its target by exact
 | Todos os apps | `apps` | [`list-apps.json`](examples/list-apps.json) | `package`, `label`, `picture` (its App Banner, or its icon on a colour) and `inTray`; App Tray first, in its order, then the rest by name | `package` ([`open-app.json`](examples/open-app.json)): opens the app, as its tile does |
 | Entradas | `inputs` | [`list-inputs.json`](examples/list-inputs.json) | `input`, `name` (the Owner's, or the device's), `port` and `kind` (`hdmi` or `antenna`); hidden Inputs left out | `input` ([`open-input.json`](examples/open-input.json)): switches the TV to it |
 | Continuar assistindo | `up-next` | [`list-up-next.json`](examples/list-up-next.json) | `upNext` (the entry), `title` (null for an app's own entry, shown as "Continuar no <app>"), `episode`, `app` (its label), `minutesLeft` and `progress` (0 to 1) when the app tells them, and `picture` (the title's still, or the app's banner); most recently watched first | `upNext` ([`open-up-next.json`](examples/open-up-next.json)): resumes it on the TV, as its tile does |
+| Em alta hoje | `trending` | [`list-trending.json`](examples/list-trending.json) | `kind` (`movie` or `series`), `tmdbId`, `name`, `genre` (the main one) and `backdrop` (a TMDB image URL); Explorar's trending Titles of the day. Answered `failed` with `missing-token` when the TV has no TMDB token, or `offline` | `kind`, `tmdbId` and `service` ([`open-service.json`](examples/open-service.json)): opens the Title in that service's app, or its Play Store page when the app isn't on the TV, as Onde assistir does; `kind`, `tmdbId` and `trailer` ([`open-trailer.json`](examples/open-trailer.json)): plays the Title's Trailer on the Home's Trailer screen |
 
 ### Pictures
 

@@ -1,0 +1,10 @@
+{ "type": "title", "id": 6, "kind": "movie", "tmdbId": 1084242,
+  "name": "Último trem", "backdrop": "https://image.tmdb.org/t/p/w1280/ultimo-trem.jpg",
+  "ageRating": "14", "year": 2025, "genres": ["Suspense", "Drama"], "runtimeMinutes": 128, "seasons": null, "rating": 7.8,
+  "overview": "Na última viagem da noite, uma maquinista percebe que um dos passageiros não aparece nas câmeras do trem.",
+  "trailer": true,
+  "services": [
+    { "service": "com.netflix.ninja", "name": "Netflix", "offer": "subscription", "picture": "app:com.netflix.ninja" },
+    { "service": "com.amazon.amazonvideo.livingroom", "name": "Prime Video", "offer": "rent-or-buy", "picture": null },
+    { "service": null, "name": "Apple TV", "offer": "rent-or-buy", "picture": null }
+  ] }
