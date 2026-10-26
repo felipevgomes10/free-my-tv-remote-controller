@@ -70,6 +70,7 @@ The [companion features' spec](.scratch/companion/spec.md) and its tickets turn 
 - **Todos os apps** — every installed app, App Tray first, each opening on the TV with a tap.
 
 **The Assistir tab** (needs the Home's next release)
+- **Busca** — search movies and series by name, in Portuguese, from TMDB through the TV; results come as you type, with year and kind, and open the Title's screen.
 - **Continuar assistindo** — the TV's Up Next Tray: each title's still with its progress, the episode, the app and the time left ("Netflix, faltam 18 min"); a tap resumes it on the TV.
 - **Em alta hoje** — Explorar's trending movies and series of the day, with their backdrops from TMDB; a tap opens the Title's screen.
 - **A Title's screen** — age rating, kind, year, genre, duration or seasons, rating and synopsis; **Ver trailer na TV** plays the Trailer on the TV, and **Onde assistir** opens the Title in each service's app on the TV, or its Play Store page when the app isn't installed.

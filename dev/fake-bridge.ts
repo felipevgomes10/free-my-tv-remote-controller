@@ -124,6 +124,12 @@ function attach(http: Server | null, tvName: string) {
           ws.send(JSON.stringify({ type: "ack", id: message.id }));
         } else if (message.type === "list") {
           ws.send(JSON.stringify({ type: "list", id: message.id, of: message.of, items: SAMPLE_LISTS[message.of] ?? [] }));
+        } else if (message.type === "search") {
+          const query = String(message.query).toLowerCase();
+          const results = (SAMPLE_LISTS.trending as { kind: string; tmdbId: number; name: string; backdrop: string }[])
+            .filter((title) => title.name.toLowerCase().includes(query))
+            .map(({ kind, tmdbId, name, backdrop }) => ({ kind, tmdbId, name, year: 2025, backdrop, poster: null }));
+          ws.send(JSON.stringify({ type: "search-results", id: message.id, query: message.query, results }));
         } else if (message.type === "title") {
           ws.send(JSON.stringify({ ...sampleTitle(message.kind, message.tmdbId), id: message.id }));
         } else if (message.type !== "hello") {
