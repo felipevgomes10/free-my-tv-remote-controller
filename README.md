@@ -102,6 +102,25 @@ Open the address Vite prints, on the computer or on an iPhone on the same Wi-Fi.
 | `npm test` | The page's tests: the real page, driven through its controls, against a fake bridge speaking the protocol's examples. |
 | `npm run build` | Type-checks and builds the page into `dist/`. |
 | `npm run preview` | Serves the built page, with the fake bridge. |
+| [`scripts/release.sh`](scripts/release.sh) | Builds, tests and publishes a versioned zip on GitHub, for the Home to pin. |
+
+### `release.sh` — ship the page to the Home
+
+```bash
+scripts/release.sh 0.2.0 --dry-run   # build the zip only
+scripts/release.sh 0.2.0             # build, then type "sim" to publish
+```
+
+From a clean `main`, it bumps the version in `package.json`, runs the tests, builds the page and zips it as `release/web-remote-<version>.zip`, printing its SHA-256 next to it. The zip holds two folders: `page/`, which the Home serves, and `protocol/`, whose examples the Home's tests read. After you type `sim`, it commits, tags `v<version>`, pushes `main` and the tag, and creates the GitHub release with the zip and its `.sha256`.
+
+To ship a release in the Home, set both lines it prints in free-my-tv's `gradle.properties` and release the Home:
+
+```properties
+webRemoteVersion=0.2.0
+webRemoteSha256=<the SHA-256 printed>
+```
+
+The Home's build downloads that zip, refuses it if the checksum differs, and puts the page in the APK. A new page reaches the TV only with a new Home.
 
 ## Development
 
