@@ -1,7 +1,10 @@
-import { PROTOCOL_VERSION, type BridgeMessage, type Key, type KeyAction, type PageMessage } from "./protocol";
+import { type BridgeState, PROTOCOL_VERSION, type BridgeMessage, type Key, type KeyAction, type PageMessage } from "./protocol";
 
 export type BridgeEvents = {
-  onReady: (tvName: string) => void;
+  onState: (state: BridgeState, tvName: string) => void;
+  /** The bridge asked for a newer page. */
+  onReload: () => void;
+  /** The connection couldn't be made, or was lost. */
   onClosed: () => void;
 };
 
@@ -15,6 +18,7 @@ export type Bridge = {
 export function connectBridge(url: string, credential: string, events: BridgeEvents): Bridge {
   const socket = new WebSocket(url);
   let ready = false;
+  let closed = false;
   let nextId = 1;
 
   const send = (message: PageMessage) => socket.send(JSON.stringify(message));
@@ -22,14 +26,16 @@ export function connectBridge(url: string, credential: string, events: BridgeEve
   socket.addEventListener("open", () => send({ type: "hello", protocol: PROTOCOL_VERSION, credential }));
   socket.addEventListener("message", (event) => {
     const message = parse(event.data);
-    if (message?.type === "state" && message.state === "ready") {
-      ready = true;
-      events.onReady(message.tvName);
+    if (message?.type === "state") {
+      ready = message.state === "ready";
+      events.onState(message.state, message.tvName);
+    } else if (message?.type === "reload") {
+      events.onReload();
     }
   });
   socket.addEventListener("close", () => {
     ready = false;
-    events.onClosed();
+    if (!closed) events.onClosed();
   });
 
   return {
@@ -38,7 +44,11 @@ export function connectBridge(url: string, credential: string, events: BridgeEve
       send({ type: "key", id: nextId++, key, action });
       return true;
     },
-    close: () => socket.close(),
+    close() {
+      closed = true;
+      ready = false;
+      socket.close();
+    },
   };
 }
 

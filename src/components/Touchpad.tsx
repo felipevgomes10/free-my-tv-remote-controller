@@ -5,7 +5,7 @@ import type { Key, KeyAction } from "../protocol";
 
 type Light = { x: number; y: number; trail?: Direction };
 
-export function Touchpad({ send }: { send: (key: Key, action: KeyAction) => void }) {
+export function Touchpad({ send, enabled = true }: { send: (key: Key, action: KeyAction) => void; enabled?: boolean }) {
   const surface = useRef<HTMLDivElement>(null);
   const [light, setLight] = useState<Light>();
   const [used, setUsed] = useState(false);
@@ -31,10 +31,12 @@ export function Touchpad({ send }: { send: (key: Key, action: KeyAction) => void
   return (
     <div
       ref={surface}
-      class="touchpad"
+      class={`touchpad${enabled ? "" : " disabled"}`}
       role="application"
+      aria-disabled={!enabled}
       aria-label="Área de toque: deslize para mover, toque para OK"
       onPointerDown={(event) => {
+        if (!enabled) return;
         surface.current!.setPointerCapture?.(event.pointerId);
         const p = at(event);
         touching.current = true;
@@ -67,7 +69,7 @@ export function Touchpad({ send }: { send: (key: Key, action: KeyAction) => void
           <span class="touchpad-light" style={{ left: `${light.x}px`, top: `${light.y}px` }} />
         </>
       )}
-      {!used && <p class="touchpad-hint">Deslize para mover. Toque para OK.</p>}
+      {!used && enabled && <p class="touchpad-hint">Deslize para mover. Toque para OK.</p>}
     </div>
   );
 }

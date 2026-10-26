@@ -41,7 +41,9 @@ export function RemoteButton({ label, keyName, behaviour = "press", send, class:
   };
 
   const onPointerDown = (event: PointerEvent) => {
-    (event.currentTarget as HTMLElement).setPointerCapture?.(event.pointerId);
+    const button = event.currentTarget as HTMLButtonElement;
+    if (button.matches(":disabled")) return;
+    button.setPointerCapture?.(event.pointerId);
     down.current = true;
     holding.current = false;
     if (behaviour === "repeat") {

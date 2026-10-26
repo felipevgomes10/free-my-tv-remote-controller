@@ -54,7 +54,7 @@ describe("connecting", () => {
   });
 
   it("drops keys pressed before the bridge is ready, never sending them later", async () => {
-    bridge.answerHello = false;
+    bridge.answer = "nothing";
     render(<App bridgeUrl={BRIDGE_URL} />);
     await waitFor(() => expect(bridge.received).toHaveLength(1));
     fireEvent.pointerDown(button("Voltar"));

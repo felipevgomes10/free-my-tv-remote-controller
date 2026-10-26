@@ -14,7 +14,8 @@ export type Key =
   | "volume-up"
   | "volume-down"
   | "mute"
-  | "power";
+  | "power"
+  | "wake";
 
 export type KeyAction = "press" | "hold-start" | "hold-end";
 
@@ -22,6 +23,8 @@ export type Hello = { type: "hello"; protocol: number; credential: string };
 export type KeyMessage = { type: "key"; id: number; key: Key; action: KeyAction };
 export type PageMessage = Hello | KeyMessage;
 
-export type State = { type: "state"; state: "ready"; tvName: string };
+export type BridgeState = "ready" | "not-linked" | "revoked";
+export type State = { type: "state"; state: BridgeState; tvName: string };
+export type Reload = { type: "reload"; protocol: number };
 export type Ack = { type: "ack"; id: number };
-export type BridgeMessage = State | Ack;
+export type BridgeMessage = State | Reload | Ack;

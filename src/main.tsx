@@ -10,3 +10,8 @@ for (const type of ["gesturestart", "gesturechange", "dblclick"]) {
 }
 
 render(<App bridgeUrl={bridgeUrl(location)} />, document.getElementById("app")!);
+
+// Keeps the page openable when the TV doesn't answer (ADR 0004). Only the build has one.
+if ("serviceWorker" in navigator && import.meta.env.PROD) {
+  void navigator.serviceWorker.register("/sw.js");
+}

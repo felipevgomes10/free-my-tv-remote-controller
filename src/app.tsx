@@ -1,11 +1,11 @@
-import { useCallback, useEffect, useRef, useState } from "preact/hooks";
-import { type Bridge, connectBridge } from "./bridge";
+import { useState } from "preact/hooks";
 import { AddToHomeScreen } from "./components/AddToHomeScreen";
 import { Controls } from "./components/Controls";
+import { MessageScreen } from "./components/MessageScreen";
 import { PairingScreen } from "./components/PairingScreen";
+import { useConnection } from "./connection";
 import { isIosSafariTab } from "./pairing";
-import type { Key, KeyAction } from "./protocol";
-import { loadCredential, saveCredential } from "./storage";
+import { forgetCredential, loadCredential, saveCredential } from "./storage";
 
 type Phase = "add-to-home" | "pairing" | "controls";
 
@@ -30,24 +30,46 @@ export function App({ bridgeUrl }: { bridgeUrl: string }) {
       />
     );
   }
-  return <Connected bridgeUrl={bridgeUrl} credential={credential} />;
+  return (
+    <Connected
+      bridgeUrl={bridgeUrl}
+      credential={credential}
+      onPairAgain={() => {
+        forgetCredential();
+        setCredential(undefined);
+        setPhase("pairing");
+      }}
+    />
+  );
 }
 
-function Connected({ bridgeUrl, credential }: { bridgeUrl: string; credential: string }) {
-  const bridge = useRef<Bridge>(undefined);
-  const [tvName, setTvName] = useState("TV");
+function Connected({ bridgeUrl, credential, onPairAgain }: { bridgeUrl: string; credential: string; onPairAgain: () => void }) {
+  const { status, tvName, send, tryTurnOn } = useConnection(bridgeUrl, credential);
 
-  useEffect(() => {
-    bridge.current = connectBridge(bridgeUrl, credential, {
-      onReady: setTvName,
-      onClosed: () => {},
-    });
-    return () => bridge.current?.close();
-  }, [bridgeUrl, credential]);
-
-  const send = useCallback((key: Key, action: KeyAction) => {
-    bridge.current?.sendKey(key, action);
-  }, []);
-
-  return <Controls tvName={tvName} send={send} />;
+  if (status === "not-linked") {
+    return (
+      <MessageScreen icon="linkOff" title="O Home ainda não está vinculado à TV">
+        <p class="explanation">
+          Sem isso, as teclas não chegam aos apps. No controle físico, abra Configurações → FMTV Controller e escolha
+          Vincular.
+        </p>
+        <p class="explanation">Esta tela some sozinha assim que o Home for vinculado.</p>
+      </MessageScreen>
+    );
+  }
+  if (status === "revoked") {
+    return (
+      <MessageScreen
+        icon="mobileOff"
+        title="Este iPhone não está mais pareado"
+        action={{ label: "Parear de novo", onClick: onPairAgain }}
+      >
+        <p class="explanation">
+          Ele foi removido dos aparelhos pareados da TV. Para voltar a usar o FMTV Controller, pareie de novo com o
+          código da TV.
+        </p>
+      </MessageScreen>
+    );
+  }
+  return <Controls tvName={tvName} status={status} send={send} onTryTurnOn={tryTurnOn} />;
 }

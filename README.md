@@ -33,6 +33,11 @@ All previews below are exported from the current [`design.pen`](design.pen). The
     <td width="33%"><img src="docs/design/out-of-reach.jpg" alt="No connection with the TV" width="100%"><br><sub><b>Sem conexão</b> — with a button to try turning the TV on</sub></td>
     <td width="33%"><img src="docs/design/revoked.jpg" alt="This iPhone is no longer paired" width="100%"><br><sub><b>Revogado</b> — the Owner removed this iPhone on the TV</sub></td>
   </tr>
+  <tr>
+    <td width="33%"><img src="docs/design/pairing-wrong-code.jpg" alt="A wrong pairing code" width="100%"><br><sub><b>Código errado</b> — every refusal says what to do</sub></td>
+    <td width="33%"><img src="docs/design/out-of-reach-tv-did-not-turn-on.jpg" alt="The TV did not turn on" width="100%"><br><sub><b>A TV não ligou</b> — after Tentar ligar a TV</sub></td>
+    <td width="33%"><img src="docs/design/not-linked.jpg" alt="The Home is not linked to the TV" width="100%"><br><sub><b>Não vinculado</b> — the Owner links it on the TV</sub></td>
+  </tr>
 </table>
 
 <details>
@@ -61,7 +66,17 @@ All previews below are exported from the current [`design.pen`](design.pen). The
 - **A code from the TV** — type the 4 digits the TV shows on *Configurações → FMTV Controller → Parear aparelho* and give the iPhone a name ("iPhone da Ana"); from then on it opens straight to the controls.
 - **Clear refusals** — a wrong code, the TV's pairing screen being closed, too many tries, or a TV out of reach each say what to do.
 
-**Status:** the page, its controls and Pairing are built and tested against a fake bridge. Pairing, the Home's bridge and the rest of the first release are in progress — see [the tickets](.scratch/web-remote/issues) and the Home's side in [free-my-tv](https://github.com/felipevgomes10/free-my-tv/tree/main/.scratch/web-remote/issues).
+**When the TV is out of reach**
+- **Sem conexão** — the controls dim and the Touchpad says why; FMTV Controller tries again by itself, at once when you come back to it, and returns to the controls without a reload.
+- **Tentar ligar a TV** — a best-effort wake: if the Home answers within 5 seconds it sends `wake`, which can turn a TV on but never off; otherwise it says to use the Remote.
+- **Never late keys** — a key pressed while out of reach is dropped, never sent when the TV comes back.
+- **Not linked, revoked** — a Home not yet linked to the TV, or an iPhone the Owner removed, each get a screen saying who fixes it; a revoked iPhone can pair again.
+
+**A Home Screen app**
+- **FMTV Controller** on the Home Screen, with its icon, opening standalone in portrait under a translucent status bar.
+- **Opens with the TV off** — a network-first service worker ([ADR 0004](docs/adr/0004-a-network-first-service-worker.md)) keeps a copy of the page: when the Home answers, every open gets the page it serves now; when it doesn't within 3 seconds, the copy opens on Sem conexão instead of Safari's error page.
+
+**Status:** the whole page is built and tested against a fake bridge. The Home's side — Linking, Pairing on the TV and the bridge — is in progress in [free-my-tv](https://github.com/felipevgomes10/free-my-tv/tree/main/.scratch/web-remote/issues). Pairing, the Home's bridge and the rest of the first release are in progress — see [the tickets](.scratch/web-remote/issues) and the Home's side in [free-my-tv](https://github.com/felipevgomes10/free-my-tv/tree/main/.scratch/web-remote/issues).
 
 ## How it works
 
@@ -79,6 +94,7 @@ All previews below are exported from the current [`design.pen`](design.pen). The
 - **Keys go through the TV's own remote service** ([ADR 0001](docs/adr/0001-keys-through-android-tv-remote-protocol-bridged-by-the-home.md)). A browser can't make another app receive a key, so a bridge inside the Home passes each key to the TV Remote Service, the one Google's phone remote uses.
 - **The page ships inside the Home** ([ADR 0002](docs/adr/0002-the-page-ships-inside-the-home.md)). Each release here is a versioned zip; the Home pins one and serves it next to its bridge, so page and bridge always speak the same version.
 - **Plain HTTP on the home network** ([ADR 0003](docs/adr/0003-plain-http-on-the-home-network.md)), as APK Drop does.
+- **A network-first service worker** ([ADR 0004](docs/adr/0004-a-network-first-service-worker.md)) keeps the page openable when the TV isn't, without ever hiding a Home update.
 - **Keys are intentions, not key codes** — `right`, `ok`, `home`, each pressed, held or released. The messages and their JSON examples are in [`protocol/`](protocol); both projects' tests read the same examples.
 
 The language of the project — *Web Remote*, *Pairing*, *Paired Phone*, *Linking*, *Touchpad*… — is defined in [`CONTEXT.md`](CONTEXT.md); every decision with a trade-off is an [ADR](docs/adr).
@@ -107,7 +123,7 @@ Open the address Vite prints, on the computer or on an iPhone on the same Wi-Fi.
 | `npm run dev` | The page with the fake bridge, on the network, with live reload. |
 | `npm test` | The page's tests: the real page, driven through its controls, against a fake bridge speaking the protocol's examples. |
 | `npm run build` | Type-checks and builds the page into `dist/`. |
-| `npm run preview` | Serves the built page, with the fake bridge. |
+| `npm run preview` | Serves the built page, with the fake bridge and the service worker. |
 | [`scripts/release.sh`](scripts/release.sh) | Builds, tests and publishes a versioned zip on GitHub, for the Home to pin. |
 
 ### `release.sh` — ship the page to the Home
@@ -134,21 +150,24 @@ The Home's build downloads that zip, refuses it if the checksum differs, and put
 src/
 ├── app.tsx          the page: Adicionar à Tela de Início, Pairing, then the controls
 ├── bridge.ts        the page's side of the protocol over WebSocket
+├── connection.ts    one connection kept alive: retries, Tentar ligar, reload once
 ├── gestures.ts      the Touchpad's taps, holds and swipes, turned into keys
 ├── haptics.ts       the haptic tick, through Safari's switch control
 ├── pairing.ts       Pairing's request, and telling a Safari tab from the Home Screen app
 ├── protocol.ts      the protocol's messages and version
-├── storage.ts       the Paired Phone's credential
-└── components/      Controls, Touchpad, RemoteButton, PairingScreen, AddToHomeScreen, Icon
+├── service-worker.js  the network-first copy of the page (ADR 0004)
+├── storage.ts       the Paired Phone's credential and the last TV's name
+└── components/      Controls, Touchpad, RemoteButton, PairingScreen, AddToHomeScreen, MessageScreen, Icon
 protocol/            the protocol's contract and its JSON examples
 tests/               tests against a fake bridge (mock-socket)
 dev/                 the fake bridge for `npm run dev`
+plugins/             the build's service worker, with every file to keep
 public/              the web app manifest and the app icons
 docs/adr/            decisions and their trade-offs
 docs/design/         design exports of design.pen
 ```
 
-The tests render the real page in jsdom and touch it like a finger would: pointer events on the Touchpad and the buttons, with fake timers for holds and repeats, and typing into the Pairing form. What they check is only what crosses to the bridge — the WebSocket and the `/pair` request — and what the page shows.
+The tests render the real page in jsdom and touch it like a finger would: pointer events on the Touchpad and the buttons, with fake timers for holds, repeats and retries, and typing into the Pairing form. The fake bridge can go down and come back, refuse a credential or ask for a newer page. What they check is only what crosses to the bridge — the WebSocket and the `/pair` request — and what the page shows.
 
 ## Credits
 

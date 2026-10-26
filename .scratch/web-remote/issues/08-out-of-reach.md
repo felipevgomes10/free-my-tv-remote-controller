@@ -15,13 +15,19 @@ The spec is `.scratch/web-remote/spec.md` in free-my-tv-remote-controller. Ticke
 
 **Blocked by:** 03 (The Web Remote's controls, against a fake bridge)
 
-**Status:** ready-for-agent
+**Status:** resolved
 
-- [ ] The screens match their design
-- [ ] Losing the fake bridge shows Sem conexão and disables the controls; bringing it back returns to the controls without a reload
-- [ ] Trying to turn the TV on reports failure when nothing answers
-- [ ] Not linked and revoked each show their own screen, revoked offering to pair again
-- [ ] A reload request reloads once, even if the next hello asks again
-- [ ] Keys pressed while disconnected never reach the fake bridge after reconnecting
-- [ ] Opened with the bridge down, the saved page shows Sem conexão; with the bridge up again, the next open loads the page the bridge serves, not the saved one
-- [ ] JSON examples exist for the state messages, and the page's tests read them
+- [x] The screens match their design
+- [x] Losing the fake bridge shows Sem conexão and disables the controls; bringing it back returns to the controls without a reload
+- [x] Trying to turn the TV on reports failure when nothing answers
+- [x] Not linked and revoked each show their own screen, revoked offering to pair again
+- [x] A reload request reloads once, even if the next hello asks again
+- [x] Keys pressed while disconnected never reach the fake bridge after reconnecting
+- [x] Opened with the bridge down, the saved page shows Sem conexão; with the bridge up again, the next open loads the page the bridge serves, not the saved one
+- [x] JSON examples exist for the state messages, and the page's tests read them
+
+## Comments
+
+**2026-10-26, done.** One connection is kept for as long as the page is open (`connection.ts`): lost or never made, it shows Sem conexão and tries again after 1, 2, 4, then every 5 seconds, and at once when the page becomes visible again. Two additions to the protocol, both in `protocol/`: `state` now carries `not-linked` and `revoked`, and a `reload` message; and a `wake` key, which "Tentar ligar a TV" sends instead of `power`, so it can never turn off a TV that happens to be on when the bridge answers. The header keeps the last TV's name while out of reach. 12 new tests, 39 in all; the fake bridge can go down and come back.
+
+The service worker is built from `src/service-worker.js` with every file of the build to keep. In the browser pane with `npm run preview`: once installed, stopping the server and reopening showed the saved page on Sem conexão; rebuilding, restarting and reopening loaded the new build's JS from the network, swapped the cache for the new version and connected. Navigations wait 3 seconds for the network before using the copy, since an unreachable TV can leave a request hanging.
