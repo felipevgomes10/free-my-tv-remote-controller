@@ -25,7 +25,7 @@ All previews below are exported from the current [`design.pen`](design.pen). The
 <table>
   <tr>
     <td width="33%"><img src="docs/design/controls.jpg" alt="Controls" width="100%"><br><sub><b>Controles</b> — the Touchpad and the Remote's buttons</sub></td>
-    <td width="33%"><img src="docs/design/controls-swiping.jpg" alt="Swiping right on the Touchpad" width="100%"><br><sub><b>Swiping</b> — a light follows the finger and trails behind it</sub></td>
+    <td width="33%"><img src="docs/design/controls-swiping.jpg" alt="Swiping right on the Touchpad" width="100%"><br><sub><b>Swiping</b> — a light follows the finger</sub></td>
     <td width="33%"><img src="docs/design/add-to-home-screen.jpg" alt="Add to Home Screen instructions" width="100%"><br><sub><b>Adicionar à Tela de Início</b> — the first open, in Safari</sub></td>
   </tr>
   <tr>
