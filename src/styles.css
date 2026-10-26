@@ -591,3 +591,52 @@ body {
 .picture.placeholder {
   background: var(--glass);
 }
+
+/* The Shortcut Buttons, under the Touchpad. */
+
+.shortcut-row {
+  display: flex;
+  flex: none;
+  gap: 8px;
+  margin: 0 -20px;
+  padding: 0 20px;
+  overflow-x: auto;
+  scrollbar-width: none;
+  touch-action: pan-x;
+}
+
+.shortcut-row::-webkit-scrollbar {
+  display: none;
+}
+
+.shortcut {
+  flex: none;
+  height: 40px;
+  padding: 0 16px;
+  border: 2px solid transparent;
+  border-radius: 20px;
+  background: var(--glass);
+  color: var(--text-primary);
+  font: inherit;
+  font-size: 14px;
+  font-weight: 700;
+  white-space: nowrap;
+}
+
+.shortcut:active,
+.shortcut.busy {
+  background: var(--glass-strong);
+}
+
+.shortcut.failed {
+  border-color: var(--attention);
+}
+
+.shortcut:focus-visible {
+  outline: 2px solid var(--text-primary);
+  outline-offset: 2px;
+}
+
+.shell-content > .controls {
+  gap: 20px;
+}

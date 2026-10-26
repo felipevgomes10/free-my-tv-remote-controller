@@ -47,6 +47,14 @@ The companion features ask the Home rather than send keys (ADR 0006). A request 
 | `done` | [`done.json`](examples/done.json) | An action (an `open`, a `close-app`…) was carried out on the TV. |
 | `failed` | [`failed.json`](examples/failed.json) | An action or request couldn't be carried out; `reason` says why. |
 
+### The companion's lists and actions
+
+Each feature's list items and `open` fields. An `open` names its target by exactly one field.
+
+| Feature | List (`of`) | Example | Items | `open` by |
+| --- | --- | --- | --- | --- |
+| Shortcut Buttons | `shortcuts` | [`list-shortcuts.json`](examples/list-shortcuts.json) | `shortcut` (the button: `netflix`, `globoplay`, `prime-video`, `disney-plus`, `youtube`, `input`) and `label` (what the Owner assigned to it) | `shortcut` ([`open-shortcut.json`](examples/open-shortcut.json)): does what the Remote's button does |
+
 ### Pictures
 
 Items name the Home's pictures (App Banners, Up Next stills) by an opaque `picture` id. The page fetches `GET /pictures/{id}` from the bridge with `Authorization: Bearer <credential>`, never with the credential in the URL; the bridge answers `401` to anything else. TMDB's pictures are full `https://image.tmdb.org/…` URLs instead, loaded straight from TMDB.

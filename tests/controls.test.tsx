@@ -71,7 +71,8 @@ describe("the Touchpad", () => {
     release(touchpad());
     await sent([["right", "press"], ["right", "press"]]);
     const first = bridge.received.find((m) => m.type === "key");
-    expect(first).toEqual(examples["key-press"]);
+    // Ids share one counter with the companion's requests: compare the rest, and that ids grow.
+    expect({ ...first, id: examples["key-press"].id }).toEqual(examples["key-press"]);
   });
 
   it("moves along the swipe's main axis", async () => {
@@ -100,10 +101,10 @@ describe("the Touchpad", () => {
     release(touchpad());
     await vi.advanceTimersByTimeAsync(20);
     expect(bridge.keys()).toEqual([["ok", "hold-start"], ["ok", "hold-end"]]);
-    expect(bridge.received.filter((m) => m.type === "key")).toEqual([
-      examples["key-hold-start"],
-      examples["key-hold-end"],
-    ]);
+    const [start, end] = bridge.received.filter((m) => m.type === "key");
+    expect({ ...start, id: examples["key-hold-start"].id }).toEqual(examples["key-hold-start"]);
+    expect({ ...end, id: examples["key-hold-end"].id }).toEqual(examples["key-hold-end"]);
+    expect(end.id).toBeGreaterThan(start.id);
   });
 
   it("ends a hold when the touch is taken away", async () => {

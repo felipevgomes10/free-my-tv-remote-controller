@@ -7,6 +7,7 @@ import { TabPage } from "./components/TabPage";
 import { PairingScreen } from "./components/PairingScreen";
 import { useConnection } from "./connection";
 import { isIosSafariTab } from "./pairing";
+import { CompanionContext } from "./companion";
 import { CredentialContext } from "./pictures";
 import { forgetCredential, loadCredential, saveCredential } from "./storage";
 
@@ -47,7 +48,7 @@ export function App({ bridgeUrl }: { bridgeUrl: string }) {
 }
 
 function Connected({ bridgeUrl, credential, onPairAgain }: { bridgeUrl: string; credential: string; onPairAgain: () => void }) {
-  const { status, tvName, send, tryTurnOn } = useConnection(bridgeUrl, credential);
+  const { status, tvName, send, tryTurnOn, lists, request } = useConnection(bridgeUrl, credential);
   const [tab, setTab] = useState<Tab>("controls");
 
   if (status === "not-linked") {
@@ -77,14 +78,16 @@ function Connected({ bridgeUrl, credential, onPairAgain }: { bridgeUrl: string; 
   }
   return (
     <CredentialContext.Provider value={credential}>
-      <div class="shell">
-        <div class="shell-content">
-          {tab === "controls" && <Controls tvName={tvName} status={status} send={send} onTryTurnOn={tryTurnOn} />}
-          {tab === "apps" && <TabPage title="Apps" status={status} />}
-          {tab === "watch" && <TabPage title="Assistir" status={status} />}
+      <CompanionContext.Provider value={{ status, lists, request }}>
+        <div class="shell">
+          <div class="shell-content">
+            {tab === "controls" && <Controls tvName={tvName} status={status} send={send} onTryTurnOn={tryTurnOn} />}
+            {tab === "apps" && <TabPage title="Apps" status={status} />}
+            {tab === "watch" && <TabPage title="Assistir" status={status} />}
+          </div>
+          <TabBar tab={tab} onTab={setTab} />
         </div>
-        <TabBar tab={tab} onTab={setTab} />
-      </div>
+      </CompanionContext.Provider>
     </CredentialContext.Provider>
   );
 }
