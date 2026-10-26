@@ -8,9 +8,9 @@ The TV is only controllable from its Remote. When the Remote is under a cushion,
 
 ## Solution
 
-The **Web Remote** (Controle web): a page that any **Household Member** opens in Safari on their iPhone and keeps on the Home Screen, which controls the **TV** like the Remote does.
+The **Web Remote** (FMTV Controller): a page that any **Household Member** opens in Safari on their iPhone and keeps on the Home Screen, which controls the **TV** like the Remote does.
 
-**Getting it.** In the Home's Settings, a new section **Controle web**:
+**Getting it.** In the Home's Settings, a new section **FMTV Controller**:
 - **Linking**: the first time, the Home links itself to the **TV Remote Service**. Android shows a code on the TV, and the Owner types it with the Remote. Settings says whether the Home is linked, and lets the Owner link it again.
 - **Parear aparelho**: a screen with the TV's address as a QR code and a **Pairing Code**. The Household Member scans the QR code, adds the page to the Home Screen, types the Pairing Code and gives the phone a name ("iPhone da Ana"). From then on, the Web Remote opens straight to the controls.
 - **Aparelhos pareados**: every **Paired Phone** by its name, each of which the Owner can revoke.
@@ -39,7 +39,7 @@ Keys travel from the page to a bridge inside the Home over the home network, the
 
 ### Pairing a phone
 
-8. As the Owner, I want a "Parear aparelho" screen in Settings → Controle web, so that pairing a phone is one place to go.
+8. As the Owner, I want a "Parear aparelho" screen in Settings → FMTV Controller, so that pairing a phone is one place to go.
 9. As a Household Member, I want a QR code on that screen that opens the Web Remote in Safari, so that I never type an address.
 10. As a Household Member, I want the Web Remote to suggest "Adicionar à Tela de Início" before pairing, so that I pair the icon I will actually use.
 11. As a Household Member, I want to type the Pairing Code shown on the TV, so that only someone in front of the TV can pair.
@@ -52,7 +52,7 @@ Keys travel from the page to a bridge inside the Home over the home network, the
 
 ### Paired Phones
 
-18. As the Owner, I want to see every Paired Phone by name in Settings → Controle web, so that I know who can control the TV.
+18. As the Owner, I want to see every Paired Phone by name in Settings → FMTV Controller, so that I know who can control the TV.
 19. As the Owner, I want to revoke a Paired Phone, so that a phone that left the home stops working.
 20. As a Household Member whose phone was revoked, I want the Web Remote to say it is no longer paired and offer to pair again, so that I'm not left with a silent screen.
 21. As the Owner, I want every Paired Phone to control the TV equally, mine included, so that there are no permissions to manage.
@@ -99,14 +99,25 @@ Keys travel from the page to a bridge inside the Home over the home network, the
 50. As a Household Member, I want the Web Remote's look to match the Home's dark, Apple TV–style design, so that both feel like one product.
 51. As a Household Member, I want the screen not to scroll, zoom or select text while I'm using the Touchpad, so that gestures only ever control the TV.
 
+### On the Home Screen
+
+52. As a Household Member, I want the Web Remote on my Home Screen as "FMTV Controller" with its own icon, so that I find it like any other app.
+53. As a Household Member, I want it to open full screen in portrait, with the status bar over its black background, so that nothing of Safari shows.
+54. As a Household Member, I want it to open even when the TV is off or the Home is restarting, showing Sem conexão instead of Safari's error page, so that I can try turning the TV on from it.
+55. As a Household Member, I want it to load the newest page whenever the TV answers, so that a copy saved on my phone never hides a Home update.
+
 ## Implementation Decisions
 
-**Two projects, one feature.** This repository holds the Web Remote's page, its design and the protocol between page and bridge. free-my-tv holds the bridge, Linking, Pairing, the Controle web section of Settings, the Setup changes and the Home's new screens in its own design file. Tickets for the Home's side live in free-my-tv's tracker and point back to this spec.
+**Two projects, one feature.** This repository holds the Web Remote's page, its design and the protocol between page and bridge. free-my-tv holds the bridge, Linking, Pairing, the FMTV Controller section of Settings, the Setup changes and the Home's new screens in its own design file. Tickets for the Home's side live in free-my-tv's tracker and point back to this spec.
 
 **The page.**
 - Preact, TypeScript and Vite. It is small and has little state: connection, pairing, and the controls.
 - It is served by the Home, from the same address and port as the bridge, so it needs no cross-origin rules.
-- No service worker. Every open loads the page the Home is serving now, so a Home update never leaves an old page cached.
+- **A Home Screen app (PWA).** The page is set up to be added to the iPhone's Home Screen and open like an app:
+  - A web app manifest names it **FMTV Controller** and opens it standalone, in portrait, on a black background and theme, with its start and scope at the bridge's root.
+  - Safari's own tags do the same on iOS: Home Screen web app capable, a black-translucent status bar, the apple-touch-icon, and a viewport that covers the whole screen with the content kept inside the safe areas.
+  - The app icon is designed in this repository's `design.pen` and exported at 180, 192 and 512 px.
+- **A network-first service worker** keeps a copy of the page (ADR 0004). When the Home answers, every open loads the page it serves now. When it doesn't, the saved copy opens and shows Sem conexão, so the Web Remote never falls into Safari's error page. The protocol version in the hello still makes an outdated page reload once.
 - It keeps the Paired Phone's credential in the Home Screen app's own storage. On iOS that storage is separate from Safari's, which is why pairing happens after "Adicionar à Tela de Início".
 - Each release here publishes the built page as a versioned zip on GitHub. free-my-tv pins the version and its checksum and unpacks it into the APK's assets at build time (ADR 0002).
 
@@ -127,7 +138,7 @@ Keys travel from the page to a bridge inside the Home over the home network, the
 - It passes keys to the TV Remote Service at `127.0.0.1` as that service's own protocol expects, with the credential Linking produced.
 - The TV Remote Service connection sits behind `TvPlatform`, like every other part of Android: link, report whether linked, send a key with a direction (press, hold start, hold end).
 
-**Linking, in the Home.** Settings → Controle web starts Linking. The Home connects to the TV Remote Service, Android shows its code on the TV, and the Owner types it into a Home dialog with the Remote. The resulting credential is kept by the Home. Linking is lost on Restore.
+**Linking, in the Home.** Settings → FMTV Controller starts Linking. The Home connects to the TV Remote Service, Android shows its code on the TV, and the Owner types it into a Home dialog with the Remote. The resulting credential is kept by the Home. Linking is lost on Restore.
 
 **Pairing, in the Home.**
 - "Parear aparelho" opens a Pairing session that lives only while the screen is open. It shows the address as a QR code and a short Pairing Code, which changes after a few wrong tries.
@@ -138,7 +149,7 @@ Keys travel from the page to a bridge inside the Home over the home network, the
 
 **Turning the TV on.** It is best-effort: the "Sem conexão" screen sends a power key to the TV's last address in case the bridge is still reachable. Nothing beyond that, such as Wake-on-LAN, is in this release.
 
-**The TV's address.** The QR code holds the TV's IP and the bridge's port. The Home Screen icon and the Paired Phone's credential are tied to that address, so the Owner should reserve the TV's IP in the router; the Controle web screen says so. If the address changes anyway, Household Members scan the QR code and pair again.
+**The TV's address.** The QR code holds the TV's IP and the bridge's port. The Home Screen icon and the Paired Phone's credential are tied to that address, so the Owner should reserve the TV's IP in the router; the FMTV Controller screen says so. If the address changes anyway, Household Members scan the QR code and pair again.
 
 ## Testing Decisions
 
@@ -150,7 +161,8 @@ A good test drives a whole side through its outermost boundary and checks only w
   - Pairing's refusals are told to the Household Member;
   - "Sem conexão", "not linked" and "revoked" each show their screen;
   - keys aren't replayed after a reconnect;
-  - a version mismatch reloads once.
+  - a version mismatch reloads once;
+  - opened while the bridge can't be reached, the saved page shows Sem conexão, and once the bridge answers, the next open loads the page it serves.
   
   This repository has no prior art yet. These tests set it.
 - **The Home, against `FakeTvPlatform`.** In free-my-tv, the tests drive the bridge, Pairing and Linking on the JVM. They check:
@@ -188,4 +200,4 @@ A good test drives a whole side through its outermost boundary and checks only w
 - **Prototype first.** The first ticket is a prototype on the real TV. It must confirm that the TCL's TV Remote Service accepts a connection from the Home at `127.0.0.1`, that Linking works, and that a key sent this way reaches another app such as Netflix or YouTube. It should also note whether the Android TV emulator has the service, which decides how much can be tried before touching the TV. If the TV refuses, ADR 0001 is reopened before anything else is built.
 - **iOS storage.** Whether a Home Screen web app keeps its storage separate from Safari's has changed across iOS versions. Check it on the iPhone 17 Pro, since it decides when Pairing is asked.
 - **The haptic.** The haptic relies on Safari's switch control producing a tick, which no standard guarantees. Treat it as decoration.
-- **Design.** The page's screens are designed in a `design.pen` in this repository before they are built: controls, Pairing, Sem conexão, not linked, revoked. Controle web, Parear aparelho and Linking are designed in free-my-tv's `design.pen`, in the style of APK Drop.
+- **Design.** The page's screens are designed in a `design.pen` in this repository before they are built: controls, Pairing, Sem conexão, not linked, revoked, and the app icon. The FMTV Controller section of Settings, Parear aparelho and Linking are designed in free-my-tv's `design.pen`, in the style of APK Drop.

@@ -4,9 +4,9 @@ A remote control that Household Members open in their phone's browser to control
 
 ## Language
 
-**Web Remote** (Controle web):
-The remote control a Household Member opens in a phone's browser; it controls the one TV running the Home.
-_Avoid_: Remote, controller, companion, phone remote, app
+**Web Remote** (FMTV Controller):
+The remote control a Household Member opens in a phone's browser and keeps on the Home Screen; it controls the one TV running the Home. People see it named FMTV Controller, on the phone and in the Home's Settings.
+_Avoid_: Controle web, Remote, companion, phone remote
 
 **Remote** (Controle):
 The TV's physical remote, as in the Home's glossary; never the Web Remote.

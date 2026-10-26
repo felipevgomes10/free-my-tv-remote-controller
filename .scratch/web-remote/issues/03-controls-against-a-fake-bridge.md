@@ -5,6 +5,7 @@
 - **The buttons:** Voltar; Home, where two quick presses are two Home presses and holding is holding Home; play/pause; volume up and down, repeating while held; mute; power.
 - **Haptics:** a tick for each step and press where Safari allows it, and the controls work the same without one.
 - **The page:** pt-BR, full screen from the Home Screen, portrait on every iPhone, clear of the notch and the home indicator. It never scrolls, zooms or selects text.
+- **A Home Screen app:** a web app manifest and Safari's iOS tags make it **FMTV Controller** on the Home Screen: standalone, portrait, black background and theme, a black-translucent status bar, a viewport covering the whole screen with the content inside the safe areas, and the app icon from `design.pen` at 180, 192 and 512 px.
 - **The protocol:** the key messages (intention plus press, hold start or hold end, and their acknowledgement) are defined with JSON examples that free-my-tv's tests will also read.
 
 Start by designing the controls screen in a new `design.pen` in this repository, matching the Home's dark, Apple TV–style look. Set up the project with Preact, TypeScript and Vite.
@@ -21,4 +22,5 @@ The spec is `.scratch/web-remote/spec.md` in free-my-tv-remote-controller. Ticke
 - [ ] Volume repeats while held and stops on release
 - [ ] The page doesn't scroll, zoom or select text under the Touchpad
 - [ ] JSON examples exist for every key message, and the page's tests read them
+- [ ] Added to the Home Screen in the iOS Simulator's Safari, it shows as FMTV Controller with its icon and opens standalone, in portrait, with nothing under the notch or the home indicator
 - [ ] Tests drive the rendered page against the fake bridge only, never its components' internals
