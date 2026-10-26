@@ -1,0 +1,57 @@
+# Free My TV Web Remote
+
+A remote control that Household Members open in their phone's browser to control the TV running the Free My TV Home, from the D-pad to the Home's own features. The Home's language is defined in free-my-tv's `CONTEXT.md`; this glossary only adds what the Web Remote brings.
+
+## Language
+
+**Web Remote** (Controle web):
+The remote control a Household Member opens in a phone's browser; it controls the one TV running the Home.
+_Avoid_: Remote, controller, companion, phone remote, app
+
+**Remote** (Controle):
+The TV's physical remote, as in the Home's glossary; never the Web Remote.
+_Avoid_: Physical remote, IR remote
+
+**TV**:
+The Owner's TCL Google TV running the Free My TV Home; the only TV the Web Remote controls.
+_Avoid_: Device, set, screen
+
+**Home**:
+The Free My TV Home on the TV, as defined in free-my-tv's glossary.
+_Avoid_: Launcher, free-my-tv app
+
+**Owner** (Dono):
+The person whose TV it is, who sees and revokes Paired Phones from the Home's Settings.
+_Avoid_: Admin, user
+
+**Household Member** (Morador):
+Anyone in the home who uses the Web Remote from a Paired Phone; every Household Member controls the TV equally, the Owner included.
+_Avoid_: User, client, guest
+
+### Pairing
+
+**Pairing** (Pareamento):
+The one-time step in which a Household Member's phone proves it is in front of the TV by entering the Pairing Code the TV shows, after which the Web Remote opens on it without asking again.
+_Avoid_: Login, connect, register
+
+**Pairing Code** (Código de pareamento):
+The short code the TV shows only while its Pair a Phone screen is open, beside a QR code that opens the Web Remote; it changes after a few wrong tries.
+_Avoid_: PIN, password, token
+
+**Paired Phone** (Aparelho pareado):
+A phone that completed Pairing, known by the name the Household Member gave it then; the Owner sees and revokes Paired Phones from the Home's Settings.
+_Avoid_: Device, client, session
+
+**TV Remote Service** (Serviço de controle da TV):
+The TV's built-in service that accepts keys from remote-control apps and delivers them to whatever is on screen; part of the TV, never of the Home.
+_Avoid_: Remote protocol, Android TV Remote, receiver
+
+**Linking** (Vinculação):
+The one-time step in which the Home proves to the TV Remote Service that it may send keys, by the Owner typing the code Android shows; distinct from Pairing, which is between a phone and the Home.
+_Avoid_: Pairing (for this step), connecting, authorizing
+
+### Controls
+
+**Touchpad** (Área de toque):
+The surface of the Web Remote where swiping moves the TV's focus and tapping presses OK, as in the Apple TV Remote.
+_Avoid_: Trackpad, D-pad, gesture area
