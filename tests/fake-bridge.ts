@@ -33,8 +33,10 @@ export class FakeBridge {
   lists: Record<string, unknown[]> = {};
   /** Requests the Home leaves unanswered, by type, to try the page's timeout. */
   silentOn = new Set<string>();
-  /** Actions that fail, by type, with this reason. */
+  /** Requests that fail, by type (or one list, as `list:<of>`), with this reason. */
   failing: Record<string, string> = {};
+  /** A feature's own answer to a request, by its type (`title`…), sent with the request's `id`. */
+  replies: Record<string, object> = {};
   /** The Home's pictures, by id, and how many times each was fetched. */
   pictures: Record<string, string> = {};
   readonly pictureFetches: string[] = [];
@@ -80,9 +82,9 @@ export class FakeBridge {
 
   private respond(socket: any, message: any) {
     if (this.silentOn.has(message.type)) return;
-    if (this.failing[message.type]) {
-      return socket.send(JSON.stringify({ ...examples.failed, id: message.id, reason: this.failing[message.type] }));
-    }
+    const reason = this.failing[message.type] ?? (message.type === "list" ? this.failing[`list:${message.of}`] : undefined);
+    if (reason) return socket.send(JSON.stringify({ ...examples.failed, id: message.id, reason }));
+    if (this.replies[message.type]) return socket.send(JSON.stringify({ ...this.replies[message.type], id: message.id }));
     if (message.type === "list") {
       return socket.send(JSON.stringify({ ...examples["list-answer"], id: message.id, of: message.of, items: this.lists[message.of] ?? [] }));
     }

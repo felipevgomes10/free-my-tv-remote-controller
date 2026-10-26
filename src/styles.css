@@ -930,3 +930,244 @@ body {
   outline: 2px solid var(--text-primary);
   outline-offset: 2px;
 }
+
+.trending-row {
+  display: flex;
+  gap: 14px;
+  margin: 0 -20px;
+  padding: 0 20px;
+  overflow-x: auto;
+  list-style: none;
+  scrollbar-width: none;
+  touch-action: pan-x;
+}
+
+.trending-row::-webkit-scrollbar {
+  display: none;
+}
+
+.trending {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  width: 200px;
+  padding: 0;
+  border: 0;
+  background: none;
+  color: var(--text-secondary);
+  font: inherit;
+  text-align: left;
+}
+
+.trending-backdrop {
+  display: block;
+  width: 100%;
+  aspect-ratio: 16 / 9;
+  margin-bottom: 6px;
+  overflow: hidden;
+  border-radius: 16px;
+  background: var(--glass);
+}
+
+.trending-backdrop img,
+.title-backdrop img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.trending-name {
+  font-size: 15px;
+  font-weight: 700;
+  color: var(--text-primary);
+}
+
+.trending-meta {
+  font-size: 13px;
+}
+
+.trending:focus-visible .trending-backdrop {
+  outline: 2px solid var(--text-primary);
+  outline-offset: 2px;
+}
+
+/* A Title's screen, over the tabs. */
+
+.title-screen {
+  position: fixed;
+  inset: 0;
+  z-index: 10;
+  overflow-y: auto;
+  background: var(--bg);
+  touch-action: pan-y;
+}
+
+.title-backdrop {
+  position: relative;
+  height: 300px;
+  background: var(--glass-soft);
+}
+
+.title-backdrop::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(to bottom, transparent 55%, var(--bg));
+}
+
+.title-back {
+  position: absolute;
+  top: calc(env(safe-area-inset-top) + 8px);
+  left: 20px;
+  display: grid;
+  place-items: center;
+  width: 40px;
+  height: 40px;
+  padding: 0;
+  border: 0;
+  border-radius: 50%;
+  background: rgb(0 0 0 / 0.55);
+  color: #fff;
+}
+
+.title-body {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  margin-top: -12px;
+  padding: 0 20px calc(env(safe-area-inset-bottom) + 24px);
+  position: relative;
+}
+
+.title-name {
+  margin: 0;
+  font-size: 30px;
+  font-weight: 800;
+  line-height: 1.1;
+}
+
+.title-facts {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 4px 12px;
+  margin: 0;
+  font-size: 14px;
+  color: var(--text-secondary);
+}
+
+.age-rating {
+  display: grid;
+  place-items: center;
+  min-width: 26px;
+  height: 26px;
+  padding: 0 4px;
+  border-radius: 6px;
+  font-size: 14px;
+  font-weight: 800;
+}
+
+.title-overview {
+  margin: 0;
+  font-size: 15px;
+  line-height: 1.45;
+}
+
+.trailer-button {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  height: 52px;
+  border: 2px solid transparent;
+  border-radius: 26px;
+  background: var(--text-primary);
+  color: #000;
+  font: inherit;
+  font-size: 17px;
+  font-weight: 700;
+}
+
+.trailer-button.busy {
+  opacity: 0.6;
+}
+
+.trailer-button.failed {
+  border-color: var(--attention);
+}
+
+.services {
+  margin: 0;
+  padding: 0;
+  overflow: hidden;
+  list-style: none;
+  border-radius: 18px;
+  background: var(--glass-soft);
+}
+
+.service {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 12px 14px;
+}
+
+.service + .service {
+  border-top: 1px solid var(--glass);
+}
+
+.service-logo {
+  flex: none;
+  width: 56px;
+  height: 32px;
+  border-radius: 8px;
+}
+
+.service-logo.plain {
+  display: grid;
+  place-items: center;
+  overflow: hidden;
+  background: var(--glass);
+  font-size: 9px;
+  font-weight: 700;
+  text-align: center;
+}
+
+.service-text {
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+  min-width: 0;
+}
+
+.service-name {
+  font-size: 15px;
+  font-weight: 700;
+}
+
+.service-offer {
+  font-size: 13px;
+  color: var(--text-secondary);
+}
+
+.open-on-tv {
+  flex: none;
+  height: 34px;
+  padding: 0 14px;
+  border: 2px solid transparent;
+  border-radius: 17px;
+  background: var(--glass-strong);
+  color: var(--text-primary);
+  font: inherit;
+  font-size: 14px;
+  font-weight: 700;
+}
+
+.open-on-tv.busy {
+  opacity: 0.6;
+}
+
+.open-on-tv.failed {
+  border-color: var(--attention);
+}

@@ -1,0 +1,5 @@
+{ "type": "list", "id": 4, "of": "trending", "items": [
+  { "kind": "movie", "tmdbId": 1084242, "name": "Último trem", "genre": "Suspense", "backdrop": "https://image.tmdb.org/t/p/w780/ultimo-trem.jpg" },
+  { "kind": "series", "tmdbId": 245703, "name": "Maré alta", "genre": "Drama", "backdrop": "https://image.tmdb.org/t/p/w780/mare-alta.jpg" },
+  { "kind": "movie", "tmdbId": 933260, "name": "Sem título ainda", "genre": null, "backdrop": null }
+] }

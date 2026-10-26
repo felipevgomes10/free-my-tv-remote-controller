@@ -46,7 +46,39 @@ const SAMPLE_LISTS: Record<string, unknown[]> = {
     const key = title ? `${pkg}|${title}` : pkg;
     return { upNext: key, title, episode, app, minutesLeft, progress, picture: title ? `upnext:${key}` : `app:${pkg}` };
   }),
+  trending: [
+    { kind: "movie", tmdbId: 1, name: "Último trem", genre: "Suspense", backdrop: "/images/ultimo-trem.png" },
+    { kind: "series", tmdbId: 2, name: "Maré alta", genre: "Drama", backdrop: "/pictures/upnext:tmdb|Maré alta" },
+    { kind: "movie", tmdbId: 3, name: "Cidade de vidro", genre: "Ficção científica", backdrop: "/pictures/upnext:tmdb|Cidade de vidro" },
+  ],
 };
+
+/** A Title's screen for the dev bridge: the trending Title asked for, with made-up facts. */
+function sampleTitle(kind: string, tmdbId: number) {
+  const summary = (SAMPLE_LISTS.trending as { kind: string; tmdbId: number; name: string; genre: string; backdrop: string }[]).find(
+    (t) => t.kind === kind && t.tmdbId === tmdbId,
+  );
+  return {
+    type: "title",
+    kind,
+    tmdbId,
+    name: summary?.name ?? "?",
+    backdrop: summary?.backdrop ?? null,
+    ageRating: "14",
+    year: 2025,
+    genres: [summary?.genre ?? "Drama"],
+    runtimeMinutes: kind === "movie" ? 128 : null,
+    seasons: kind === "series" ? 2 : null,
+    rating: 7.8,
+    overview: "Na última viagem da noite, uma maquinista percebe que um dos passageiros não aparece nas câmeras do trem.",
+    trailer: true,
+    services: [
+      { service: "com.netflix.ninja", name: "Netflix", offer: "subscription", picture: "app:com.netflix.ninja" },
+      { service: "com.amazon.amazonvideo.livingroom", name: "Prime Video", offer: "rent-or-buy", picture: "app:com.amazon.amazonvideo.livingroom" },
+      { service: null, name: "Apple TV", offer: "rent-or-buy", picture: null },
+    ],
+  };
+}
 
 /** A banner for the dev bridge's pictures: the app's name on a colour of its own. */
 const banner: Connect.NextHandleFunction = (request: IncomingMessage, response: ServerResponse) => {
@@ -92,6 +124,8 @@ function attach(http: Server | null, tvName: string) {
           ws.send(JSON.stringify({ type: "ack", id: message.id }));
         } else if (message.type === "list") {
           ws.send(JSON.stringify({ type: "list", id: message.id, of: message.of, items: SAMPLE_LISTS[message.of] ?? [] }));
+        } else if (message.type === "title") {
+          ws.send(JSON.stringify({ ...sampleTitle(message.kind, message.tmdbId), id: message.id }));
         } else if (message.type !== "hello") {
           console.log(`[ponte de teste] ${message.type} ${JSON.stringify(message)}`);
           ws.send(JSON.stringify({ type: "done", id: message.id }));

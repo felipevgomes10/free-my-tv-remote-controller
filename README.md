@@ -71,6 +71,8 @@ The [companion features' spec](.scratch/companion/spec.md) and its tickets turn 
 
 **The Assistir tab** (needs the Home's next release)
 - **Continuar assistindo** — the TV's Up Next Tray: each title's still with its progress, the episode, the app and the time left ("Netflix, faltam 18 min"); a tap resumes it on the TV.
+- **Em alta hoje** — Explorar's trending movies and series of the day, with their backdrops from TMDB; a tap opens the Title's screen.
+- **A Title's screen** — age rating, kind, year, genre, duration or seasons, rating and synopsis; **Ver trailer na TV** plays the Trailer on the TV, and **Onde assistir** opens the Title in each service's app on the TV, or its Play Store page when the app isn't installed.
 
 
 **Pairing**
