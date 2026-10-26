@@ -44,6 +44,8 @@ All previews below are exported from the current [`design.pen`](design.pen). The
 <summary><b>Coming after the first release</b></summary>
 <br>
 
+The [companion features' spec](.scratch/companion/spec.md) and its tickets turn these into the Controls, Apps and Watch tabs: the Teclado, the Shortcut Buttons, Open Apps, Inputs, every app, Continuar assistindo, Explorar's trending Titles and search ([ADR 0006](docs/adr/0006-companion-features-ask-the-home.md)).
+
 <table>
   <tr>
     <td width="33%"><img src="docs/design/keyboard.jpg" alt="Typing into the TV's search field" width="100%"><br><sub><b>Teclado</b> — type into the field open on the TV</sub></td>

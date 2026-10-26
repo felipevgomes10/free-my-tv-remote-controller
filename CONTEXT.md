@@ -51,3 +51,20 @@ _Avoid_: Pairing (for this step), connecting, authorizing
 **Touchpad** (Área de toque):
 The surface of the Web Remote where swiping moves the TV's focus and tapping presses OK, as in the Apple TV Remote.
 _Avoid_: Trackpad, D-pad, gesture area
+
+**Controls tab** (Controle):
+The Web Remote's first tab: the Touchpad, the buttons, the Shortcut Buttons and the Teclado. Its pt-BR label is the same word as the Remote's; in writing, say "the Controls tab", never "Controle" alone.
+_Avoid_: Remote tab, home tab
+
+**Apps tab** (Apps):
+The Web Remote's tab listing the TV's Open Apps, Inputs and every installed app, each opening on the TV.
+_Avoid_: Launcher, library
+
+**Watch tab** (Assistir):
+The Web Remote's tab for what to watch: search, the Up Next Tray's entries, Explorar's trending Titles and a Title's screen.
+_Avoid_: Explorar tab, discover
+
+**Keyboard** (Teclado):
+The Web Remote's sheet for typing into the text field open on the TV, with the phone's own keyboard.
+_Avoid_: Input, IME, keypad, virtual keyboard
+
