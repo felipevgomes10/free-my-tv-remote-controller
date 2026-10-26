@@ -11,8 +11,6 @@ export type Direction = "up" | "down" | "left" | "right";
 
 export type TouchpadOutput = {
   key: (key: Key, action: KeyAction) => void;
-  /** A step the focus moved, for the light's trail. */
-  step?: (direction: Direction) => void;
 };
 
 /**
@@ -54,7 +52,6 @@ export class TouchpadGestures {
       if (direction === "right" || direction === "left") this.origin.x += Math.sign(dx) * STEP_PX;
       else this.origin.y += Math.sign(dy) * STEP_PX;
       this.output.key(direction, "press");
-      this.output.step?.(direction);
     }
   }
 
