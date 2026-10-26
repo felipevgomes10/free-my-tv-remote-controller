@@ -173,8 +173,9 @@ The Home's build downloads that zip, refuses it if the checksum differs, and put
 
 ```
 src/
-├── app.tsx          the page: Adicionar à Tela de Início, Pairing, then the controls
-├── bridge.ts        the page's side of the protocol over WebSocket
+├── app.tsx          the page: Adicionar à Tela de Início, Pairing, then the tabs
+├── bridge.ts        the page's side of the protocol: keys, and requests answered by id
+├── pictures.tsx     the Home's pictures, fetched once with the credential in a header
 ├── connection.ts    one connection kept alive: retries, Tentar ligar, reload once
 ├── gestures.ts      the Touchpad's taps, holds and swipes, turned into keys
 ├── haptics.ts       the haptic tick, through Safari's switch control
@@ -182,7 +183,7 @@ src/
 ├── protocol.ts      the protocol's messages and version
 ├── service-worker.js  the network-first copy of the page (ADR 0004)
 ├── storage.ts       the Paired Phone's credential and the last TV's name
-└── components/      Controls, Touchpad, RemoteButton, PairingScreen, AddToHomeScreen, MessageScreen, Icon
+└── components/      TabBar, TabPage, Controls, Touchpad, RemoteButton, PairingScreen, AddToHomeScreen, MessageScreen, Icon
 protocol/            the protocol's contract and its JSON examples
 tests/               tests against a fake bridge (mock-socket)
 dev/                 the fake bridge for `npm run dev`

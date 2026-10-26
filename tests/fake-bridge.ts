@@ -29,6 +29,15 @@ export class FakeBridge {
   pairing: "open" | "closed" | "too-many-tries" = "open";
   readonly pairingCode = examples["pair-request"].code;
   readonly pairRequests: any[] = [];
+  /** The Home's lists, by `of`, as `list` answers them. */
+  lists: Record<string, unknown[]> = {};
+  /** Requests the Home leaves unanswered, by type, to try the page's timeout. */
+  silentOn = new Set<string>();
+  /** Actions that fail, by type, with this reason. */
+  failing: Record<string, string> = {};
+  /** The Home's pictures, by id, and how many times each was fetched. */
+  pictures: Record<string, string> = {};
+  readonly pictureFetches: string[] = [];
 
   constructor({ up = true } = {}) {
     if (up) this.comeBack();
@@ -53,6 +62,7 @@ export class FakeBridge {
         this.received.push(message);
         if (message.type === "hello") this.answerHello(socket);
         if (message.type === "key") socket.send(JSON.stringify({ ...examples.ack, id: message.id }));
+        else if (message.type !== "hello") this.respond(socket, message);
       });
     });
   }
@@ -60,6 +70,23 @@ export class FakeBridge {
   /** Sends a state to every open connection, as the bridge does when Linking or the Paired Phones change. */
   sendState(state: "ready" | "not-linked" | "revoked") {
     for (const socket of this.sockets) socket.send(JSON.stringify({ ...examples[`state-${state}`], tvName: this.tvName }));
+  }
+
+  /** Pushes a list again to every open connection, as the Home does when it changes. */
+  push(of: string, items: unknown[]) {
+    this.lists[of] = items;
+    for (const socket of this.sockets) socket.send(JSON.stringify({ ...examples["list-pushed"], of, items }));
+  }
+
+  private respond(socket: any, message: any) {
+    if (this.silentOn.has(message.type)) return;
+    if (this.failing[message.type]) {
+      return socket.send(JSON.stringify({ ...examples.failed, id: message.id, reason: this.failing[message.type] }));
+    }
+    if (message.type === "list") {
+      return socket.send(JSON.stringify({ ...examples["list-answer"], id: message.id, of: message.of, items: this.lists[message.of] ?? [] }));
+    }
+    socket.send(JSON.stringify({ ...examples.done, id: message.id }));
   }
 
   private answerHello(socket: any) {
@@ -71,6 +98,14 @@ export class FakeBridge {
 
   /** The bridge's HTTP side, for `vi.stubGlobal("fetch", bridge.fetch)`. */
   readonly fetch = async (url: string, init?: RequestInit): Promise<Response> => {
+    if (url.startsWith("/pictures/")) {
+      const id = decodeURIComponent(url.slice("/pictures/".length));
+      this.pictureFetches.push(url);
+      const authorization = new Headers(init?.headers).get("Authorization");
+      if (authorization !== `Bearer ${examples.hello.credential}`) return new Response(null, { status: 401 });
+      const picture = this.pictures[id];
+      return picture ? new Response(new Blob([picture], { type: "image/png" })) : new Response(null, { status: 404 });
+    }
     if (url !== "/pair" || init?.method !== "POST") return json(404, {});
     const request = JSON.parse(String(init.body));
     this.pairRequests.push(request);

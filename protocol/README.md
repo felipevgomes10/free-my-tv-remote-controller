@@ -16,7 +16,7 @@ Pairing is one HTTP request, before any WebSocket: `POST /pair` with a JSON body
 
 ## Version
 
-`protocol` is `1`. The page sends it in its `hello`; a bridge that doesn't speak it answers `reload` (see below).
+`protocol` is `2` since the companion features (ADR 0006); version 1 had only keys. The page sends it in its `hello`; a bridge that doesn't speak it answers `reload` (see below).
 
 ## Page → bridge
 
@@ -35,12 +35,28 @@ Each key comes with an `action`:
 
 Pressing Home twice is two `press`es; the Home recognises it as with the Remote. A key the page couldn't send because the connection was down is dropped, never sent later.
 
+## Requests and answers (version 2)
+
+The companion features ask the Home rather than send keys (ADR 0006). A request is any message with a `type` and an `id`; the Home answers it with a message carrying the same `id`. `id`s share one counter with keys, growing by one on each connection. A request the Home doesn't answer within 5 seconds is a failure for the page, and requests are only answered once the bridge is `ready`.
+
+| Message | Example | Meaning |
+| --- | --- | --- |
+| `list` (request) | [`list-request.json`](examples/list-request.json) | Asks for one of the Home's lists: `of` is `shortcuts`, `open-apps`, `inputs`, `apps`, `up-next` or `trending`. Each list's items are described with its feature. |
+| `list` (answer) | [`list-answer.json`](examples/list-answer.json) | The list, with the request's `id`. |
+| `list` (pushed) | [`list-pushed.json`](examples/list-pushed.json) | The same list again, without an `id`, whenever it changes on the TV. The page replaces what it shows. |
+| `done` | [`done.json`](examples/done.json) | An action (an `open`, a `close-app`…) was carried out on the TV. |
+| `failed` | [`failed.json`](examples/failed.json) | An action or request couldn't be carried out; `reason` says why. |
+
+### Pictures
+
+Items name the Home's pictures (App Banners, Up Next stills) by an opaque `picture` id. The page fetches `GET /pictures/{id}` from the bridge with `Authorization: Bearer <credential>`, never with the credential in the URL; the bridge answers `401` to anything else. TMDB's pictures are full `https://image.tmdb.org/…` URLs instead, loaded straight from TMDB.
+
 ## Bridge → page
 
 | Message | Example | Meaning |
 | --- | --- | --- |
 | `state` | [`state-ready.json`](examples/state-ready.json) | The bridge is ready for keys, and the TV's name to show. |
-| `state` | [`state-not-linked.json`](examples/state-not-linked.json) | The Home isn't linked to the TV Remote Service: keys can't reach the TV until the Owner links it. The connection stays open, and a `ready` follows once it is linked. |
+| `state` | [`state-not-linked.json`](examples/state-not-linked.json) | The Home isn't linked to the TV's ADB (ADR 0005): keys can't reach the TV until the Owner links it. The connection stays open, and a `ready` follows once it is linked. |
 | `state` | [`state-revoked.json`](examples/state-revoked.json) | The credential belongs to no Paired Phone: never paired, or revoked by the Owner. The bridge closes the connection after it. |
 | `reload` | [`reload.json`](examples/reload.json) | The bridge doesn't speak the page's protocol version; `protocol` is the one it speaks. The page reloads once to get the page the Home serves now. |
 | `ack` | [`ack.json`](examples/ack.json) | The key with this `id` was passed on to the TV Remote Service. |
