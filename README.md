@@ -59,7 +59,7 @@ All previews below are exported from the current [`design.pen`](design.pen). The
 **The controls**
 - **Touchpad** — swipe to move the TV's focus, one step every 48 px; tap for OK; touch and hold to hold OK, which opens Edit Mode on the Home. A tap is never mistaken for a short swipe.
 - **Buttons** — Voltar, Home (twice for the App Switcher, held for the Notification Panel, as on the Remote), play/pause, mute, and volume, which keeps changing while held. Power sits apart at the top, away from the thumb.
-- **Haptics** — a tick for every step and press where iOS allows it; the controls work the same without one.
+- **Haptics** — a tick for every step and press where iOS allows it (not on iOS 26, so far); the controls work the same without one.
 
 **Pairing**
 - **Adicionar à Tela de Início first** — opened in a Safari tab, FMTV Controller shows how to add it to the Home Screen, so the pairing lands in the icon you will use. It can still pair right there if you ask.
@@ -81,7 +81,7 @@ All previews below are exported from the current [`design.pen`](design.pen). The
 - **Parear aparelho** — the TV's address as a QR code and a 4-digit code that exists only while the screen is open and changes after each phone, or after 3 wrong tries.
 - **Aparelhos pareados** — every Paired Phone by its name, each revocable; a revoked iPhone is closed at once.
 
-**Status:** the page and the Home's side are built and tested, and work end to end on the Android TV emulator: a swipe moves the Home's focus, holding OK opens Edit Mode, a key takes about 70 ms from the iPhone's touch to the TV. Left: the first release of the page, pinning it in the Home, and checking it all on the real TV with a real iPhone ([ticket 09](https://github.com/felipevgomes10/free-my-tv/blob/main/.scratch/web-remote/issues/09-apply-the-web-remote-to-the-tv.md)). Pairing, the Home's bridge and the rest of the first release are in progress — see [the tickets](.scratch/web-remote/issues) and the Home's side in [free-my-tv](https://github.com/felipevgomes10/free-my-tv/tree/main/.scratch/web-remote/issues).
+**Status:** working on the owner's TCL with an iPhone 17 Pro, since page v0.1.0 and the Home's v0.5.0: in the Home, YouTube and Netflix, a key takes about as long as the Remote's, pairing and revoking work, and Linking survives a reboot of the TV. iOS gives no haptic tick on that iPhone; the controls work the same without it.
 
 ## How it works
 
