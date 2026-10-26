@@ -1,5 +1,6 @@
 import { useMemo, useRef, useState } from "preact/hooks";
 import { type Direction, TouchpadGestures } from "../gestures";
+import { capture } from "../capture";
 import { tick } from "../haptics";
 import type { Key, KeyAction } from "../protocol";
 
@@ -37,7 +38,7 @@ export function Touchpad({ send, enabled = true }: { send: (key: Key, action: Ke
       aria-label="Área de toque: deslize para mover, toque para OK"
       onPointerDown={(event) => {
         if (!enabled) return;
-        surface.current!.setPointerCapture?.(event.pointerId);
+        capture(surface.current!, event.pointerId);
         const p = at(event);
         touching.current = true;
         setUsed(true);

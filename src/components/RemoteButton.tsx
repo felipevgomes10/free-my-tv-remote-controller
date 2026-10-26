@@ -1,5 +1,6 @@
 import type { ComponentChildren } from "preact";
 import { useEffect, useRef } from "preact/hooks";
+import { capture } from "../capture";
 import { tick } from "../haptics";
 import type { Key, KeyAction } from "../protocol";
 
@@ -43,7 +44,7 @@ export function RemoteButton({ label, keyName, behaviour = "press", send, class:
   const onPointerDown = (event: PointerEvent) => {
     const button = event.currentTarget as HTMLButtonElement;
     if (button.matches(":disabled")) return;
-    button.setPointerCapture?.(event.pointerId);
+    capture(button, event.pointerId);
     down.current = true;
     holding.current = false;
     if (behaviour === "repeat") {

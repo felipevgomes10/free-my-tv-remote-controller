@@ -76,7 +76,12 @@ All previews below are exported from the current [`design.pen`](design.pen). The
 - **FMTV Controller** on the Home Screen, with its icon, opening standalone in portrait under a translucent status bar.
 - **Opens with the TV off** — a network-first service worker ([ADR 0004](docs/adr/0004-a-network-first-service-worker.md)) keeps a copy of the page: when the Home answers, every open gets the page it serves now; when it doesn't within 3 seconds, the copy opens on Sem conexão instead of Safari's error page.
 
-**Status:** the whole page is built and tested against a fake bridge. The Home's side — Linking, Pairing on the TV and the bridge — is in progress in [free-my-tv](https://github.com/felipevgomes10/free-my-tv/tree/main/.scratch/web-remote/issues). Pairing, the Home's bridge and the rest of the first release are in progress — see [the tickets](.scratch/web-remote/issues) and the Home's side in [free-my-tv](https://github.com/felipevgomes10/free-my-tv/tree/main/.scratch/web-remote/issues).
+**On the TV** (in [free-my-tv](https://github.com/felipevgomes10/free-my-tv))
+- **Linking** — *Configurações → FMTV Controller → Vincular* asks Android's "Allow debugging?" once; accepted with "always allow", the Home can send real keys to every app.
+- **Parear aparelho** — the TV's address as a QR code and a 4-digit code that exists only while the screen is open and changes after each phone, or after 3 wrong tries.
+- **Aparelhos pareados** — every Paired Phone by its name, each revocable; a revoked iPhone is closed at once.
+
+**Status:** the page and the Home's side are built and tested, and work end to end on the Android TV emulator: a swipe moves the Home's focus, holding OK opens Edit Mode, a key takes about 70 ms from the iPhone's touch to the TV. Left: the first release of the page, pinning it in the Home, and checking it all on the real TV with a real iPhone ([ticket 09](https://github.com/felipevgomes10/free-my-tv/blob/main/.scratch/web-remote/issues/09-apply-the-web-remote-to-the-tv.md)). Pairing, the Home's bridge and the rest of the first release are in progress — see [the tickets](.scratch/web-remote/issues) and the Home's side in [free-my-tv](https://github.com/felipevgomes10/free-my-tv/tree/main/.scratch/web-remote/issues).
 
 ## How it works
 
@@ -114,6 +119,24 @@ Open the address Vite prints, on the computer or on an iPhone on the same Wi-Fi.
 [ponte de teste] pareamento de "iPhone da Ana" com 4827: aceito
 [ponte de teste] right press
 [ponte de teste] ok hold-start
+```
+
+### With the Home
+
+To try the page against the real bridge, build the Home with a local zip instead of a pinned release, and install it on an Android TV emulator:
+
+```bash
+scripts/release.sh 0.1.0 --dry-run
+```
+
+```bash
+cd ../free-my-tv && ./gradlew :app:assembleDebug -PwebRemoteZip=../free-my-tv-remote-controller/release/web-remote-0.1.0.zip
+```
+
+Then link the Home in *Configurações → FMTV Controller*, open *Parear aparelho*, forward the bridge's port to your computer and open it in a browser:
+
+```bash
+adb -s emulator-5554 forward tcp:8766 tcp:8766
 ```
 
 ## Scripts
