@@ -1,6 +1,6 @@
 import { useCallback, useEffect, useRef, useState } from "preact/hooks";
-import { type Bridge, connectBridge } from "./bridge";
-import { PROTOCOL_VERSION, type Key, type KeyAction } from "./protocol";
+import { type Bridge, connectBridge, RequestFailed } from "./bridge";
+import { type Answer, type Key, type KeyAction, type ListName, PROTOCOL_VERSION, type Request } from "./protocol";
 import { loadTvName, saveTvName } from "./storage";
 
 export type Status =
@@ -29,6 +29,8 @@ export const page = { reload: () => location.reload() };
 export function useConnection(url: string, credential: string) {
   const [status, setStatus] = useState<Status>("connecting");
   const [tvName, setTvName] = useState(loadTvName);
+  /** The Home's lists, as last answered or pushed on this connection. */
+  const [lists, setLists] = useState<Partial<Record<ListName, unknown[]>>>({});
   const current = useRef<Status>("connecting");
   const bridge = useRef<Bridge>(undefined);
   const retry = useRef<ReturnType<typeof setTimeout>>(undefined);
@@ -65,6 +67,9 @@ export function useConnection(url: string, credential: string) {
         if (reloadOnce()) return;
         bridge.current?.close();
         set("out-of-reach");
+      },
+      onList(of, items) {
+        setLists((lists) => ({ ...lists, [of]: items }));
       },
       onClosed() {
         if (current.current === "revoked") return;
@@ -116,7 +121,12 @@ export function useConnection(url: string, credential: string) {
     }, TURN_ON_TIMEOUT_MS);
   }, [connect]);
 
-  return { status, tvName, send, tryTurnOn };
+  const request = useCallback(
+    (message: Request): Promise<Answer> => bridge.current?.request(message) ?? Promise.reject(new RequestFailed("not-ready")),
+    [],
+  );
+
+  return { status, tvName, send, tryTurnOn, lists, request };
 }
 
 /** Reloads once for a newer page; returns false if this page already did, so it never loops. */

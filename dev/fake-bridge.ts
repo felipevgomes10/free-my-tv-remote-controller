@@ -35,6 +35,11 @@ function attach(http: Server | null, tvName: string) {
         if (message.type === "key") {
           console.log(`[ponte de teste] ${message.key} ${message.action}`);
           ws.send(JSON.stringify({ type: "ack", id: message.id }));
+        } else if (message.type === "list") {
+          ws.send(JSON.stringify({ type: "list", id: message.id, of: message.of, items: [] }));
+        } else if (message.type !== "hello") {
+          console.log(`[ponte de teste] ${message.type} ${JSON.stringify(message)}`);
+          ws.send(JSON.stringify({ type: "done", id: message.id }));
         }
       });
     });

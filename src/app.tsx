@@ -2,9 +2,12 @@ import { useState } from "preact/hooks";
 import { AddToHomeScreen } from "./components/AddToHomeScreen";
 import { Controls } from "./components/Controls";
 import { MessageScreen } from "./components/MessageScreen";
+import { type Tab, TabBar } from "./components/TabBar";
+import { TabPage } from "./components/TabPage";
 import { PairingScreen } from "./components/PairingScreen";
 import { useConnection } from "./connection";
 import { isIosSafariTab } from "./pairing";
+import { CredentialContext } from "./pictures";
 import { forgetCredential, loadCredential, saveCredential } from "./storage";
 
 type Phase = "add-to-home" | "pairing" | "controls";
@@ -45,6 +48,7 @@ export function App({ bridgeUrl }: { bridgeUrl: string }) {
 
 function Connected({ bridgeUrl, credential, onPairAgain }: { bridgeUrl: string; credential: string; onPairAgain: () => void }) {
   const { status, tvName, send, tryTurnOn } = useConnection(bridgeUrl, credential);
+  const [tab, setTab] = useState<Tab>("controls");
 
   if (status === "not-linked") {
     return (
@@ -71,5 +75,16 @@ function Connected({ bridgeUrl, credential, onPairAgain }: { bridgeUrl: string; 
       </MessageScreen>
     );
   }
-  return <Controls tvName={tvName} status={status} send={send} onTryTurnOn={tryTurnOn} />;
+  return (
+    <CredentialContext.Provider value={credential}>
+      <div class="shell">
+        <div class="shell-content">
+          {tab === "controls" && <Controls tvName={tvName} status={status} send={send} onTryTurnOn={tryTurnOn} />}
+          {tab === "apps" && <TabPage title="Apps" status={status} />}
+          {tab === "watch" && <TabPage title="Assistir" status={status} />}
+        </div>
+        <TabBar tab={tab} onTab={setTab} />
+      </div>
+    </CredentialContext.Provider>
+  );
 }
