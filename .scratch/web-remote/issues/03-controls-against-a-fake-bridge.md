@@ -14,13 +14,17 @@ The spec is `.scratch/web-remote/spec.md` in free-my-tv-remote-controller. Ticke
 
 **Blocked by:** None (can start immediately)
 
-**Status:** ready-for-agent
+**Status:** resolved
 
-- [ ] The controls screen matches its design on an iPhone-sized viewport
-- [ ] Each gesture and button sends the right intention and direction to the fake bridge
-- [ ] A tap sends OK, never a move; holding sends a hold start then a hold end
-- [ ] Volume repeats while held and stops on release
-- [ ] The page doesn't scroll, zoom or select text under the Touchpad
-- [ ] JSON examples exist for every key message, and the page's tests read them
-- [ ] Added to the Home Screen in the iOS Simulator's Safari, it shows as FMTV Controller with its icon and opens standalone, in portrait, with nothing under the notch or the home indicator
-- [ ] Tests drive the rendered page against the fake bridge only, never its components' internals
+- [x] The controls screen matches its design on an iPhone-sized viewport
+- [x] Each gesture and button sends the right intention and direction to the fake bridge
+- [x] A tap sends OK, never a move; holding sends a hold start then a hold end
+- [x] Volume repeats while held and stops on release
+- [x] The page doesn't scroll, zoom or select text under the Touchpad
+- [x] JSON examples exist for every key message, and the page's tests read them
+- [ ] Added to the Home Screen in the iOS Simulator's Safari (not checked: this Mac has no Xcode, so no iOS Simulator; the manifest, the iOS tags and the icons are served and checked by curl; the real iPhone checks it in 09), it shows as FMTV Controller with its icon and opens standalone, in portrait, with nothing under the notch or the home indicator
+- [x] Tests drive the rendered page against the fake bridge only, never its components' internals
+
+## Comments
+
+**2026-10-26, done.** The page is Preact, TypeScript and Vite; 26 KB of JS, 10 KB gzipped. The controls follow `design.pen` without the tab bar, the keyboard button and the Shortcut Buttons row, which belong to the companion features after the first release. 17 tests drive the rendered page against a mock-socket bridge and compare what crosses the WebSocket with `protocol/examples/`. `npm run dev` runs a fake bridge inside Vite, so the page can be tried from a phone; in the browser pane a 250 px swipe printed five `right press`es and the buttons their keys. Tests caught a double `hold-end` on releasing a held Touchpad, fixed.

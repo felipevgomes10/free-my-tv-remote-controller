@@ -1,0 +1,204 @@
+/* Tokens shared with the Home's design (design.pen). */
+:root {
+  --bg: #000000;
+  --glass: #ffffff1f;
+  --glass-soft: #ffffff12;
+  --glass-strong: #ffffff33;
+  --text-primary: #f5f5f7;
+  --text-secondary: #ffffff8c;
+  --attention: #ffb340;
+  --font: "Figtree Variable", system-ui, sans-serif;
+  color-scheme: dark;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html,
+body {
+  margin: 0;
+  height: 100%;
+  background: var(--bg);
+  color: var(--text-primary);
+  font-family: var(--font);
+  overflow: hidden;
+  overscroll-behavior: none;
+  touch-action: none;
+  -webkit-user-select: none;
+  user-select: none;
+  -webkit-touch-callout: none;
+  -webkit-tap-highlight-color: transparent;
+}
+
+#app {
+  height: 100%;
+}
+
+.screen {
+  display: flex;
+  flex-direction: column;
+  height: 100dvh;
+  padding: calc(env(safe-area-inset-top) + 4px) 20px calc(env(safe-area-inset-bottom) + 28px);
+}
+
+.icon {
+  display: inline-flex;
+}
+
+/* Controles */
+
+.controls {
+  gap: 28px;
+}
+
+.controls-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  min-height: 44px;
+}
+
+.tv-name {
+  margin: 0;
+  font-size: 22px;
+  font-weight: 700;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.round-button,
+.volume-button {
+  display: grid;
+  place-items: center;
+  padding: 0;
+  border: 0;
+  color: var(--text-primary);
+  background: var(--glass);
+  font: inherit;
+  touch-action: none;
+  -webkit-user-select: none;
+}
+
+.round-button {
+  width: 76px;
+  height: 76px;
+  border-radius: 50%;
+}
+
+.round-button.small {
+  width: 44px;
+  height: 44px;
+}
+
+.round-button:active,
+.volume-button:active {
+  background: var(--glass-strong);
+}
+
+.round-button:focus-visible,
+.volume-button:focus-visible {
+  outline: 2px solid var(--text-primary);
+  outline-offset: 2px;
+}
+
+.touchpad {
+  position: relative;
+  flex: 1;
+  min-height: 200px;
+  overflow: hidden;
+  border: 1px solid #ffffff14;
+  border-radius: 36px;
+  background:
+    radial-gradient(160% 110% at 50% 0%, #ffffff1a, #ffffff00),
+    #ffffff0d;
+  touch-action: none;
+}
+
+.touchpad-hint {
+  position: absolute;
+  inset: auto 0 24px;
+  margin: 0;
+  text-align: center;
+  font-size: 15px;
+  color: var(--text-secondary);
+  pointer-events: none;
+}
+
+.touchpad-light,
+.touchpad-trail {
+  position: absolute;
+  border-radius: 50%;
+  pointer-events: none;
+  transform: translate(-50%, -50%);
+}
+
+.touchpad-light {
+  width: 88px;
+  height: 88px;
+  background: radial-gradient(closest-side, #ffffff66, #ffffff1f 50%, #ffffff00);
+}
+
+.touchpad-trail {
+  width: 260px;
+  height: 120px;
+  background: radial-gradient(closest-side, #ffffff2e, #ffffff0f 50%, #ffffff00);
+  transition: transform 120ms ease-out;
+}
+
+.trail-right {
+  transform: translate(-75%, -50%);
+}
+.trail-left {
+  transform: translate(-25%, -50%);
+}
+.trail-down {
+  width: 120px;
+  height: 260px;
+  transform: translate(-50%, -75%);
+}
+.trail-up {
+  width: 120px;
+  height: 260px;
+  transform: translate(-50%, -25%);
+}
+
+.buttons {
+  display: flex;
+  justify-content: space-between;
+  padding: 0 10px;
+}
+
+.button-column {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.volume {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 76px;
+  height: 172px;
+  overflow: hidden;
+  border-radius: 38px;
+  background: var(--glass);
+}
+
+.volume-button {
+  flex: 1;
+  width: 100%;
+  background: transparent;
+}
+
+.volume-mark {
+  color: var(--text-secondary);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .touchpad-trail {
+    transition: none;
+  }
+}
