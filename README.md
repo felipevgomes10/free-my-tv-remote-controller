@@ -41,10 +41,10 @@ All previews below are exported from the current [`design.pen`](design.pen). The
 </table>
 
 <details>
-<summary><b>Coming after the first release</b></summary>
+<summary><b>The tabs, and the Teclado still to come</b></summary>
 <br>
 
-The [companion features' spec](.scratch/companion/spec.md) and its tickets turn these into the Controls, Apps and Watch tabs: the Teclado, the Shortcut Buttons, Open Apps, Inputs, every app, Continuar assistindo, Explorar's trending Titles and search ([ADR 0006](docs/adr/0006-companion-features-ask-the-home.md)).
+Page v0.2.0, with the Home's v0.6.0, adds the Shortcut Buttons and the Apps and Assistir tabs ([companion features' spec](.scratch/companion/spec.md), [ADR 0006](docs/adr/0006-companion-features-ask-the-home.md)). The Teclado comes next, once a prototype on the TV settles how typing gets into its apps.
 
 <table>
   <tr>
@@ -64,12 +64,12 @@ The [companion features' spec](.scratch/companion/spec.md) and its tickets turn 
 - **Haptics** — a tick for every step and press where iOS allows it (it didn't on the owner's iPhone 17 Pro); the controls work the same without one.
 - **Shortcut Buttons** — under the Touchpad, a row with the Remote's Netflix, Globoplay, Prime Video, Disney+, YouTube and Input buttons, each named after what the Owner assigned to it and doing what the Remote's button does.
 
-**The Apps tab** (needs the Home's next release)
+**The Apps tab** (page v0.2.0 with the Home's v0.6.0)
 - **Abertos** — the Open Apps, most recent first, with their App Banners: a tap switches the TV back to one, its ✕ closes it; an app playing music says *Tocando* and has no ✕.
 - **Entradas** — the TV's Inputs by the names the Owner gave them; a tap switches the TV to one.
 - **Todos os apps** — every installed app, App Tray first, each opening on the TV with a tap.
 
-**The Assistir tab** (needs the Home's next release)
+**The Assistir tab** (page v0.2.0 with the Home's v0.6.0)
 - **Busca** — search movies and series by name, in Portuguese, from TMDB through the TV; results come as you type, with year and kind, and open the Title's screen.
 - **Continuar assistindo** — the TV's Up Next Tray: each title's still with its progress, the episode, the app and the time left ("Netflix, faltam 18 min"); a tap resumes it on the TV.
 - **Em alta hoje** — Explorar's trending movies and series of the day, with their backdrops from TMDB; a tap opens the Title's screen.
@@ -96,7 +96,7 @@ The [companion features' spec](.scratch/companion/spec.md) and its tickets turn 
 - **Parear aparelho** — the TV's address as a QR code and a 4-digit code that exists only while the screen is open and changes after each phone, or after 3 wrong tries.
 - **Aparelhos pareados** — every Paired Phone by its name, each revocable; a revoked iPhone is closed at once.
 
-**Status:** working on the owner's TCL with an iPhone 17 Pro, since page v0.1.0 and the Home's v0.5.0: in the Home, YouTube and Netflix, a key takes about as long as the Remote's, pairing and revoking work, and Linking survives a reboot of the TV. iOS gives no haptic tick on that iPhone; the controls work the same without it.
+**Status:** working on the owner's TCL with an iPhone 17 Pro, since page v0.1.0 and the Home's v0.5.0: in the Home, YouTube and Netflix, a key takes about as long as the Remote's, pairing and revoking work, and Linking survives a reboot of the TV. iOS gives no haptic tick on that iPhone; the controls work the same without it. The Shortcut Buttons and the Apps and Assistir tabs of v0.2.0 are checked on the Android TV emulator with the real Home and TMDB; their walk on the TV is still to come.
 
 ## How it works
 
