@@ -84,14 +84,14 @@ All previews below are exported from the current [`design.pen`](design.pen). The
              the iPhone                                     the TV
 ┌──────────────────────────────────┐       ┌──────────────────────────────────────────┐
 │ FMTV Controller (Home Screen)    │       │ Free My TV Home                          │
-│   Touchpad, buttons ── keys ─────┼──WS──►│   bridge ── keys ──► TV Remote Service   │
-│                      ◄── state ──┼───────┤     │                  (127.0.0.1)       │
+│   Touchpad, buttons ── keys ─────┼──WS──►│   bridge ── keys ──► the TV's own ADB    │
+│                      ◄── state ──┼───────┤     │      (127.0.0.1:5555, cmd input)   │
 │   served by the Home over HTTP   │◄──────┤   serves this page at the version it     │
 └──────────────────────────────────┘       │   pins from this repository's releases   │
                                            └──────────────────────────────────────────┘
 ```
 
-- **Keys go through the TV's own remote service** ([ADR 0001](docs/adr/0001-keys-through-android-tv-remote-protocol-bridged-by-the-home.md)). A browser can't make another app receive a key, so a bridge inside the Home passes each key to the TV Remote Service, the one Google's phone remote uses.
+- **Keys go through the TV's own ADB** ([ADR 0005](docs/adr/0005-keys-through-the-tvs-own-adb.md)). A browser can't make another app receive a key, and neither can an ordinary app, so a bridge inside the Home passes each key to the TV's own debugging bridge, which Setup already keeps on, as a real key event. The TV Remote Service that Google's phone remote uses was the first plan ([ADR 0001](docs/adr/0001-keys-through-android-tv-remote-protocol-bridged-by-the-home.md)), until it turned out to refuse keys from the TV itself.
 - **The page ships inside the Home** ([ADR 0002](docs/adr/0002-the-page-ships-inside-the-home.md)). Each release here is a versioned zip; the Home pins one and serves it next to its bridge, so page and bridge always speak the same version.
 - **Plain HTTP on the home network** ([ADR 0003](docs/adr/0003-plain-http-on-the-home-network.md)), as APK Drop does.
 - **A network-first service worker** ([ADR 0004](docs/adr/0004-a-network-first-service-worker.md)) keeps the page openable when the TV isn't, without ever hiding a Home update.

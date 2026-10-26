@@ -42,12 +42,8 @@ _Avoid_: PIN, password, token
 A phone that completed Pairing, known by the name the Household Member gave it then; the Owner sees and revokes Paired Phones from the Home's Settings.
 _Avoid_: Device, client, session
 
-**TV Remote Service** (Serviço de controle da TV):
-The TV's built-in service that accepts keys from remote-control apps and delivers them to whatever is on screen; part of the TV, never of the Home.
-_Avoid_: Remote protocol, Android TV Remote, receiver
-
 **Linking** (Vinculação):
-The one-time step in which the Home proves to the TV Remote Service that it may send keys, by the Owner typing the code Android shows; distinct from Pairing, which is between a phone and the Home.
+The one-time step in which the Owner allows the Home to use the TV's debugging bridge, by accepting Android's "Allow debugging?" prompt with the Remote; distinct from Pairing, which is between a phone and the Home.
 _Avoid_: Pairing (for this step), connecting, authorizing
 
 ### Controls

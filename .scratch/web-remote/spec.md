@@ -11,7 +11,7 @@ The TV is only controllable from its Remote. When the Remote is under a cushion,
 The **Web Remote** (FMTV Controller): a page that any **Household Member** opens in Safari on their iPhone and keeps on the Home Screen, which controls the **TV** like the Remote does.
 
 **Getting it.** In the Home's Settings, a new section **FMTV Controller**:
-- **Linking**: the first time, the Home links itself to the **TV Remote Service**. Android shows a code on the TV, and the Owner types it with the Remote. Settings says whether the Home is linked, and lets the Owner link it again.
+- **Linking**: the first time, the Home asks the TV to let it use the TV's debugging bridge. Android shows its "Allow debugging?" prompt, and the Owner accepts it with the Remote, always for this Home. Settings says whether the Home is linked, and lets the Owner link it again.
 - **Parear aparelho**: a screen with the TV's address as a QR code and a **Pairing Code**. The Household Member scans the QR code, adds the page to the Home Screen, types the Pairing Code and gives the phone a name ("iPhone da Ana"). From then on, the Web Remote opens straight to the controls.
 - **Aparelhos pareados**: every **Paired Phone** by its name, each of which the Owner can revoke.
 
@@ -23,19 +23,19 @@ The **Web Remote** (FMTV Controller): a page that any **Household Member** opens
 
 **When the TV is out of reach**, because it's off, the phone is on another network or the Home is restarting, the Web Remote says "Sem conexão com a TV". It offers to try turning the TV on and reconnects by itself when the TV comes back.
 
-Keys travel from the page to a bridge inside the Home over the home network, then to the TV Remote Service on the TV itself, which delivers them to whatever app is on screen (ADR 0001). The page is built and released from this repository and ships inside the Home at a version the Home pins (ADR 0002). Everything travels over plain HTTP on the home network (ADR 0003).
+Keys travel from the page to a bridge inside the Home over the home network, then through the TV's own debugging bridge (ADB) as real key events, to whatever app is on screen (ADR 0005, which replaced ADR 0001 once the TV Remote Service turned out to refuse keys from the TV itself). The page is built and released from this repository and ships inside the Home at a version the Home pins (ADR 0002). Everything travels over plain HTTP on the home network (ADR 0003).
 
 ## User Stories
 
 ### Linking the Home
 
-1. As the Owner, I want the Home to link itself to the TV Remote Service once, so that the Web Remote can send keys to any app.
-2. As the Owner, I want to type the code Android shows using the Remote, inside the Home's Settings, so that Linking needs no computer.
+1. As the Owner, I want the Home to link itself to the TV's debugging bridge once, so that the Web Remote can send keys to any app.
+2. As the Owner, I want to accept Android's "Allow debugging?" prompt with the Remote, started from the Home's Settings, so that Linking needs no computer.
 3. As the Owner, I want Settings to say whether the Home is linked, so that I know why the Web Remote might not be working.
-4. As the Owner, I want to link the Home again from Settings, so that I can recover if Linking is lost, after a Restore or a system update for example.
-5. As the Owner, I want a wrong or expired Linking code to be told apart from success, with a way to try again, so that I'm never left guessing.
-6. As the Owner, I want Setup never to disable the TV Remote Service, whatever the approved extras list says, so that Setup can't silently break the Web Remote.
-7. As the Owner, I want the Home's Setup status to report when the TV Remote Service is missing or disabled, so that I learn it from the Home rather than from a dead Web Remote.
+4. As the Owner, I want to link the Home again from Settings, so that I can recover if Linking is lost, after a Restore or revoking debugging authorisations for example.
+5. As the Owner, I want a refused or unanswered prompt, and network debugging being off, each told apart from success, with a way to try again, so that I'm never left guessing.
+6. As the Owner, I want Setup to leave network debugging on, as it already needs, so that Setup can't silently break the Web Remote.
+7. As the Owner, I want the Home's Setup status to report when network debugging is off, so that I learn it from the Home rather than from a dead Web Remote.
 
 ### Pairing a phone
 
@@ -126,7 +126,7 @@ Keys travel from the page to a bridge inside the Home over the home network, the
 - **Everything else is one WebSocket per open Web Remote**, authenticated with the credential:
   - It opens with a hello that carries the protocol version. A page whose version the bridge doesn't speak is told to reload, and reloads once.
   - The bridge reports its state: ready, not linked, or revoked.
-  - The page sends keys as intentions, not raw key codes: move up/down/left/right, OK, Voltar, Home, play/pause, volume up/down, mute, power. Each key comes as a press, a hold start or a hold end.
+  - The page sends keys as intentions, not raw key codes: move up/down/left/right, OK, Voltar, Home, play/pause, volume up/down, mute, power, and wake, which only ever turns the TV on. Each key comes as a press, a hold start or a hold end.
   - The bridge acknowledges each key.
   - "Pressing Home twice" is two Home presses, and the Home recognises it as with the Remote. The page adds no meaning of its own: the Home decides what a gesture does, whichever remote it came from.
   - Keys are not queued while disconnected: a key sent without a live connection is dropped, never replayed later.
@@ -135,25 +135,25 @@ Keys travel from the page to a bridge inside the Home over the home network, the
 **The bridge, in the Home.**
 - It runs for as long as the Home is alive, on a fixed port distinct from APK Drop's, and serves the page and the protocol above.
 - It counts against the Home's memory budget (free-my-tv ADR 0004): nothing kept per key, and nothing running when no Web Remote is connected beyond a listening socket.
-- It passes keys to the TV Remote Service at `127.0.0.1` as that service's own protocol expects, with the credential Linking produced.
-- The TV Remote Service connection sits behind `TvPlatform`, like every other part of Android: link, report whether linked, send a key with a direction (press, hold start, hold end).
+- It passes each key to the TV's own ADB daemon at `127.0.0.1:5555`, over one ADB shell kept open, as `cmd input keyevent` with the key's Android key code (ADR 0005). A `hold-start` becomes a long press; `hold-end` does nothing, since `cmd input` on Android 12 can't keep a key down.
+- The ADB connection sits behind `TvPlatform`, like every other part of Android: link, report whether linked (and why not: debugging off, prompt refused), send a key with a direction. The Home's ADB key pair is generated once and kept in its private storage.
 
-**Linking, in the Home.** Settings → FMTV Controller starts Linking. The Home connects to the TV Remote Service, Android shows its code on the TV, and the Owner types it into a Home dialog with the Remote. The resulting credential is kept by the Home. Linking is lost on Restore.
+**Linking, in the Home.** Settings → FMTV Controller starts Linking. The Home connects to `127.0.0.1:5555` with its ADB key, Android shows "Allow debugging?" with the key's fingerprint, and the Owner ticks "always allow" and accepts with the Remote. Linking is lost when the Owner revokes debugging authorisations in Android's developer options.
 
 **Pairing, in the Home.**
 - "Parear aparelho" opens a Pairing session that lives only while the screen is open. It shows the address as a QR code and a short Pairing Code, which changes after a few wrong tries.
 - A successful Pairing stores a Paired Phone: the name the Household Member gave it, a credential, and when it was paired.
 - Revoking deletes it and closes that phone's open WebSocket.
 
-**Setup, in free-my-tv.** The TV Remote Service's package joins the packages Setup refuses to disable. The Home's Setup status gains a check that the service is present and enabled.
+**Setup, in free-my-tv.** Setup already needs network debugging; Restore leaves it as it found it. The Home's Setup status gains a check that network debugging answers on `127.0.0.1:5555`.
 
-**Turning the TV on.** It is best-effort: the "Sem conexão" screen sends a power key to the TV's last address in case the bridge is still reachable. Nothing beyond that, such as Wake-on-LAN, is in this release.
+**Turning the TV on.** It is best-effort: the "Sem conexão" screen sends `wake` (`KEYCODE_WAKEUP`, which never turns a TV off) if the bridge answers within a few seconds. Nothing beyond that, such as Wake-on-LAN, is in this release.
 
 **The TV's address.** The QR code holds the TV's IP and the bridge's port. The Home Screen icon and the Paired Phone's credential are tied to that address, so the Owner should reserve the TV's IP in the router; the FMTV Controller screen says so. If the address changes anyway, Household Members scan the QR code and pair again.
 
 ## Testing Decisions
 
-A good test drives a whole side through its outermost boundary and checks only what someone outside could see: what the page sends and shows, or what the Home sends to the TV Remote Service and shows on its screens. No test looks at components, internal state or private functions.
+A good test drives a whole side through its outermost boundary and checks only what someone outside could see: what the page sends and shows, or what the Home sends to the TV's ADB and shows on its screens. No test looks at components, internal state or private functions.
 
 - **The page, against a fake bridge.** The tests render the real page and connect it to a fake bridge that speaks the protocol. They check that:
   - each gesture and button sends the right key and direction;
@@ -169,13 +169,13 @@ A good test drives a whole side through its outermost boundary and checks only w
   - Pairing sessions only exist while the screen is open;
   - wrong codes, and the code changing after them;
   - Paired Phones listed and revoked, and a revoked phone's connection closed;
-  - a key from a Paired Phone reaches the fake TV Remote Service with its direction, and one from an unpaired phone doesn't;
+  - a key from a Paired Phone reaches the fake ADB with its key code and direction, and one from an unpaired phone doesn't;
   - "not linked" is reported to the page;
-  - Setup's protected list includes the TV Remote Service.
+  - Setup status reports network debugging off.
   
   The prior art is `ApkDropTest`, for a session that lives while a screen is open and its code rules, plus the existing Setup planning tests.
 - **The protocol, from both sides.** Both test suites read the same JSON examples of every message: the page's tests check it produces and understands them, and the Home's tests check the bridge does. A change on one side breaks the other's tests.
-- **The real TV Remote Service** can only be checked on the TV. The prototype and the "apply to the TV" ticket check it there by hand.
+- **The real ADB** can only be checked on a device: the emulator for the mechanics, then the TV in the "apply to the TV" ticket, by hand.
 
 ## Out of Scope
 
@@ -197,7 +197,8 @@ A good test drives a whole side through its outermost boundary and checks only w
 
 ## Further Notes
 
-- **Prototype first.** The first ticket is a prototype on the real TV. It must confirm that the TCL's TV Remote Service accepts a connection from the Home at `127.0.0.1`, that Linking works, and that a key sent this way reaches another app such as Netflix or YouTube. It should also note whether the Android TV emulator has the service, which decides how much can be tried before touching the TV. If the TV refuses, ADR 0001 is reopened before anything else is built.
+- **The prototype changed the plan.** Ticket 01 found that the TV Remote Service pairs from the TV itself but refuses its keys, and that accessibility can't move the focus in YouTube or Netflix; ADR 0005 replaced ADR 0001 with the TV's own ADB.
+- **Network debugging after a reboot.** Whether the TCL turns network debugging back on after a reboot is unverified; the apply-to-the-TV ticket checks it with the Owner.
 - **iOS storage.** Whether a Home Screen web app keeps its storage separate from Safari's has changed across iOS versions. Check it on the iPhone 17 Pro, since it decides when Pairing is asked.
 - **The haptic.** The haptic relies on Safari's switch control producing a tick, which no standard guarantees. Treat it as decoration.
 - **Design.** The page's screens are designed in a `design.pen` in this repository before they are built: controls, Pairing, Sem conexão, not linked, revoked, and the app icon. The FMTV Controller section of Settings, Parear aparelho and Linking are designed in free-my-tv's `design.pen`, in the style of APK Drop.
