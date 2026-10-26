@@ -4,8 +4,8 @@ import { AppsTab } from "./components/AppsTab";
 import { Controls } from "./components/Controls";
 import { MessageScreen } from "./components/MessageScreen";
 import { type Tab, TabBar } from "./components/TabBar";
-import { TabPage } from "./components/TabPage";
 import { PairingScreen } from "./components/PairingScreen";
+import { WatchTab } from "./components/WatchTab";
 import { useConnection } from "./connection";
 import { isIosSafariTab } from "./pairing";
 import { CompanionContext } from "./companion";
@@ -84,7 +84,7 @@ function Connected({ bridgeUrl, credential, onPairAgain }: { bridgeUrl: string; 
           <div class="shell-content">
             {tab === "controls" && <Controls tvName={tvName} status={status} send={send} onTryTurnOn={tryTurnOn} />}
             {tab === "apps" && <AppsTab />}
-            {tab === "watch" && <TabPage title="Assistir" status={status} />}
+            {tab === "watch" && <WatchTab />}
           </div>
           <TabBar tab={tab} onTab={setTab} />
         </div>

@@ -1,0 +1,5 @@
+{ "type": "list", "id": 4, "of": "up-next", "items": [
+  { "upNext": "com.netflix.ninja|Sombras do Norte", "title": "Sombras do Norte", "episode": "T2, E4: O farol", "app": "Netflix", "minutesLeft": 18, "progress": 0.62, "picture": "upnext:com.netflix.ninja|Sombras do Norte" },
+  { "upNext": "com.hbo.hbonow|Cidade de vidro", "title": "Cidade de vidro", "episode": "T1, E7: Reflexos", "app": "Max", "minutesLeft": 72, "progress": 0.3, "picture": "upnext:com.hbo.hbonow|Cidade de vidro" },
+  { "upNext": "com.globo.globotv", "title": null, "episode": null, "app": "Globoplay", "minutesLeft": null, "progress": null, "picture": "app:com.globo.globotv" }
+] }
