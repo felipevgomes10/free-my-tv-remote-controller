@@ -2,6 +2,18 @@
 
 The page and the bridge inside the Home talk over one WebSocket per open FMTV Controller, at `/remote` on the bridge's address. Every message is a JSON object with a `type`. The examples in [`examples/`](examples) are the contract: this repository's tests check that the page produces and understands them, and free-my-tv's tests check that the bridge does. Change an example and both sides' tests must agree again.
 
+## Pairing
+
+Pairing is one HTTP request, before any WebSocket: `POST /pair` with a JSON body.
+
+| | Status | Example | Meaning |
+| --- | --- | --- | --- |
+| Request | | [`pair-request.json`](examples/pair-request.json) | The Pairing Code the TV shows and the name the Household Member gave the phone. |
+| Success | `200` | [`pair-success.json`](examples/pair-success.json) | The Paired Phone's credential, which the page keeps and sends in every `hello`. |
+| Wrong code | `401` | [`pair-wrong-code.json`](examples/pair-wrong-code.json) | The code isn't the one on the TV. |
+| Pairing closed | `409` | [`pair-closed.json`](examples/pair-closed.json) | Parear aparelho isn't open on the TV. |
+| Too many tries | `429` | [`pair-too-many-tries.json`](examples/pair-too-many-tries.json) | The TV changed the code after too many wrong ones. |
+
 ## Version
 
 `protocol` is `1`. The page sends it in its `hello`; a bridge that doesn't speak it answers `reload` (see below).

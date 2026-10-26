@@ -56,7 +56,12 @@ All previews below are exported from the current [`design.pen`](design.pen). The
 - **Buttons** — Voltar, Home (twice for the App Switcher, held for the Notification Panel, as on the Remote), play/pause, mute, and volume, which keeps changing while held. Power sits apart at the top, away from the thumb.
 - **Haptics** — a tick for every step and press where iOS allows it; the controls work the same without one.
 
-**Status:** the page and its controls are built and tested against a fake bridge. Pairing, the Home's bridge and the rest of the first release are in progress — see [the tickets](.scratch/web-remote/issues) and the Home's side in [free-my-tv](https://github.com/felipevgomes10/free-my-tv/tree/main/.scratch/web-remote/issues).
+**Pairing**
+- **Adicionar à Tela de Início first** — opened in a Safari tab, FMTV Controller shows how to add it to the Home Screen, so the pairing lands in the icon you will use. It can still pair right there if you ask.
+- **A code from the TV** — type the 4 digits the TV shows on *Configurações → FMTV Controller → Parear aparelho* and give the iPhone a name ("iPhone da Ana"); from then on it opens straight to the controls.
+- **Clear refusals** — a wrong code, the TV's pairing screen being closed, too many tries, or a TV out of reach each say what to do.
+
+**Status:** the page, its controls and Pairing are built and tested against a fake bridge. Pairing, the Home's bridge and the rest of the first release are in progress — see [the tickets](.scratch/web-remote/issues) and the Home's side in [free-my-tv](https://github.com/felipevgomes10/free-my-tv/tree/main/.scratch/web-remote/issues).
 
 ## How it works
 
@@ -87,9 +92,10 @@ npm install
 npm run dev
 ```
 
-Open the address Vite prints, on the computer or on an iPhone on the same Wi-Fi. A fake bridge runs inside the dev server: it answers like the Home, calls the TV "TV de teste", and prints every key it receives:
+Open the address Vite prints, on the computer or on an iPhone on the same Wi-Fi. A fake bridge runs inside the dev server: it answers like the Home, pairs with the code **4827**, calls the TV "TV de teste", and prints every pairing and key it receives:
 
 ```
+[ponte de teste] pareamento de "iPhone da Ana" com 4827: aceito
 [ponte de teste] right press
 [ponte de teste] ok hold-start
 ```
@@ -126,12 +132,14 @@ The Home's build downloads that zip, refuses it if the checksum differs, and put
 
 ```
 src/
-├── app.tsx          the page: connects to the bridge, shows the controls
+├── app.tsx          the page: Adicionar à Tela de Início, Pairing, then the controls
 ├── bridge.ts        the page's side of the protocol over WebSocket
 ├── gestures.ts      the Touchpad's taps, holds and swipes, turned into keys
 ├── haptics.ts       the haptic tick, through Safari's switch control
+├── pairing.ts       Pairing's request, and telling a Safari tab from the Home Screen app
 ├── protocol.ts      the protocol's messages and version
-└── components/      Controls, Touchpad, RemoteButton, Icon
+├── storage.ts       the Paired Phone's credential
+└── components/      Controls, Touchpad, RemoteButton, PairingScreen, AddToHomeScreen, Icon
 protocol/            the protocol's contract and its JSON examples
 tests/               tests against a fake bridge (mock-socket)
 dev/                 the fake bridge for `npm run dev`
@@ -140,7 +148,7 @@ docs/adr/            decisions and their trade-offs
 docs/design/         design exports of design.pen
 ```
 
-The tests render the real page in jsdom and touch it like a finger would: pointer events on the Touchpad and the buttons, with fake timers for holds and repeats. What they check is only what crosses the WebSocket.
+The tests render the real page in jsdom and touch it like a finger would: pointer events on the Touchpad and the buttons, with fake timers for holds and repeats, and typing into the Pairing form. What they check is only what crosses to the bridge — the WebSocket and the `/pair` request — and what the page shows.
 
 ## Credits
 

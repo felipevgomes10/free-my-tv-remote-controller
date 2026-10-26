@@ -9,6 +9,7 @@ let bridge: FakeBridge;
 
 beforeEach(() => {
   bridge = new FakeBridge();
+  localStorage.setItem("fmtv-controller.credential", examples.hello.credential);
 });
 
 afterEach(() => {
@@ -42,7 +43,6 @@ async function sent(keys: [string, string][]) {
 
 describe("connecting", () => {
   it("says hello with the protocol version and the credential kept on the phone", async () => {
-    localStorage.setItem("fmtv-controller.credential", examples.hello.credential);
     await openControls();
     expect(bridge.received[0]).toEqual(examples.hello);
   });

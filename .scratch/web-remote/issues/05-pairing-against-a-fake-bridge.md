@@ -13,10 +13,14 @@ The spec is `.scratch/web-remote/spec.md` in free-my-tv-remote-controller. Ticke
 
 **Blocked by:** 03 (The Web Remote's controls, against a fake bridge)
 
-**Status:** ready-for-agent
+**Status:** resolved
 
-- [ ] The Pairing screens match their design
-- [ ] A Safari tab suggests adding to the Home Screen; the Home Screen app goes straight to the form
-- [ ] A successful Pairing keeps the credential and opens the controls, then and on every later open
-- [ ] Wrong code, Pairing closed and too many tries each show their own message
-- [ ] JSON examples exist for the Pairing request and every answer, and the page's tests read them
+- [x] The Pairing screens match their design
+- [x] A Safari tab suggests adding to the Home Screen; the Home Screen app goes straight to the form
+- [x] A successful Pairing keeps the credential and opens the controls, then and on every later open
+- [x] Wrong code, Pairing closed and too many tries each show their own message
+- [x] JSON examples exist for the Pairing request and every answer, and the page's tests read them
+
+## Comments
+
+**2026-10-26, done.** Pairing is `POST /pair` (protocol/README.md, with an example for the request and each answer and its HTTP status). A Safari tab on iOS (`navigator.standalone === false`) shows Adicionar à Tela de Início first, with a quiet "Parear no Safari mesmo assim" so it never dead-ends; the Home Screen app and any other browser go straight to the form. "Parear" waits for the 4 digits and a name; after a refusal it stays enabled, as in the design, and the refusal clears as soon as the code changes. A TV out of reach gets its own message too. 11 new tests, 28 in all; in the browser pane the dev bridge refused 4821 and accepted 4827, which opened the controls.

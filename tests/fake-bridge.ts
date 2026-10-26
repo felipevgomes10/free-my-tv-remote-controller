@@ -17,6 +17,21 @@ export class FakeBridge {
   readonly received: any[] = [];
   tvName = "TV da sala";
   answerHello = true;
+  /** Whether Parear aparelho is open on the TV, and whether the code just changed after too many tries. */
+  pairing: "open" | "closed" | "too-many-tries" = "open";
+  readonly pairingCode = examples["pair-request"].code;
+  readonly pairRequests: any[] = [];
+
+  /** The bridge's HTTP side, for `vi.stubGlobal("fetch", bridge.fetch)`. */
+  readonly fetch = async (url: string, init?: RequestInit): Promise<Response> => {
+    if (url !== "/pair" || init?.method !== "POST") return json(404, {});
+    const request = JSON.parse(String(init.body));
+    this.pairRequests.push(request);
+    if (this.pairing === "closed") return json(409, examples["pair-closed"]);
+    if (this.pairing === "too-many-tries") return json(429, examples["pair-too-many-tries"]);
+    if (request.code !== this.pairingCode) return json(401, examples["pair-wrong-code"]);
+    return json(200, examples["pair-success"]);
+  };
 
   constructor() {
     this.server.on("connection", (socket) => {
@@ -39,4 +54,8 @@ export class FakeBridge {
   stop() {
     this.server.stop();
   }
+}
+
+function json(status: number, body: unknown): Response {
+  return new Response(JSON.stringify(body), { status, headers: { "Content-Type": "application/json" } });
 }
