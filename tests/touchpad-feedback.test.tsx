@@ -22,7 +22,7 @@ const pad = () => screen.getByRole("application");
 const down = () => fireEvent.pointerDown(pad(), { pointerId: 1, clientX: 100, clientY: 100 });
 const move = (x: number, y: number, pointerId = 1) =>
   fireEvent.pointerMove(pad(), { pointerId, clientX: x, clientY: y });
-const trail = () => pad().querySelectorAll(".touchpad-trail line");
+const trail = () => pad().querySelectorAll(".touchpad-trail path");
 
 describe("the Touchpad's moving light", () => {
   it("traces short movements and curves before any direction is sent to the TV", () => {
@@ -34,8 +34,8 @@ describe("the Touchpad's moving light", () => {
     frame();
 
     expect(send).not.toHaveBeenCalled();
-    expect([...trail()].map((line) => ["x1", "y1", "x2", "y2"].map((attr) => line.getAttribute(attr))))
-      .toEqual([["100", "100", "120", "100"], ["120", "100", "120", "120"]]);
+    expect(trail()).toHaveLength(1);
+    expect(trail()[0].getAttribute("d")).toBe("M 100 100 Q 120 100 120 110 L 120 120");
   });
 
   it("fades the trail while the finger stays still, keeping the light under the finger", () => {
@@ -49,6 +49,20 @@ describe("the Touchpad's moving light", () => {
     advance(220);
     expect(trail()).toHaveLength(0);
     expect(pad().querySelector(".touchpad-light")).toBeTruthy();
+  });
+
+  it("draws one stroke with the same opacity for sparse and dense samples", () => {
+    render(<Touchpad send={vi.fn()} />);
+    down();
+    move(140, 100);
+    frame();
+    const opacity = trail()[0].getAttribute("opacity");
+    fireEvent.pointerCancel(pad(), { pointerId: 1 });
+    down();
+    for (let x = 102; x <= 140; x += 2) move(x, 100);
+    frame();
+    expect(trail()).toHaveLength(1);
+    expect(trail()[0].getAttribute("opacity")).toBe(opacity);
   });
 
   it("lets the trail fade after release and starts the next touch without an old trail", () => {
@@ -74,8 +88,7 @@ describe("the Touchpad's moving light", () => {
     move(120, 100);
     frame();
     expect(trail()).toHaveLength(1);
-    expect(trail()[0].getAttribute("x1")).toBe("100");
-    expect(trail()[0].getAttribute("x2")).toBe("120");
+    expect(trail()[0].getAttribute("d")).toBe("M 100 100 L 120 100");
   });
 
   it("clears the feedback and animation when the touch is cancelled", () => {
