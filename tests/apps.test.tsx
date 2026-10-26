@@ -10,6 +10,7 @@ beforeEach(() => {
   bridge = new FakeBridge();
   bridge.lists.apps = examples["list-apps"].items;
   bridge.lists.inputs = examples["list-inputs"].items;
+  bridge.lists["open-apps"] = examples["list-open-apps"].items;
   for (const app of examples["list-apps"].items) bridge.pictures[app.picture] = "png";
   vi.stubGlobal("fetch", bridge.fetch);
   vi.stubGlobal("URL", Object.assign(URL, { createObjectURL: (blob: Blob) => `blob:test/${blob.size}` }));
@@ -31,6 +32,59 @@ async function openApps() {
 }
 
 const sent = (type: string, field: string) => bridge.received.find((m) => m.type === type && field in m);
+
+describe("Abertos", () => {
+  it("shows the Open Apps, most recent first; a playing app says Tocando and has no ✕", async () => {
+    await openApps();
+    const section = (await screen.findByRole("heading", { name: "Abertos" })).closest("section")!;
+    await waitFor(() => expect(within(section).getAllByRole("listitem")).toHaveLength(3));
+    expect(within(section).getAllByRole("button", { name: /^Voltar para/ }).map((b) => b.getAttribute("aria-label"))).toEqual([
+      "Voltar para YouTube",
+      "Voltar para Spotify",
+      "Voltar para Netflix",
+    ]);
+    expect(screen.getByRole("button", { name: "Voltar para Spotify" }).textContent).toBe("SpotifyTocando");
+    expect(within(section).getAllByRole("button", { name: /^Fechar/ }).map((b) => b.getAttribute("aria-label"))).toEqual(["Fechar YouTube", "Fechar Netflix"]);
+  });
+
+  it("switches the TV back to an Open App with the protocol's open", async () => {
+    await openApps();
+    fireEvent.click(await screen.findByRole("button", { name: "Voltar para Netflix" }));
+    await waitFor(() => expect(sent("open", "package")).toBeTruthy());
+    expect({ ...sent("open", "package"), id: examples["open-app"].id }).toEqual(examples["open-app"]);
+  });
+
+  it("closes an Open App with close-app, and the card goes once the TV confirms", async () => {
+    bridge.silentOn.add("close-app");
+    await openApps();
+    fireEvent.click(await screen.findByRole("button", { name: "Fechar YouTube" }));
+    await waitFor(() => expect(sent("close-app", "package")).toBeTruthy());
+    expect({ ...sent("close-app", "package"), id: examples["close-app"].id }).toEqual(examples["close-app"]);
+    expect(screen.getByRole("button", { name: "Voltar para YouTube" })).toBeTruthy();
+
+    bridge.silentOn.delete("close-app");
+    fireEvent.click(screen.getByRole("button", { name: "Fechar Netflix" }));
+    await waitFor(() => expect(screen.queryByRole("button", { name: "Voltar para Netflix" })).toBeNull());
+  });
+
+  it("keeps and marks an app the TV couldn't close", async () => {
+    bridge.failing["close-app"] = "playing";
+    await openApps();
+    const close = await screen.findByRole("button", { name: "Fechar YouTube" });
+    fireEvent.click(close);
+    await waitFor(() => expect(close.className).toContain("failed"));
+    expect(screen.getByRole("button", { name: "Voltar para YouTube" })).toBeTruthy();
+  });
+
+  it("follows apps opened and closed on the TV, and hides when none is open", async () => {
+    await openApps();
+    await screen.findByRole("button", { name: "Voltar para Netflix" });
+    bridge.push("open-apps", examples["list-open-apps"].items.slice(0, 1));
+    await waitFor(() => expect(screen.queryByRole("button", { name: "Voltar para Netflix" })).toBeNull());
+    bridge.push("open-apps", []);
+    await waitFor(() => expect(screen.queryByRole("heading", { name: "Abertos" })).toBeNull());
+  });
+});
 
 describe("Todos os apps", () => {
   it("shows every app, as the Home lists them, with its banner", async () => {
