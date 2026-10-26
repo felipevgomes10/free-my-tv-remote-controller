@@ -69,6 +69,9 @@ The [companion features' spec](.scratch/companion/spec.md) and its tickets turn 
 - **Entradas** — the TV's Inputs by the names the Owner gave them; a tap switches the TV to one.
 - **Todos os apps** — every installed app, App Tray first, each opening on the TV with a tap.
 
+**The Assistir tab** (needs the Home's next release)
+- **Continuar assistindo** — the TV's Up Next Tray: each title's still with its progress, the episode, the app and the time left ("Netflix, faltam 18 min"); a tap resumes it on the TV.
+
 
 **Pairing**
 - **Adicionar à Tela de Início first** — opened in a Safari tab, FMTV Controller shows how to add it to the Home Screen, so the pairing lands in the icon you will use. It can still pair right there if you ask.

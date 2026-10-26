@@ -38,17 +38,27 @@ const SAMPLE_LISTS: Record<string, unknown[]> = {
     ["com.spotify.tv.android", "Spotify", true],
     ["com.netflix.ninja", "Netflix", false],
   ].map(([pkg, label, playing]) => ({ package: pkg, label, picture: `app:${pkg}`, playing })),
+  "up-next": [
+    ["com.netflix.ninja", "Netflix", "Sombras do Norte", "T2, E4: O farol", 18, 0.62],
+    ["com.hbo.hbonow", "Max", "Cidade de vidro", "T1, E7: Reflexos", 72, 0.3],
+    ["com.globo.globotv", "Globoplay", null, null, null, null],
+  ].map(([pkg, app, title, episode, minutesLeft, progress]) => {
+    const key = title ? `${pkg}|${title}` : pkg;
+    return { upNext: key, title, episode, app, minutesLeft, progress, picture: title ? `upnext:${key}` : `app:${pkg}` };
+  }),
 };
 
 /** A banner for the dev bridge's pictures: the app's name on a colour of its own. */
 const banner: Connect.NextHandleFunction = (request: IncomingMessage, response: ServerResponse) => {
-  const pkg = decodeURIComponent(request.url ?? "").replace(/^\/(app:)?/, "");
+  const id = decodeURIComponent(request.url ?? "").replace(/^\//, "");
+  const pkg = id.replace(/^(app|upnext):/, "");
   const app = (SAMPLE_LISTS.apps as { package: string; label: string }[]).find((a) => a.package === pkg);
+  const label = id.startsWith("upnext:") ? pkg.split("|")[1] : app?.label;
   const hue = [...pkg].reduce((h, c) => (h * 31 + c.charCodeAt(0)) % 360, 0);
   response.setHeader("Content-Type", "image/svg+xml");
   response.end(
     `<svg xmlns="http://www.w3.org/2000/svg" width="320" height="180"><rect width="320" height="180" fill="hsl(${hue} 60% 38%)"/>` +
-      `<text x="160" y="100" font-family="sans-serif" font-size="34" font-weight="700" fill="#fff" text-anchor="middle">${app?.label ?? "?"}</text></svg>`,
+      `<text x="160" y="100" font-family="sans-serif" font-size="34" font-weight="700" fill="#fff" text-anchor="middle">${label ?? "?"}</text></svg>`,
   );
 };
 

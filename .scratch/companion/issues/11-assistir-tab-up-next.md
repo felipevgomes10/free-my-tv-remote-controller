@@ -6,9 +6,13 @@ The spec is `.scratch/companion/spec.md` in free-my-tv-remote-controller. Ticket
 
 **Blocked by:** 03 (The tabs and protocol version 2)
 
-**Status:** ready-for-agent
+**Status:** resolved
 
-- [ ] Continuar assistindo matches `design.pen` with the example list
-- [ ] Entries without a title read "Continuar no <app>"
-- [ ] A tap sends the entry's `open` example; a push replaces the list
-- [ ] The examples exist and the page's tests read them
+- [x] Continuar assistindo matches `design.pen` with the example list
+- [x] Entries without a title read "Continuar no <app>"
+- [x] A tap sends the entry's `open` example; a push replaces the list
+- [x] The examples exist and the page's tests read them
+
+## Comments
+
+**2026-10-26, done.** `WatchTab` replaces the empty Assistir tab with Continuar assistindo, left out while the Up Next Tray is empty: each entry's still with a white progress bar, its title (or "Continuar no <app>"), the episode line when known, and the app with the time left, written as the TV writes it ("faltam 18 min", "faltam 1h12"); a tap sends `open` with `upNext`, with the busy and failed marks of `useActions`. The Home sends `minutesLeft` and `progress` rather than milliseconds, and the picture is the title's still (`upnext:<entry>`) or, without one, the app's banner, as on the TV. Examples `list-up-next` and `open-up-next`, and their row in the protocol README. The dev bridge lists three entries with coloured stills. 4 new tests, 72 in all.

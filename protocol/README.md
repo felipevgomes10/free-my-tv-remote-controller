@@ -58,6 +58,7 @@ Each feature's list items and `open` fields. An `open` names its target by exact
 | Abertos | `open-apps` | [`list-open-apps.json`](examples/list-open-apps.json) | `package`, `label`, `picture` (its App Banner, or its icon on a colour) and `playing` (it plays music, so it can't be closed); most recently used first | `package` ([`open-app.json`](examples/open-app.json)): switches the TV back to it |
 | Todos os apps | `apps` | [`list-apps.json`](examples/list-apps.json) | `package`, `label`, `picture` (its App Banner, or its icon on a colour) and `inTray`; App Tray first, in its order, then the rest by name | `package` ([`open-app.json`](examples/open-app.json)): opens the app, as its tile does |
 | Entradas | `inputs` | [`list-inputs.json`](examples/list-inputs.json) | `input`, `name` (the Owner's, or the device's), `port` and `kind` (`hdmi` or `antenna`); hidden Inputs left out | `input` ([`open-input.json`](examples/open-input.json)): switches the TV to it |
+| Continuar assistindo | `up-next` | [`list-up-next.json`](examples/list-up-next.json) | `upNext` (the entry), `title` (null for an app's own entry, shown as "Continuar no <app>"), `episode`, `app` (its label), `minutesLeft` and `progress` (0 to 1) when the app tells them, and `picture` (the title's still, or the app's banner); most recently watched first | `upNext` ([`open-up-next.json`](examples/open-up-next.json)): resumes it on the TV, as its tile does |
 
 ### Pictures
 
