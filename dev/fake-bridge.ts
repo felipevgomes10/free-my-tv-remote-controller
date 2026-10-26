@@ -33,6 +33,11 @@ const SAMPLE_LISTS: Record<string, unknown[]> = {
     ["tv.plex.labs", "Plex", false],
     ["com.spotify.tv.android", "Spotify", false],
   ].map(([pkg, label, inTray]) => ({ package: pkg, label, picture: `app:${pkg}`, inTray })),
+  "open-apps": [
+    ["com.google.android.youtube.tv", "YouTube", false],
+    ["com.spotify.tv.android", "Spotify", true],
+    ["com.netflix.ninja", "Netflix", false],
+  ].map(([pkg, label, playing]) => ({ package: pkg, label, picture: `app:${pkg}`, playing })),
 };
 
 /** A banner for the dev bridge's pictures: the app's name on a colour of its own. */

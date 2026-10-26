@@ -62,6 +62,13 @@ The [companion features' spec](.scratch/companion/spec.md) and its tickets turn 
 - **Touchpad** — swipe to move the TV's focus, one step every 48 px; tap for OK; touch and hold to hold OK, which opens Edit Mode on the Home. A tap is never mistaken for a short swipe.
 - **Buttons** — Voltar, Home (twice for the App Switcher, held for the Notification Panel, as on the Remote), play/pause, mute, and volume, which keeps changing while held. Power sits apart at the top, away from the thumb.
 - **Haptics** — a tick for every step and press where iOS allows it (it didn't on the owner's iPhone 17 Pro); the controls work the same without one.
+- **Shortcut Buttons** — under the Touchpad, a row with the Remote's Netflix, Globoplay, Prime Video, Disney+, YouTube and Input buttons, each named after what the Owner assigned to it and doing what the Remote's button does.
+
+**The Apps tab** (needs the Home's next release)
+- **Abertos** — the Open Apps, most recent first, with their App Banners: a tap switches the TV back to one, its ✕ closes it; an app playing music says *Tocando* and has no ✕.
+- **Entradas** — the TV's Inputs by the names the Owner gave them; a tap switches the TV to one.
+- **Todos os apps** — every installed app, App Tray first, each opening on the TV with a tap.
+
 
 **Pairing**
 - **Adicionar à Tela de Início first** — opened in a Safari tab, FMTV Controller shows how to add it to the Home Screen, so the pairing lands in the icon you will use. It can still pair right there if you ask.

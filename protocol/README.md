@@ -45,6 +45,7 @@ The companion features ask the Home rather than send keys (ADR 0006). A request 
 | `list` (answer) | [`list-answer.json`](examples/list-answer.json) | The list, with the request's `id`. |
 | `list` (pushed) | [`list-pushed.json`](examples/list-pushed.json) | The same list again, without an `id`, whenever it changes on the TV. The page replaces what it shows. |
 | `done` | [`done.json`](examples/done.json) | An action (an `open`, a `close-app`…) was carried out on the TV. |
+| `close-app` | [`close-app.json`](examples/close-app.json) | Closes an Open App on the TV, as the App Switcher's ✕ does. The bridge answers `done` once it is closed, or `failed` with `playing` for an app playing music, which can't be closed. |
 | `failed` | [`failed.json`](examples/failed.json) | An action or request couldn't be carried out; `reason` says why. |
 
 ### The companion's lists and actions
@@ -54,6 +55,7 @@ Each feature's list items and `open` fields. An `open` names its target by exact
 | Feature | List (`of`) | Example | Items | `open` by |
 | --- | --- | --- | --- | --- |
 | Shortcut Buttons | `shortcuts` | [`list-shortcuts.json`](examples/list-shortcuts.json) | `shortcut` (the button: `netflix`, `globoplay`, `prime-video`, `disney-plus`, `youtube`, `input`) and `label` (what the Owner assigned to it) | `shortcut` ([`open-shortcut.json`](examples/open-shortcut.json)): does what the Remote's button does |
+| Abertos | `open-apps` | [`list-open-apps.json`](examples/list-open-apps.json) | `package`, `label`, `picture` (its App Banner, or its icon on a colour) and `playing` (it plays music, so it can't be closed); most recently used first | `package` ([`open-app.json`](examples/open-app.json)): switches the TV back to it |
 | Todos os apps | `apps` | [`list-apps.json`](examples/list-apps.json) | `package`, `label`, `picture` (its App Banner, or its icon on a colour) and `inTray`; App Tray first, in its order, then the rest by name | `package` ([`open-app.json`](examples/open-app.json)): opens the app, as its tile does |
 | Entradas | `inputs` | [`list-inputs.json`](examples/list-inputs.json) | `input`, `name` (the Owner's, or the device's), `port` and `kind` (`hdmi` or `antenna`); hidden Inputs left out | `input` ([`open-input.json`](examples/open-input.json)): switches the TV to it |
 

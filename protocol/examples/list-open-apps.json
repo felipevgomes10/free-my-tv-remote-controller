@@ -1,0 +1,5 @@
+{ "type": "list", "id": 4, "of": "open-apps", "items": [
+  { "package": "com.google.android.youtube.tv", "label": "YouTube", "picture": "app:com.google.android.youtube.tv", "playing": false },
+  { "package": "com.spotify.tv.android", "label": "Spotify", "picture": "app:com.spotify.tv.android", "playing": true },
+  { "package": "com.netflix.ninja", "label": "Netflix", "picture": "app:com.netflix.ninja", "playing": false }
+] }
