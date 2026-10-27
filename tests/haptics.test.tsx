@@ -8,8 +8,13 @@ import { BRIDGE_URL, examples, FakeBridge } from "./fake-bridge";
 let bridge: FakeBridge;
 
 beforeEach(() => {
-  // Model Safari's native switch support; desktop jsdom has no haptic hardware.
-  Object.defineProperty(HTMLInputElement.prototype, "switch", { configurable: true, value: false });
+  // WebKit reflects this boolean DOM property to the switch attribute. An empty
+  // string assigned by Preact becomes false; a read-only stub hides this bug.
+  Object.defineProperty(HTMLInputElement.prototype, "switch", {
+    configurable: true,
+    get(this: HTMLInputElement) { return this.hasAttribute("switch"); },
+    set(this: HTMLInputElement, value: unknown) { this.toggleAttribute("switch", Boolean(value)); },
+  });
   bridge = new FakeBridge();
   bridge.lists.shortcuts = examples["list-shortcuts"].items;
   localStorage.setItem("fmtv-controller.credential", examples.hello.credential);
@@ -42,6 +47,7 @@ function hapticTarget(host: Element) {
 function nativePad() {
   const input = screen.getByRole("application").querySelector<HTMLInputElement>(":scope > input.touchpad-switch");
   expect(input, "Native dragging needs the actual switch under the finger").not.toBeNull();
+  expect(input!.hasAttribute("switch"), "WebKit must receive a true native switch property").toBe(true);
   return input!;
 }
 
@@ -189,6 +195,7 @@ describe("haptic activation from the actual control", () => {
     expect(bridge.keys()).toEqual([]);
     bridge.sendState("ready");
     await waitFor(() => expect(input.disabled).toBe(false));
+    expect(input.hasAttribute("switch")).toBe(true);
   });
 
   it("uses the browser vibration API where available, without a switch overlay", async () => {

@@ -61,7 +61,7 @@ export function TouchpadSwitch({ enabled, onStart, onMove, onEnd, onCancel }: Pr
   };
 
   return (
-    <input ref={input} class="touchpad-switch" type="checkbox" {...{ switch: "" }}
+    <input ref={input} class="touchpad-switch" type="checkbox" {...{ switch: true }}
       aria-hidden="true" tabIndex={-1} disabled={!enabled}
       onPointerDown={stopPointerCopy} onPointerMove={stopPointerCopy}
       onPointerUp={stopPointerCopy} onPointerCancel={stopPointerCopy}

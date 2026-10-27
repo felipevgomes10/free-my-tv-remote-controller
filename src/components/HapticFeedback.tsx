@@ -11,7 +11,7 @@ export function HapticFeedback({ disabled = false }: { disabled?: boolean }) {
 
   return (
     <label class="haptic-trigger" aria-hidden="true">
-      <input type="checkbox" {...{ switch: "" }} tabIndex={-1} disabled={disabled}
+      <input type="checkbox" {...{ switch: true }} tabIndex={-1} disabled={disabled}
         onClick={(event) => event.stopPropagation()} />
     </label>
   );

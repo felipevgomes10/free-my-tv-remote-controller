@@ -62,6 +62,8 @@ Page v0.2.0, with the Home's v0.6.0, adds the Shortcut Buttons and the Apps and 
 - **Touchpad** — swipe to move the TV's focus, one step every 48 px; tap for OK; touch and hold to hold OK, which opens Edit Mode on the Home. A tap is never mistaken for a short swipe.
 - **Buttons** — Voltar, Home (twice for the App Switcher, held for the Notification Panel, as on the Remote), play/pause, mute, and volume, which keeps changing while held. Power sits apart at the top, away from the thumb.
 - **Haptics** — Safari uses a native switch label for button taps, and a directly dragged native switch for the Touchpad. The switch's coordinates follow the real finger to produce ticks during navigation; no synthetic click is used. Native tracking has an initial delay, and several steps in one touch event may share a tick. Browsers with the Vibration API use that API instead. The controls work the same without haptics.
+
+The full page's swipe and button haptics are physically checked in the Chrome-installed PWA on the owner's iPhone with iOS 26.6.2. Native switch props use boolean `true`: an empty string would be coerced to `false` by WebKit and silently turn these controls back into ordinary checkboxes. The regression tests model this writable, attribute-reflecting DOM property.
 - **Shortcut Buttons** — under the Touchpad, a row with the Remote's Netflix, Globoplay, Prime Video, Disney+, YouTube and Input buttons, each named after what the Owner assigned to it and doing what the Remote's button does.
 
 **The Apps tab** (page v0.2.0 with the Home's v0.6.0)
