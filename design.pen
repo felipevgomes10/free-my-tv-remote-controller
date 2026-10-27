@@ -145,7 +145,7 @@
           "width": "fill_container",
           "height": "fill_container",
           "layout": "vertical",
-          "gap": 20,
+          "gap": 16,
           "padding": [
             4,
             20,
@@ -187,23 +187,6 @@
                   "gap": 12,
                   "alignItems": "center",
                   "children": [
-                    {
-                      "id": "sxr4E",
-                      "type": "ref",
-                      "ref": "f7sgIJ",
-                      "name": "Teclado",
-                      "width": 44,
-                      "height": 44,
-                      "cornerRadius": 22,
-                      "opacity": 1,
-                      "descendants": {
-                        "aSPqD": {
-                          "icon": "keyboard",
-                          "width": 22,
-                          "height": 22
-                        }
-                      }
-                    },
                     {
                       "id": "MO0CN",
                       "type": "ref",
@@ -418,130 +401,12 @@
               ]
             },
             {
-              "type": "frame",
-              "id": "bpiNN",
+              "id": "iP9DL",
+              "type": "ref",
+              "ref": "xFKom",
               "name": "Botões",
               "width": "fill_container",
-              "padding": [
-                0,
-                10
-              ],
-              "justifyContent": "space_between",
-              "children": [
-                {
-                  "type": "frame",
-                  "id": "IqJ7o",
-                  "name": "Coluna esquerda",
-                  "layout": "vertical",
-                  "gap": 20,
-                  "children": [
-                    {
-                      "id": "m3lFra",
-                      "type": "ref",
-                      "ref": "f7sgIJ",
-                      "name": "Voltar",
-                      "descendants": {
-                        "aSPqD": {
-                          "icon": "arrow_back"
-                        }
-                      }
-                    },
-                    {
-                      "id": "Z0n85k",
-                      "type": "ref",
-                      "ref": "f7sgIJ",
-                      "name": "Play/pausa",
-                      "descendants": {
-                        "aSPqD": {
-                          "icon": "play_pause"
-                        }
-                      }
-                    }
-                  ]
-                },
-                {
-                  "type": "frame",
-                  "id": "y9Ya21",
-                  "name": "Coluna central",
-                  "layout": "vertical",
-                  "gap": 20,
-                  "children": [
-                    {
-                      "id": "gBK8v",
-                      "type": "ref",
-                      "ref": "f7sgIJ",
-                      "name": "Home",
-                      "descendants": {
-                        "aSPqD": {
-                          "icon": "home"
-                        }
-                      }
-                    },
-                    {
-                      "id": "w9Dqeo",
-                      "type": "ref",
-                      "ref": "f7sgIJ",
-                      "name": "Mudo",
-                      "descendants": {
-                        "aSPqD": {
-                          "icon": "volume_off"
-                        }
-                      }
-                    }
-                  ]
-                },
-                {
-                  "type": "frame",
-                  "id": "G2aN2",
-                  "name": "Volume",
-                  "width": 76,
-                  "height": 172,
-                  "fill": "$glass",
-                  "cornerRadius": 38,
-                  "layout": "vertical",
-                  "padding": [
-                    22,
-                    0
-                  ],
-                  "justifyContent": "space_between",
-                  "alignItems": "center",
-                  "children": [
-                    {
-                      "type": "icon",
-                      "id": "nxeQk",
-                      "name": "Aumentar volume",
-                      "width": 30,
-                      "height": 30,
-                      "icon": "add",
-                      "library": "Material Symbols Rounded",
-                      "weight": 500,
-                      "fill": "$text-primary"
-                    },
-                    {
-                      "type": "icon",
-                      "id": "k7ADPs",
-                      "name": "Volume",
-                      "width": 20,
-                      "height": 20,
-                      "icon": "volume_up",
-                      "library": "Material Symbols Rounded",
-                      "weight": 500,
-                      "fill": "$text-secondary"
-                    },
-                    {
-                      "type": "icon",
-                      "id": "o4OS6",
-                      "name": "Diminuir volume",
-                      "width": 30,
-                      "height": 30,
-                      "icon": "remove",
-                      "library": "Material Symbols Rounded",
-                      "weight": 500,
-                      "fill": "$text-primary"
-                    }
-                  ]
-                }
-              ]
+              "opacity": 1
             }
           ]
         },
@@ -584,7 +449,7 @@
           "width": "fill_container",
           "height": "fill_container",
           "layout": "vertical",
-          "gap": 20,
+          "gap": 16,
           "padding": [
             4,
             20,
@@ -626,23 +491,6 @@
                   "gap": 12,
                   "alignItems": "center",
                   "children": [
-                    {
-                      "id": "NChqR",
-                      "type": "ref",
-                      "ref": "f7sgIJ",
-                      "name": "Teclado",
-                      "width": 44,
-                      "height": 44,
-                      "cornerRadius": 22,
-                      "opacity": 1,
-                      "descendants": {
-                        "aSPqD": {
-                          "icon": "keyboard",
-                          "width": 22,
-                          "height": 22
-                        }
-                      }
-                    },
                     {
                       "id": "TLlWW",
                       "type": "ref",
@@ -727,7 +575,7 @@
                   "id": "HWJBO",
                   "layoutPosition": "absolute",
                   "x": 60,
-                  "y": 170,
+                  "y": 100,
                   "name": "Rastro do deslize",
                   "fill": {
                     "type": "gradient",
@@ -761,7 +609,7 @@
                   "id": "UceJv",
                   "layoutPosition": "absolute",
                   "x": 196,
-                  "y": 186,
+                  "y": 116,
                   "name": "Luz sob o dedo",
                   "fill": {
                     "type": "gradient",
@@ -928,130 +776,12 @@
               ]
             },
             {
-              "type": "frame",
-              "id": "mauKL",
+              "id": "UaAlu",
+              "type": "ref",
+              "ref": "xFKom",
               "name": "Botões",
               "width": "fill_container",
-              "padding": [
-                0,
-                10
-              ],
-              "justifyContent": "space_between",
-              "children": [
-                {
-                  "type": "frame",
-                  "id": "W5JBcA",
-                  "name": "Coluna esquerda",
-                  "layout": "vertical",
-                  "gap": 20,
-                  "children": [
-                    {
-                      "id": "A675p",
-                      "type": "ref",
-                      "ref": "f7sgIJ",
-                      "name": "Voltar",
-                      "descendants": {
-                        "aSPqD": {
-                          "icon": "arrow_back"
-                        }
-                      }
-                    },
-                    {
-                      "id": "R1sLc",
-                      "type": "ref",
-                      "ref": "f7sgIJ",
-                      "name": "Play/pausa",
-                      "descendants": {
-                        "aSPqD": {
-                          "icon": "play_pause"
-                        }
-                      }
-                    }
-                  ]
-                },
-                {
-                  "type": "frame",
-                  "id": "V02gp6",
-                  "name": "Coluna central",
-                  "layout": "vertical",
-                  "gap": 20,
-                  "children": [
-                    {
-                      "id": "oLlm0",
-                      "type": "ref",
-                      "ref": "f7sgIJ",
-                      "name": "Home",
-                      "descendants": {
-                        "aSPqD": {
-                          "icon": "home"
-                        }
-                      }
-                    },
-                    {
-                      "id": "LRXoJ",
-                      "type": "ref",
-                      "ref": "f7sgIJ",
-                      "name": "Mudo",
-                      "descendants": {
-                        "aSPqD": {
-                          "icon": "volume_off"
-                        }
-                      }
-                    }
-                  ]
-                },
-                {
-                  "type": "frame",
-                  "id": "gafoP",
-                  "name": "Volume",
-                  "width": 76,
-                  "height": 172,
-                  "fill": "$glass",
-                  "cornerRadius": 38,
-                  "layout": "vertical",
-                  "padding": [
-                    22,
-                    0
-                  ],
-                  "justifyContent": "space_between",
-                  "alignItems": "center",
-                  "children": [
-                    {
-                      "type": "icon",
-                      "id": "bPBU4",
-                      "name": "Aumentar volume",
-                      "width": 30,
-                      "height": 30,
-                      "icon": "add",
-                      "library": "Material Symbols Rounded",
-                      "weight": 500,
-                      "fill": "$text-primary"
-                    },
-                    {
-                      "type": "icon",
-                      "id": "rjrBd",
-                      "name": "Volume",
-                      "width": 20,
-                      "height": 20,
-                      "icon": "volume_up",
-                      "library": "Material Symbols Rounded",
-                      "weight": 500,
-                      "fill": "$text-secondary"
-                    },
-                    {
-                      "type": "icon",
-                      "id": "qldCe",
-                      "name": "Diminuir volume",
-                      "width": 30,
-                      "height": 30,
-                      "icon": "remove",
-                      "library": "Material Symbols Rounded",
-                      "weight": 500,
-                      "fill": "$text-primary"
-                    }
-                  ]
-                }
-              ]
+              "opacity": 1
             }
           ]
         },
@@ -2159,7 +1889,7 @@
           "width": "fill_container",
           "height": "fill_container",
           "layout": "vertical",
-          "gap": 20,
+          "gap": 16,
           "padding": [
             4,
             20,
@@ -2201,23 +1931,6 @@
                   "gap": 12,
                   "alignItems": "center",
                   "children": [
-                    {
-                      "id": "s1rz1d",
-                      "type": "ref",
-                      "ref": "f7sgIJ",
-                      "name": "Teclado",
-                      "width": 44,
-                      "height": 44,
-                      "cornerRadius": 22,
-                      "opacity": 0.3,
-                      "descendants": {
-                        "aSPqD": {
-                          "icon": "keyboard",
-                          "width": 22,
-                          "height": 22
-                        }
-                      }
-                    },
                     {
                       "id": "TCZ76",
                       "type": "ref",
@@ -2502,131 +2215,12 @@
               ]
             },
             {
-              "type": "frame",
-              "id": "MIBr2",
+              "id": "jIW7A",
+              "type": "ref",
+              "ref": "xFKom",
               "name": "Botões",
-              "opacity": 0.3,
               "width": "fill_container",
-              "padding": [
-                0,
-                10
-              ],
-              "justifyContent": "space_between",
-              "children": [
-                {
-                  "type": "frame",
-                  "id": "KJfwM",
-                  "name": "Coluna esquerda",
-                  "layout": "vertical",
-                  "gap": 20,
-                  "children": [
-                    {
-                      "id": "ntGta",
-                      "type": "ref",
-                      "ref": "f7sgIJ",
-                      "name": "Voltar",
-                      "descendants": {
-                        "aSPqD": {
-                          "icon": "arrow_back"
-                        }
-                      }
-                    },
-                    {
-                      "id": "pWr47",
-                      "type": "ref",
-                      "ref": "f7sgIJ",
-                      "name": "Play/pausa",
-                      "descendants": {
-                        "aSPqD": {
-                          "icon": "play_pause"
-                        }
-                      }
-                    }
-                  ]
-                },
-                {
-                  "type": "frame",
-                  "id": "y7Ilet",
-                  "name": "Coluna central",
-                  "layout": "vertical",
-                  "gap": 20,
-                  "children": [
-                    {
-                      "id": "Xpikl",
-                      "type": "ref",
-                      "ref": "f7sgIJ",
-                      "name": "Home",
-                      "descendants": {
-                        "aSPqD": {
-                          "icon": "home"
-                        }
-                      }
-                    },
-                    {
-                      "id": "sxhJp",
-                      "type": "ref",
-                      "ref": "f7sgIJ",
-                      "name": "Mudo",
-                      "descendants": {
-                        "aSPqD": {
-                          "icon": "volume_off"
-                        }
-                      }
-                    }
-                  ]
-                },
-                {
-                  "type": "frame",
-                  "id": "mT4wH",
-                  "name": "Volume",
-                  "width": 76,
-                  "height": 172,
-                  "fill": "$glass",
-                  "cornerRadius": 38,
-                  "layout": "vertical",
-                  "padding": [
-                    22,
-                    0
-                  ],
-                  "justifyContent": "space_between",
-                  "alignItems": "center",
-                  "children": [
-                    {
-                      "type": "icon",
-                      "id": "F87ac",
-                      "name": "Aumentar volume",
-                      "width": 30,
-                      "height": 30,
-                      "icon": "add",
-                      "library": "Material Symbols Rounded",
-                      "weight": 500,
-                      "fill": "$text-primary"
-                    },
-                    {
-                      "type": "icon",
-                      "id": "MDH39",
-                      "name": "Volume",
-                      "width": 20,
-                      "height": 20,
-                      "icon": "volume_up",
-                      "library": "Material Symbols Rounded",
-                      "weight": 500,
-                      "fill": "$text-secondary"
-                    },
-                    {
-                      "type": "icon",
-                      "id": "meoHZ",
-                      "name": "Diminuir volume",
-                      "width": 30,
-                      "height": 30,
-                      "icon": "remove",
-                      "library": "Material Symbols Rounded",
-                      "weight": 500,
-                      "fill": "$text-primary"
-                    }
-                  ]
-                }
-              ]
+              "opacity": 0.3
             }
           ]
         },
@@ -2669,7 +2263,7 @@
           "width": "fill_container",
           "height": "fill_container",
           "layout": "vertical",
-          "gap": 20,
+          "gap": 16,
           "padding": [
             4,
             20,
@@ -2711,23 +2305,6 @@
                   "gap": 12,
                   "alignItems": "center",
                   "children": [
-                    {
-                      "id": "UoRGF",
-                      "type": "ref",
-                      "ref": "f7sgIJ",
-                      "name": "Teclado",
-                      "width": 44,
-                      "height": 44,
-                      "cornerRadius": 22,
-                      "opacity": 0.3,
-                      "descendants": {
-                        "aSPqD": {
-                          "icon": "keyboard",
-                          "width": 22,
-                          "height": 22
-                        }
-                      }
-                    },
                     {
                       "id": "TwYw0",
                       "type": "ref",
@@ -3012,131 +2589,12 @@
               ]
             },
             {
-              "type": "frame",
-              "id": "N5xz9",
+              "id": "tJ1s6",
+              "type": "ref",
+              "ref": "xFKom",
               "name": "Botões",
-              "opacity": 0.3,
               "width": "fill_container",
-              "padding": [
-                0,
-                10
-              ],
-              "justifyContent": "space_between",
-              "children": [
-                {
-                  "type": "frame",
-                  "id": "MbGV8",
-                  "name": "Coluna esquerda",
-                  "layout": "vertical",
-                  "gap": 20,
-                  "children": [
-                    {
-                      "id": "xFfW7",
-                      "type": "ref",
-                      "ref": "f7sgIJ",
-                      "name": "Voltar",
-                      "descendants": {
-                        "aSPqD": {
-                          "icon": "arrow_back"
-                        }
-                      }
-                    },
-                    {
-                      "id": "Wy02c",
-                      "type": "ref",
-                      "ref": "f7sgIJ",
-                      "name": "Play/pausa",
-                      "descendants": {
-                        "aSPqD": {
-                          "icon": "play_pause"
-                        }
-                      }
-                    }
-                  ]
-                },
-                {
-                  "type": "frame",
-                  "id": "cFZX9",
-                  "name": "Coluna central",
-                  "layout": "vertical",
-                  "gap": 20,
-                  "children": [
-                    {
-                      "id": "esDi7",
-                      "type": "ref",
-                      "ref": "f7sgIJ",
-                      "name": "Home",
-                      "descendants": {
-                        "aSPqD": {
-                          "icon": "home"
-                        }
-                      }
-                    },
-                    {
-                      "id": "EtbKD",
-                      "type": "ref",
-                      "ref": "f7sgIJ",
-                      "name": "Mudo",
-                      "descendants": {
-                        "aSPqD": {
-                          "icon": "volume_off"
-                        }
-                      }
-                    }
-                  ]
-                },
-                {
-                  "type": "frame",
-                  "id": "F5MvC",
-                  "name": "Volume",
-                  "width": 76,
-                  "height": 172,
-                  "fill": "$glass",
-                  "cornerRadius": 38,
-                  "layout": "vertical",
-                  "padding": [
-                    22,
-                    0
-                  ],
-                  "justifyContent": "space_between",
-                  "alignItems": "center",
-                  "children": [
-                    {
-                      "type": "icon",
-                      "id": "Q85Xz",
-                      "name": "Aumentar volume",
-                      "width": 30,
-                      "height": 30,
-                      "icon": "add",
-                      "library": "Material Symbols Rounded",
-                      "weight": 500,
-                      "fill": "$text-primary"
-                    },
-                    {
-                      "type": "icon",
-                      "id": "M5sId",
-                      "name": "Volume",
-                      "width": 20,
-                      "height": 20,
-                      "icon": "volume_up",
-                      "library": "Material Symbols Rounded",
-                      "weight": 500,
-                      "fill": "$text-secondary"
-                    },
-                    {
-                      "type": "icon",
-                      "id": "Q2jljl",
-                      "name": "Diminuir volume",
-                      "width": 30,
-                      "height": 30,
-                      "icon": "remove",
-                      "library": "Material Symbols Rounded",
-                      "weight": 500,
-                      "fill": "$text-primary"
-                    }
-                  ]
-                }
-              ]
+              "opacity": 0.3
             }
           ]
         },
@@ -3716,7 +3174,8 @@
       "id": "yH2Mm",
       "x": 0,
       "y": 3000,
-      "name": "Teclado",
+      "name": "Estudo arquivado — Teclado",
+      "context": "Historical keyboard concept. Teclado was excluded after TV validation; see ADR 0007. Not part of the current product.",
       "clip": true,
       "width": 402,
       "height": 874,
@@ -5204,7 +4663,8 @@
       "id": "jI68Y",
       "x": 482,
       "y": 3000,
-      "name": "Teclado — sem campo na TV",
+      "name": "Estudo arquivado — Teclado sem campo",
+      "context": "Historical keyboard concept. Teclado was excluded after TV validation; see ADR 0007. Not part of the current product.",
       "clip": true,
       "width": 402,
       "height": 874,
@@ -8902,6 +8362,726 @@
           "id": "bhTLW",
           "type": "ref",
           "ref": "s4ScFK",
+          "name": "Home Indicator"
+        }
+      ]
+    },
+    {
+      "type": "frame",
+      "id": "Ib7nq",
+      "x": 0,
+      "y": -896,
+      "name": "D-pad",
+      "context": "Four directions repeat while held. Tap OK to select; hold OK for the TV long press.",
+      "reusable": true,
+      "width": 216,
+      "height": 216,
+      "fill": "$glass-soft",
+      "cornerRadius": 108,
+      "stroke": "#FFFFFF14",
+      "strokeWidth": 1,
+      "layout": "vertical",
+      "gap": 3,
+      "padding": 6,
+      "children": [
+        {
+          "type": "frame",
+          "id": "B91Ts",
+          "name": "Direção superior",
+          "width": "fill_container",
+          "height": "fill_container",
+          "justifyContent": "center",
+          "children": [
+            {
+              "type": "frame",
+              "id": "p1RNa",
+              "name": "Cima",
+              "width": 66,
+              "height": "fill_container",
+              "cornerRadius": 18,
+              "justifyContent": "center",
+              "alignItems": "center",
+              "children": [
+                {
+                  "type": "icon",
+                  "id": "zDxpW",
+                  "name": "Ícone Cima",
+                  "width": 28,
+                  "height": 28,
+                  "icon": "keyboard_arrow_up",
+                  "library": "Material Symbols Rounded",
+                  "weight": 500,
+                  "fill": "$text-primary"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "type": "frame",
+          "id": "L4PwAi",
+          "name": "Esquerda, OK e direita",
+          "width": "fill_container",
+          "height": "fill_container",
+          "gap": 3,
+          "children": [
+            {
+              "type": "frame",
+              "id": "eAnYO",
+              "name": "Esquerda",
+              "width": "fill_container",
+              "height": "fill_container",
+              "cornerRadius": 18,
+              "justifyContent": "center",
+              "alignItems": "center",
+              "children": [
+                {
+                  "type": "icon",
+                  "id": "oggaz",
+                  "name": "Ícone Esquerda",
+                  "width": 28,
+                  "height": 28,
+                  "icon": "keyboard_arrow_left",
+                  "library": "Material Symbols Rounded",
+                  "weight": 500,
+                  "fill": "$text-primary"
+                }
+              ]
+            },
+            {
+              "type": "frame",
+              "id": "f6non",
+              "name": "OK",
+              "width": "fill_container",
+              "height": "fill_container",
+              "fill": "$glass",
+              "cornerRadius": 33,
+              "justifyContent": "center",
+              "alignItems": "center",
+              "children": [
+                {
+                  "type": "text",
+                  "id": "mNf66",
+                  "name": "Rótulo OK",
+                  "fill": "$text-primary",
+                  "content": "OK",
+                  "fontFamily": "$font",
+                  "fontSize": 17,
+                  "fontWeight": "700"
+                }
+              ]
+            },
+            {
+              "type": "frame",
+              "id": "TtiF6",
+              "name": "Direita",
+              "width": "fill_container",
+              "height": "fill_container",
+              "cornerRadius": 18,
+              "justifyContent": "center",
+              "alignItems": "center",
+              "children": [
+                {
+                  "type": "icon",
+                  "id": "v7ZGYp",
+                  "name": "Ícone Direita",
+                  "width": 28,
+                  "height": 28,
+                  "icon": "keyboard_arrow_right",
+                  "library": "Material Symbols Rounded",
+                  "weight": 500,
+                  "fill": "$text-primary"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "type": "frame",
+          "id": "j6fW3",
+          "name": "Direção inferior",
+          "width": "fill_container",
+          "height": "fill_container",
+          "justifyContent": "center",
+          "children": [
+            {
+              "type": "frame",
+              "id": "uu0yc",
+              "name": "Baixo",
+              "width": 66,
+              "height": "fill_container",
+              "cornerRadius": 18,
+              "justifyContent": "center",
+              "alignItems": "center",
+              "children": [
+                {
+                  "type": "icon",
+                  "id": "gil6G",
+                  "name": "Ícone Baixo",
+                  "width": 28,
+                  "height": 28,
+                  "icon": "keyboard_arrow_down",
+                  "library": "Material Symbols Rounded",
+                  "weight": 500,
+                  "fill": "$text-primary"
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "type": "frame",
+      "id": "xFKom",
+      "x": 0,
+      "y": -1252,
+      "name": "Controls Deck",
+      "reusable": true,
+      "width": 362,
+      "height": 276,
+      "layout": "vertical",
+      "gap": 16,
+      "children": [
+        {
+          "type": "frame",
+          "id": "I59ND",
+          "name": "Navegação",
+          "width": "fill_container",
+          "height": 216,
+          "justifyContent": "space_between",
+          "alignItems": "center",
+          "children": [
+            {
+              "type": "frame",
+              "id": "vt378",
+              "name": "Voltar e Home",
+              "layout": "vertical",
+              "gap": 20,
+              "children": [
+                {
+                  "id": "NiH0P",
+                  "type": "ref",
+                  "ref": "f7sgIJ",
+                  "name": "Voltar",
+                  "width": 44,
+                  "height": 44,
+                  "cornerRadius": 22,
+                  "descendants": {
+                    "aSPqD": {
+                      "icon": "arrow_back",
+                      "width": 30,
+                      "height": 30
+                    }
+                  }
+                },
+                {
+                  "id": "U3fABN",
+                  "type": "ref",
+                  "ref": "f7sgIJ",
+                  "name": "Home",
+                  "width": 44,
+                  "height": 44,
+                  "cornerRadius": 22,
+                  "descendants": {
+                    "aSPqD": {
+                      "icon": "home",
+                      "width": 30,
+                      "height": 30
+                    }
+                  }
+                }
+              ]
+            },
+            {
+              "id": "l9ucz",
+              "type": "ref",
+              "ref": "Ib7nq",
+              "name": "D-pad"
+            },
+            {
+              "type": "frame",
+              "id": "HLHVz",
+              "name": "Reprodução e áudio",
+              "layout": "vertical",
+              "gap": 20,
+              "children": [
+                {
+                  "id": "PL1HD",
+                  "type": "ref",
+                  "ref": "f7sgIJ",
+                  "name": "Play ou pausa",
+                  "width": 44,
+                  "height": 44,
+                  "cornerRadius": 22,
+                  "descendants": {
+                    "aSPqD": {
+                      "icon": "play_pause",
+                      "width": 30,
+                      "height": 30
+                    }
+                  }
+                },
+                {
+                  "id": "v7opYF",
+                  "type": "ref",
+                  "ref": "f7sgIJ",
+                  "name": "Mudo",
+                  "width": 44,
+                  "height": 44,
+                  "cornerRadius": 22,
+                  "descendants": {
+                    "aSPqD": {
+                      "icon": "volume_off",
+                      "width": 30,
+                      "height": 30
+                    }
+                  }
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "type": "frame",
+          "id": "MVTRQ",
+          "name": "Multitarefas e volume",
+          "width": "fill_container",
+          "height": 44,
+          "gap": 12,
+          "children": [
+            {
+              "type": "frame",
+              "id": "GBpJS",
+              "name": "Multitarefas",
+              "width": "fill_container",
+              "height": 44,
+              "fill": "$glass",
+              "cornerRadius": 22,
+              "gap": 10,
+              "justifyContent": "center",
+              "alignItems": "center",
+              "children": [
+                {
+                  "type": "icon",
+                  "id": "znPJE",
+                  "name": "Ícone Multitarefas",
+                  "width": 22,
+                  "height": 22,
+                  "icon": "filter_none",
+                  "library": "Material Symbols Rounded",
+                  "weight": 500,
+                  "fill": "$text-primary"
+                },
+                {
+                  "type": "text",
+                  "id": "L3n11I",
+                  "name": "Rótulo Multitarefas",
+                  "fill": "$text-primary",
+                  "content": "Multitarefas",
+                  "fontFamily": "$font",
+                  "fontSize": 14,
+                  "fontWeight": "normal"
+                }
+              ]
+            },
+            {
+              "type": "frame",
+              "id": "G7R55w",
+              "name": "Volume",
+              "width": 136,
+              "height": 44,
+              "fill": "$glass",
+              "cornerRadius": 22,
+              "alignItems": "center",
+              "children": [
+                {
+                  "type": "frame",
+                  "id": "Nx2nt",
+                  "name": "Diminuir volume",
+                  "width": "fill_container",
+                  "height": "fill_container",
+                  "justifyContent": "center",
+                  "alignItems": "center",
+                  "children": [
+                    {
+                      "type": "icon",
+                      "id": "nZkmV",
+                      "name": "Ícone Diminuir volume",
+                      "width": 30,
+                      "height": 30,
+                      "icon": "remove",
+                      "library": "Material Symbols Rounded",
+                      "weight": 500,
+                      "fill": "$text-primary"
+                    }
+                  ]
+                },
+                {
+                  "type": "icon",
+                  "id": "yvy6C",
+                  "name": "Volume",
+                  "width": 20,
+                  "height": 20,
+                  "icon": "volume_up",
+                  "library": "Material Symbols Rounded",
+                  "weight": 500,
+                  "fill": "$text-secondary"
+                },
+                {
+                  "type": "frame",
+                  "id": "B3pc9",
+                  "name": "Aumentar volume",
+                  "width": "fill_container",
+                  "height": "fill_container",
+                  "justifyContent": "center",
+                  "alignItems": "center",
+                  "children": [
+                    {
+                      "type": "icon",
+                      "id": "GuU9u",
+                      "name": "Ícone Aumentar volume",
+                      "width": 30,
+                      "height": 30,
+                      "icon": "add",
+                      "library": "Material Symbols Rounded",
+                      "weight": 500,
+                      "fill": "$text-primary"
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "type": "frame",
+      "id": "Sp8hp",
+      "x": 964,
+      "y": 0,
+      "name": "Controles — compacto (320 × 568)",
+      "context": "Available app viewport at 320 × 568. System bars are excluded; Touchpad and D-pad remain visible together.",
+      "clip": true,
+      "width": 320,
+      "height": 568,
+      "fill": "$bg",
+      "layout": "vertical",
+      "children": [
+        {
+          "id": "hYsoG",
+          "type": "ref",
+          "ref": "TeWJu",
+          "enabled": false,
+          "name": "Status Bar"
+        },
+        {
+          "type": "frame",
+          "id": "MDwty",
+          "name": "Conteúdo",
+          "width": "fill_container",
+          "height": "fill_container",
+          "layout": "vertical",
+          "gap": 8,
+          "padding": [
+            4,
+            20,
+            12,
+            20
+          ],
+          "children": [
+            {
+              "type": "frame",
+              "id": "fXYDC",
+              "name": "Cabeçalho",
+              "width": "fill_container",
+              "justifyContent": "space_between",
+              "alignItems": "center",
+              "children": [
+                {
+                  "type": "frame",
+                  "id": "TNkUV",
+                  "name": "TV",
+                  "layout": "vertical",
+                  "gap": 2,
+                  "children": [
+                    {
+                      "type": "text",
+                      "id": "OKY8S",
+                      "name": "Nome da TV",
+                      "fill": "$text-primary",
+                      "content": "TV da sala",
+                      "fontFamily": "$font",
+                      "fontSize": 22,
+                      "fontWeight": "700"
+                    }
+                  ]
+                },
+                {
+                  "type": "frame",
+                  "id": "Bm9I6",
+                  "name": "Ações",
+                  "gap": 12,
+                  "alignItems": "center",
+                  "children": [
+                    {
+                      "id": "ki0v5",
+                      "type": "ref",
+                      "ref": "f7sgIJ",
+                      "name": "Desligar",
+                      "width": 44,
+                      "height": 44,
+                      "cornerRadius": 22,
+                      "descendants": {
+                        "aSPqD": {
+                          "icon": "power_settings_new",
+                          "width": 22,
+                          "height": 22
+                        }
+                      }
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "type": "frame",
+              "id": "O9b7UK",
+              "name": "Área de toque",
+              "clip": true,
+              "width": "fill_container",
+              "height": "fill_container",
+              "fill": [
+                "#FFFFFF0D",
+                {
+                  "type": "gradient",
+                  "gradientType": "radial",
+                  "enabled": true,
+                  "rotation": 0,
+                  "size": {
+                    "width": 1.6,
+                    "height": 1.1
+                  },
+                  "colors": [
+                    {
+                      "color": "#FFFFFF1A",
+                      "position": 0
+                    },
+                    {
+                      "color": "#FFFFFF00",
+                      "position": 1
+                    }
+                  ],
+                  "center": {
+                    "y": 0
+                  }
+                }
+              ],
+              "cornerRadius": 24,
+              "stroke": "#FFFFFF14",
+              "strokeWidth": 1,
+              "layout": "vertical",
+              "padding": [
+                0,
+                0,
+                16,
+                0
+              ],
+              "justifyContent": "end",
+              "alignItems": "center",
+              "children": [
+                {
+                  "type": "text",
+                  "id": "w3PaXq",
+                  "name": "Dica",
+                  "fill": "$text-secondary",
+                  "content": "Deslize para mover. Toque para OK.",
+                  "fontFamily": "$font",
+                  "fontSize": 13,
+                  "fontWeight": "normal"
+                }
+              ]
+            },
+            {
+              "type": "frame",
+              "id": "KCXeS",
+              "name": "Botões de atalho",
+              "clip": true,
+              "width": "fill_container",
+              "gap": 8,
+              "children": [
+                {
+                  "type": "frame",
+                  "id": "GR6KY",
+                  "name": "Netflix",
+                  "height": 32,
+                  "fill": "$glass",
+                  "cornerRadius": 20,
+                  "padding": [
+                    0,
+                    16
+                  ],
+                  "alignItems": "center",
+                  "children": [
+                    {
+                      "type": "text",
+                      "id": "Klkml",
+                      "name": "Rótulo",
+                      "fill": "$text-primary",
+                      "content": "Netflix",
+                      "fontFamily": "$font",
+                      "fontSize": 14,
+                      "fontWeight": "700"
+                    }
+                  ]
+                },
+                {
+                  "type": "frame",
+                  "id": "W3Yg4",
+                  "name": "Globoplay",
+                  "height": 32,
+                  "fill": "$glass",
+                  "cornerRadius": 20,
+                  "padding": [
+                    0,
+                    16
+                  ],
+                  "alignItems": "center",
+                  "children": [
+                    {
+                      "type": "text",
+                      "id": "XtJ6h",
+                      "name": "Rótulo",
+                      "fill": "$text-primary",
+                      "content": "Globoplay",
+                      "fontFamily": "$font",
+                      "fontSize": 14,
+                      "fontWeight": "700"
+                    }
+                  ]
+                },
+                {
+                  "type": "frame",
+                  "id": "Kbmvy",
+                  "name": "Prime Video",
+                  "height": 32,
+                  "fill": "$glass",
+                  "cornerRadius": 20,
+                  "padding": [
+                    0,
+                    16
+                  ],
+                  "alignItems": "center",
+                  "children": [
+                    {
+                      "type": "text",
+                      "id": "i26daz",
+                      "name": "Rótulo",
+                      "fill": "$text-primary",
+                      "content": "Prime Video",
+                      "fontFamily": "$font",
+                      "fontSize": 14,
+                      "fontWeight": "700"
+                    }
+                  ]
+                },
+                {
+                  "type": "frame",
+                  "id": "K46X1I",
+                  "name": "Disney+",
+                  "height": 32,
+                  "fill": "$glass",
+                  "cornerRadius": 20,
+                  "padding": [
+                    0,
+                    16
+                  ],
+                  "alignItems": "center",
+                  "children": [
+                    {
+                      "type": "text",
+                      "id": "nZrMg",
+                      "name": "Rótulo",
+                      "fill": "$text-primary",
+                      "content": "Disney+",
+                      "fontFamily": "$font",
+                      "fontSize": 14,
+                      "fontWeight": "700"
+                    }
+                  ]
+                },
+                {
+                  "type": "frame",
+                  "id": "oG7Gb",
+                  "name": "YouTube",
+                  "height": 32,
+                  "fill": "$glass",
+                  "cornerRadius": 20,
+                  "padding": [
+                    0,
+                    16
+                  ],
+                  "alignItems": "center",
+                  "children": [
+                    {
+                      "type": "text",
+                      "id": "xItJz",
+                      "name": "Rótulo",
+                      "fill": "$text-primary",
+                      "content": "YouTube",
+                      "fontFamily": "$font",
+                      "fontSize": 14,
+                      "fontWeight": "700"
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "id": "KoKrH",
+              "type": "ref",
+              "ref": "xFKom",
+              "height": 202,
+              "gap": 8,
+              "name": "Botões",
+              "width": "fill_container",
+              "opacity": 1,
+              "descendants": {
+                "I59ND": {
+                  "height": 150
+                },
+                "l9ucz": {
+                  "width": 150,
+                  "height": 150
+                },
+                "l9ucz/p1RNa": {
+                  "width": 44
+                },
+                "l9ucz/uu0yc": {
+                  "width": 44
+                }
+              }
+            }
+          ]
+        },
+        {
+          "id": "nWQS2",
+          "type": "ref",
+          "ref": "asdgV",
+          "width": "fill_container",
+          "name": "Tab Bar",
+          "descendants": {
+            "SOHPi": {
+              "height": 56
+            }
+          }
+        },
+        {
+          "id": "W8dRf",
+          "type": "ref",
+          "ref": "s4ScFK",
+          "enabled": false,
           "name": "Home Indicator"
         }
       ]

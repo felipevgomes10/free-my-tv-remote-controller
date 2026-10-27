@@ -5,6 +5,7 @@ import { RemoteButton } from "./RemoteButton";
 import { ShortcutRow } from "./ShortcutRow";
 import { Touchpad } from "./Touchpad";
 import { MultitaskingButton } from "./MultitaskingButton";
+import { Dpad } from "./Dpad";
 
 type Props = {
   tvName: string;
@@ -33,33 +34,38 @@ export function Controls({ tvName, status, send, onTryTurnOn }: Props) {
       <ShortcutRow />
 
       <fieldset class="control-group buttons" disabled={!ready}>
-        <MultitaskingButton />
-        <div class="button-column">
-          <RemoteButton label="Voltar" keyName="back" send={send}>
-            <Icon name="arrowBack" />
-          </RemoteButton>
-          <RemoteButton label="Play ou pausa" keyName="play-pause" send={send}>
-            <Icon name="playPause" />
-          </RemoteButton>
+        <div class="navigation-controls">
+          <div class="button-column">
+            <RemoteButton label="Voltar" keyName="back" send={send}>
+              <Icon name="arrowBack" />
+            </RemoteButton>
+            <RemoteButton label="Home" keyName="home" behaviour="hold" send={send}>
+              <Icon name="home" />
+            </RemoteButton>
+          </div>
+          <Dpad send={send} enabled={ready} />
+          <div class="button-column">
+            <RemoteButton label="Play ou pausa" keyName="play-pause" send={send}>
+              <Icon name="playPause" />
+            </RemoteButton>
+            <RemoteButton label="Mudo" keyName="mute" send={send}>
+              <Icon name="volumeOff" />
+            </RemoteButton>
+          </div>
         </div>
-        <div class="button-column">
-          <RemoteButton label="Home" keyName="home" behaviour="hold" send={send}>
-            <Icon name="home" />
-          </RemoteButton>
-          <RemoteButton label="Mudo" keyName="mute" send={send}>
-            <Icon name="volumeOff" />
-          </RemoteButton>
-        </div>
-        <div class="volume" role="group" aria-label="Volume">
-          <RemoteButton label="Aumentar volume" keyName="volume-up" behaviour="repeat" send={send} class="volume-button">
-            <Icon name="add" />
-          </RemoteButton>
-          <span class="volume-mark">
-            <Icon name="volumeUp" size={20} />
-          </span>
-          <RemoteButton label="Diminuir volume" keyName="volume-down" behaviour="repeat" send={send} class="volume-button">
-            <Icon name="remove" />
-          </RemoteButton>
+        <div class="secondary-controls">
+          <MultitaskingButton />
+          <div class="volume" role="group" aria-label="Volume">
+            <RemoteButton label="Diminuir volume" keyName="volume-down" behaviour="repeat" send={send} class="volume-button">
+              <Icon name="remove" />
+            </RemoteButton>
+            <span class="volume-mark">
+              <Icon name="volumeUp" size={20} />
+            </span>
+            <RemoteButton label="Aumentar volume" keyName="volume-up" behaviour="repeat" send={send} class="volume-button">
+              <Icon name="add" />
+            </RemoteButton>
+          </div>
         </div>
       </fieldset>
     </main>

@@ -1,6 +1,7 @@
 import add from "@material-symbols/svg-500/rounded/add.svg?raw";
 import addBox from "@material-symbols/svg-500/rounded/add_box.svg?raw";
 import close from "@material-symbols/svg-500/rounded/close.svg?raw";
+import chevronUp from "@material-symbols/svg-500/rounded/keyboard_arrow_up.svg?raw";
 import error from "@material-symbols/svg-500/rounded/error.svg?raw";
 import apps from "@material-symbols/svg-500/rounded/apps.svg?raw";
 import arrowBack from "@material-symbols/svg-500/rounded/arrow_back.svg?raw";
@@ -25,6 +26,6 @@ import volumeUp from "@material-symbols/svg-500/rounded/volume_up.svg?raw";
 import wifiOff from "@material-symbols/svg-500/rounded/wifi_off.svg?raw";
 
 /** Material Symbols Rounded, as in the design; only the ones the page uses get bundled. */
-export const icons = { add, addBox, apps, arrowBack, close, error, graphicEq, home, iosShare, linkOff, mobileOff, multitasking, playArrow, playCircle, playPause, power, remove, search, settingsInputAntenna, settingsInputHdmi, settingsRemote, touchApp, volumeOff, volumeUp, wifiOff };
+export const icons = { add, addBox, apps, arrowBack, chevronUp, close, error, graphicEq, home, iosShare, linkOff, mobileOff, multitasking, playArrow, playCircle, playPause, power, remove, search, settingsInputAntenna, settingsInputHdmi, settingsRemote, touchApp, volumeOff, volumeUp, wifiOff };
 
 export type IconName = keyof typeof icons;

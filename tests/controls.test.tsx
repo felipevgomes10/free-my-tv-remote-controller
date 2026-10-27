@@ -164,3 +164,63 @@ describe("the buttons", () => {
     expect(bridge.keys()).toEqual(Array(4).fill([key, "press"]));
   });
 });
+
+describe("the D-pad alongside the Touchpad", () => {
+  it.each([
+    ["Cima", "up"], ["Baixo", "down"],
+    ["Esquerda", "left"], ["Direita", "right"], ["OK", "ok"],
+  ])("%s sends %s and keeps the Touchpad available", async (name, key) => {
+    await openControls();
+    expect(screen.getByRole("group", { name: "D-pad" })).toBeTruthy();
+    fireEvent.pointerDown(button(name), { pointerId: 1 });
+    release(button(name));
+    fireEvent.click(button(name), { detail: 1 });
+    touch(touchpad(), [[100, 100]]);
+    release(touchpad());
+    await sent([[key, "press"], ["ok", "press"]]);
+  });
+
+  it("repeats a direction while held and stops on release", async () => {
+    await openControls();
+    vi.useFakeTimers();
+    fireEvent.pointerDown(button("Direita"), { pointerId: 1 });
+    await vi.advanceTimersByTimeAsync(REPEAT_DELAY_MS + REPEAT_EVERY_MS * 3 + 10);
+    release(button("Direita"));
+    await vi.advanceTimersByTimeAsync(1000);
+    expect(bridge.keys()).toEqual(Array(4).fill(["right", "press"]));
+  });
+
+  it.each(["pointerCancel", "lostPointerCapture", "blur", "hidden", "tab"])("stops repeating on %s", async (reason) => {
+    await openControls();
+    vi.useFakeTimers();
+    fireEvent.pointerDown(button("Cima"));
+    if (reason === "pointerCancel") fireEvent.pointerCancel(button("Cima"));
+    if (reason === "lostPointerCapture") fireEvent.lostPointerCapture(button("Cima"));
+    if (reason === "blur") fireEvent(window, new Event("blur"));
+    if (reason === "hidden") {
+      const hidden = vi.spyOn(document, "hidden", "get").mockReturnValue(true);
+      fireEvent(document, new Event("visibilitychange"));
+      hidden.mockRestore();
+    }
+    if (reason === "tab") fireEvent.click(screen.getByRole("tab", { name: "Apps" }));
+    await vi.advanceTimersByTimeAsync(1500);
+    expect(bridge.keys()).toEqual([["up", "press"]]);
+  });
+
+  it("holds OK and ends the hold on cancellation", async () => {
+    await openControls();
+    vi.useFakeTimers();
+    fireEvent.pointerDown(button("OK"));
+    await vi.advanceTimersByTimeAsync(BUTTON_HOLD_MS + 10);
+    fireEvent.pointerCancel(button("OK"));
+    await vi.advanceTimersByTimeAsync(1000);
+    expect(bridge.keys()).toEqual([["ok", "hold-start"], ["ok", "hold-end"]]);
+  });
+
+  it("accepts native keyboard and assistive clicks", async () => {
+    await openControls();
+    fireEvent.click(button("Esquerda"), { detail: 0 });
+    fireEvent.click(button("OK"), { detail: 0 });
+    await sent([["left", "press"], ["ok", "press"]]);
+  });
+});

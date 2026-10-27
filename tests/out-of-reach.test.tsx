@@ -38,7 +38,7 @@ describe("Sem conexão", () => {
     bridge = new FakeBridge({ up: false });
     render(<App bridgeUrl={BRIDGE_URL} />);
     expect(await screen.findByText("Sem conexão com a TV")).toBeTruthy();
-    for (const name of ["Voltar", "Home", "Mudo", "Aumentar volume", "Desligar"]) {
+    for (const name of ["Voltar", "Home", "Mudo", "Aumentar volume", "Desligar", "Cima", "Baixo", "Esquerda", "Direita", "OK"]) {
       expect(button(name).matches(":disabled")).toBe(true);
     }
   });
@@ -91,6 +91,22 @@ describe("Sem conexão", () => {
     render(<App bridgeUrl={BRIDGE_URL} />);
     await screen.findByText("Sem conexão com a TV");
     expect(screen.getByText("TV da sala")).toBeTruthy();
+  });
+
+  it("stops a held D-pad direction on disconnection without resuming after reconnecting", async () => {
+    bridge = new FakeBridge();
+    render(<App bridgeUrl={BRIDGE_URL} />);
+    await screen.findByText("TV da sala");
+    fireEvent.pointerDown(button("Cima"));
+    await waitAll(20);
+    expect(bridge.keys()).toEqual([["up", "press"]]);
+    bridge.goDown();
+    await screen.findByText("Sem conexão com a TV");
+    await press("Direita");
+    bridge.comeBack();
+    await waitAll(RECONNECT_DELAYS_MS[0] + 1500);
+    expect(outOfReach()).toBeNull();
+    expect(bridge.keys()).toEqual([["up", "press"]]);
   });
 });
 

@@ -74,7 +74,9 @@ button {
 /* Controles */
 
 .controls {
-  gap: 28px;
+  gap: 16px;
+  overflow-y: auto;
+  touch-action: pan-y;
 }
 
 .controls-header {
@@ -82,6 +84,7 @@ button {
   align-items: center;
   justify-content: space-between;
   min-height: 44px;
+  flex: none;
 }
 
 .tv-name {
@@ -131,7 +134,7 @@ button {
 .touchpad {
   position: relative;
   flex: 1;
-  min-height: 200px;
+  min-height: 140px;
   overflow: hidden;
   border: 1px solid #ffffff14;
   border-radius: 36px;
@@ -181,14 +184,77 @@ button {
 
 .buttons {
   display: flex;
-  flex-wrap: wrap;
-  justify-content: space-between;
-  row-gap: 16px;
-  padding: 0 10px;
+  flex: none;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.navigation-controls {
+  display: grid;
+  grid-template-columns: 44px minmax(0, 1fr) 44px;
+  align-items: center;
+  gap: 8px;
+}
+
+.navigation-controls .round-button {
+  width: 44px;
+  height: 44px;
+}
+
+.dpad {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  grid-template-rows: repeat(3, minmax(0, 1fr));
+  justify-self: center;
+  width: min(100%, 216px);
+  aspect-ratio: 1;
+  padding: 5px;
+  gap: 3px;
+  border: 1px solid #ffffff14;
+  border-radius: 50%;
+  background: var(--glass-soft);
+  touch-action: none;
+}
+
+.dpad-button {
+  display: grid;
+  place-items: center;
+  min-width: 0;
+  padding: 0;
+  border: 0;
+  border-radius: 18px;
+  background: transparent;
+  color: var(--text-primary);
+  font: inherit;
+  touch-action: none;
+}
+
+.dpad-button:active { background: var(--glass-strong); }
+.dpad-button:focus-visible { outline: 2px solid var(--text-primary); outline-offset: -2px; }
+.dpad-up { grid-area: 1 / 2; }
+.dpad-left { grid-area: 2 / 1; }
+.dpad-right { grid-area: 2 / 3; }
+.dpad-down { grid-area: 3 / 2; }
+.dpad-left .icon { transform: rotate(-90deg); }
+.dpad-right .icon { transform: rotate(90deg); }
+.dpad-down .icon { transform: rotate(180deg); }
+.dpad-ok {
+  grid-area: 2 / 2;
+  border-radius: 50%;
+  background: var(--glass);
+  font-size: 17px;
+  font-weight: 700;
+}
+
+.secondary-controls {
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
 }
 
 .multitasking-action {
-  flex: 0 0 100%;
+  flex: 1;
+  min-width: 0;
 }
 
 .multitasking-button {
@@ -220,10 +286,10 @@ button {
 
 .volume {
   display: flex;
-  flex-direction: column;
+  flex: none;
   align-items: center;
-  width: 76px;
-  height: 172px;
+  width: 136px;
+  height: 44px;
   overflow: hidden;
   border-radius: 38px;
   background: var(--glass);
@@ -231,7 +297,7 @@ button {
 
 .volume-button {
   flex: 1;
-  width: 100%;
+  height: 100%;
   background: transparent;
 }
 
@@ -458,7 +524,7 @@ button {
 }
 
 .buttons.control-group {
-  padding: 0 10px;
+  padding: 0;
 }
 
 .touchpad.disabled {
@@ -674,7 +740,24 @@ button {
 }
 
 .shell-content > .controls {
-  gap: 20px;
+  gap: 16px;
+}
+
+@media (max-height: 700px) {
+  .shell-content > .controls { gap: 12px; }
+  .buttons { gap: 12px; }
+  .dpad { max-width: 176px; }
+  .touchpad { min-height: 120px; }
+}
+
+@media (max-height: 620px) {
+  .shell-content > .controls { gap: 8px; }
+  .buttons { gap: 8px; }
+  .dpad { max-width: 150px; }
+  .touchpad { min-height: 80px; border-radius: 24px; }
+  .touchpad-hint { bottom: 16px; font-size: 13px; }
+  .shortcut { height: 32px; }
+  .tab-capsule { height: 56px; }
 }
 
 /* Match the Home's glass silhouettes and gentle 900 ms pulse (Skeleton.kt). */

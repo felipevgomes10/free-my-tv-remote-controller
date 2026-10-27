@@ -2,19 +2,19 @@
 
 # FMTV Controller
 
-**The iPhone remote for a TV running [Free My TV](https://github.com/felipevgomes10/free-my-tv): swipe, tap, done — in Safari, from the Home Screen, with no app to install.**
+**The iPhone remote for a TV running [Free My TV](https://github.com/felipevgomes10/free-my-tv): Touchpad and D-pad together, in Safari, from the Home Screen, with no app to install.**
 
 ![iOS Safari](https://img.shields.io/badge/iOS-Safari%20web%20app-0a84ff?logo=safari&logoColor=white)
 ![Preact](https://img.shields.io/badge/Preact-TypeScript%20%2B%20Vite-673ab8?logo=preact&logoColor=white)
 ![UI in pt-BR](https://img.shields.io/badge/UI-pt--BR-009c3b)
 
-<img src="docs/design/controls.jpg" alt="FMTV Controller: the Touchpad above Voltar, Home, play/pause, mute and the volume capsule" width="320">
+<img src="docs/design/controls.jpg" alt="FMTV Controller: the Touchpad stays visible above the D-pad, with Voltar, Home, play/pause, mute, Multitarefas and volume" width="320">
 
 </div>
 
 ---
 
-The Remote is always under a cushion. Everyone in the house already has an iPhone on the sofa, but the TV gives them nothing to use it for: Google's own phone remote expects Google's launcher, which Free My TV replaces. **FMTV Controller** is a remote control in the spirit of the Apple TV Remote: a Touchpad that moves the TV's focus as you swipe, and the buttons you reach for most, opened from an icon on the iPhone's Home Screen.
+The Remote is always under a cushion. Everyone in the house already has an iPhone on the sofa, but the TV gives them nothing to use it for: Google's own phone remote expects Google's launcher, which Free My TV replaces. **FMTV Controller** puts a Touchpad and a D-pad on the same screen: swipe to move the TV's focus or use the directional buttons, with both always available. It opens from an icon on the iPhone's Home Screen.
 
 It is not an App Store app. It is a page the Free My TV Home serves on the home network, added to the Home Screen from Safari, and paired once with a code the TV shows.
 
@@ -24,7 +24,7 @@ All previews below are exported from the current [`design.pen`](design.pen). The
 
 <table>
   <tr>
-    <td width="33%"><img src="docs/design/controls.jpg" alt="Controls" width="100%"><br><sub><b>Controles</b> — the Touchpad and the Remote's buttons</sub></td>
+    <td width="33%"><img src="docs/design/controls.jpg" alt="Touchpad and D-pad visible together" width="100%"><br><sub><b>Controles</b> — Touchpad, D-pad and the Remote's buttons</sub></td>
     <td width="33%"><img src="docs/design/controls-swiping.jpg" alt="Swiping right on the Touchpad" width="100%"><br><sub><b>Swiping</b> — a light follows the finger</sub></td>
     <td width="33%"><img src="docs/design/add-to-home-screen.jpg" alt="Add to Home Screen instructions" width="100%"><br><sub><b>Adicionar à Tela de Início</b> — the first open, in Safari</sub></td>
   </tr>
@@ -41,14 +41,14 @@ All previews below are exported from the current [`design.pen`](design.pen). The
 </table>
 
 <details>
-<summary><b>The tabs, and the Teclado still to come</b></summary>
+<summary><b>Compact controls and the other tabs</b></summary>
 <br>
 
-Page v0.2.0, with the Home's v0.6.0, adds the Shortcut Buttons and the Apps and Assistir tabs ([companion features' spec](.scratch/companion/spec.md), [ADR 0006](docs/adr/0006-companion-features-ask-the-home.md)). The Teclado comes next, once a prototype on the TV settles how typing gets into its apps.
+The compact layout keeps the Touchpad and D-pad visible together at an available app viewport of 320 × 568. The Shortcut Buttons and the Apps and Assistir tabs arrived in page v0.2.0 with the Home's v0.6.0 ([companion features' spec](.scratch/companion/spec.md), [ADR 0006](docs/adr/0006-companion-features-ask-the-home.md)).
 
 <table>
   <tr>
-    <td width="33%"><img src="docs/design/keyboard.jpg" alt="Typing into the TV's search field" width="100%"><br><sub><b>Teclado</b> — type into the field open on the TV</sub></td>
+    <td width="33%"><img src="docs/design/controls-compact.jpg" alt="Touchpad and D-pad together in the compact 320 by 568 layout" width="100%"><br><sub><b>Controles compactos</b> — both navigation surfaces stay visible</sub></td>
     <td width="33%"><img src="docs/design/apps.jpg" alt="Open apps, inputs and all apps" width="100%"><br><sub><b>Apps</b> — Open Apps, Entradas and every app</sub></td>
     <td width="33%"><img src="docs/design/watch.jpg" alt="Continue watching and today's highlights" width="100%"><br><sub><b>Assistir</b> — Continuar assistindo and Explorar</sub></td>
   </tr>
@@ -56,15 +56,20 @@ Page v0.2.0, with the Home's v0.6.0, adds the Shortcut Buttons and the Apps and 
 
 </details>
 
+Teclado is excluded after the TV experiments failed to meet the required behavior across apps ([ADR 0007](docs/adr/0007-typing-needs-a-supported-text-field.md)). Its old design frames remain labeled as archived studies.
+
 ## What it does
 
 **The controls**
-- **Touchpad** — swipe to move the TV's focus, one step every 48 px; tap for OK; touch and hold to hold OK, which opens Edit Mode on the Home. A tap is never mistaken for a short swipe.
-- **Buttons** — Voltar, Home (twice for the App Switcher, held for the Notification Panel, as on the Remote), play/pause, mute, and volume, which keeps changing while held. Power sits apart at the top, away from the thumb.
-- **Haptics** — Safari uses a native switch label for button taps, and a directly dragged native switch for the Touchpad. The switch's coordinates follow the real finger to produce ticks during navigation; no synthetic click is used. Native tracking has an initial delay, and several steps in one touch event may share a tick. Browsers with the Vibration API use that API instead. The controls work the same without haptics.
 
-The full page's swipe and button haptics are physically checked in the Chrome-installed PWA on the owner's iPhone with iOS 26.6.2. Native switch props use boolean `true`: an empty string would be coerced to `false` by WebKit and silently turn these controls back into ordinary checkboxes. The regression tests model this writable, attribute-reflecting DOM property.
+- **Touchpad** — swipe to move the TV's focus, one step every 48 px; tap for OK; touch and hold to hold OK, which opens Edit Mode on the Home. A tap is never mistaken for a short swipe.
+- **D-pad** — four directions and OK below the Touchpad, with both visible at the same time. Hold a direction to keep moving; tap OK to select, or hold it for a long press. Repetition stops on release, cancellation, loss of connection, leaving the Controls tab, or putting the page in the background. Native keyboard and assistive clicks also work.
+- **Buttons** — Voltar, Home (twice for the App Switcher, held for the Notification Panel, as on the Remote), play/pause, mute, and volume, which keeps changing while held. Power sits apart at the top, away from the thumb.
+- **Multitarefas** — beside the horizontal volume capsule, opens the App Switcher over the app visible on the TV. Touchpad or D-pad navigates it; Voltar dismisses it ([ADR 0008](docs/adr/0008-a-dedicated-button-opens-the-app-switcher-over-the-app.md)).
+- **Haptics** — Safari uses a native switch label for button taps, and a directly dragged native switch for the Touchpad. The switch's coordinates follow the real finger to produce ticks during navigation; no synthetic click is used. Native tracking has an initial delay, and several steps in one touch event may share a tick. Browsers with the Vibration API use that API instead. The controls work the same without haptics.
 - **Shortcut Buttons** — under the Touchpad, a row with the Remote's Netflix, Globoplay, Prime Video, Disney+, YouTube and Input buttons, each named after what the Owner assigned to it and doing what the Remote's button does.
+
+The Touchpad and the existing buttons' haptics are physically checked in the Chrome-installed PWA on the owner's iPhone with iOS 26.6.2. The new D-pad reuses the button behavior; its physical haptics have not yet been checked. Native switch props use boolean `true`: an empty string would be coerced to `false` by WebKit and silently turn these controls back into ordinary checkboxes. The regression tests model this writable, attribute-reflecting DOM property.
 
 **The Apps tab** (page v0.2.0 with the Home's v0.6.0)
 - **Abertos** — the Open Apps, most recent first, with their App Banners: a tap switches the TV back to one, its ✕ closes it; an app playing music says *Tocando* and has no ✕.
@@ -100,13 +105,15 @@ The full page's swipe and button haptics are physically checked in the Chrome-in
 
 **Status:** working on the owner's TCL with an iPhone 17 Pro, since page v0.1.0 and the Home's v0.5.0: in the Home, YouTube and Netflix, a key takes about as long as the Remote's, pairing and revoking work, and Linking survives a reboot of the TV. The original script-triggered haptic gave no tick on that iPhone, consistent with [WebKit's trusted-event requirement](https://github.com/WebKit/WebKit/commit/fc1ef83). On iOS 26.6.2 the owner confirmed haptics during real native dragging in the standalone prototype, including immediate, reverse and fast swipes. Its report records 54 navigation steps and 41 candidate requests (13 early steps); exact physical pulse counts are not measured. The owner then checked the integrated production pad locally and confirmed swipe haptics, a single OK on tap, and hold-start/hold-end on holding and releasing. The Shortcut Buttons and the Apps and Assistir tabs of v0.2.0 are checked on the Android TV emulator with the real Home and TMDB; their walk on the TV is still to come.
 
+The D-pad is implemented in the current source and checked against the fake bridge and in the browser, including simultaneous Touchpad use and layouts from 320 × 568 to 430 × 932. It has not yet been installed and checked on the TV.
+
 ## How it works
 
 ```
              the iPhone                                     the TV
 ┌──────────────────────────────────┐       ┌──────────────────────────────────────────┐
 │ FMTV Controller (Home Screen)    │       │ Free My TV Home                          │
-│   Touchpad, buttons ── keys ─────┼──WS──►│   bridge ── keys ──► the TV's own ADB    │
+│   Touchpad + D-pad ── keys ──────┼──WS──►│   bridge ── keys ──► the TV's own ADB    │
 │                      ◄── state ──┼───────┤     │      (127.0.0.1:5555, cmd input)   │
 │   served by the Home over HTTP   │◄──────┤   serves this page at the version it     │
 └──────────────────────────────────┘       │   pins from this repository's releases   │
@@ -198,7 +205,7 @@ src/
 ├── protocol.ts      the protocol's messages and version
 ├── service-worker.js  the network-first copy of the page (ADR 0004)
 ├── storage.ts       the Paired Phone's credential and the last TV's name
-└── components/      TabBar, TabPage, Controls, Touchpad, RemoteButton, PairingScreen, AddToHomeScreen, MessageScreen, Icon
+└── components/      TabBar, TabPage, Controls, Touchpad, Dpad, RemoteButton, MultitaskingButton, PairingScreen, AddToHomeScreen, MessageScreen, Icon
 protocol/            the protocol's contract and its JSON examples
 tests/               tests against a fake bridge (mock-socket)
 dev/                 the fake bridge for `npm run dev`
