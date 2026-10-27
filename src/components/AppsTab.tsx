@@ -1,9 +1,10 @@
 import { useEffect, useState } from "preact/hooks";
-import { useActions, useCompanion, useList } from "../companion";
+import { useActions, useCompanion, useListAnswer } from "../companion";
 import { tick } from "../haptics";
 import { HapticFeedback } from "./HapticFeedback";
 import { Picture } from "../pictures";
 import { Icon } from "./Icon";
+import { ListSkeleton } from "./ListSkeleton";
 import { TabPage } from "./TabPage";
 
 type App = { package: string; label: string; picture: string; inTray: boolean };
@@ -13,9 +14,9 @@ type Input = { input: string; name: string; port: string; kind: "hdmi" | "antenn
 /** The Apps tab: the TV's Open Apps, its Inputs and every installed app, each opening on the TV. */
 export function AppsTab() {
   const { status } = useCompanion();
-  const openApps = useList<OpenApp>("open-apps");
-  const inputs = useList<Input>("inputs");
-  const apps = useList<App>("apps");
+  const { items: openApps, failed: openAppsFailed } = useListAnswer<OpenApp>("open-apps");
+  const { items: inputs, failed: inputsFailed } = useListAnswer<Input>("inputs");
+  const { items: apps, failed: appsFailed } = useListAnswer<App>("apps");
   const { run, busy, failed } = useActions();
 
   const open = (key: string, message: Record<string, string>) => {
@@ -35,81 +36,95 @@ export function AppsTab() {
 
   return (
     <TabPage title="Apps" status={status}>
-      {!!stillOpen?.length && (
-        <section class="tab-section" aria-labelledby="open-apps-title">
+      {(stillOpen === undefined || stillOpen.length > 0) && (
+        <section class="tab-section" aria-labelledby="open-apps-title" aria-busy={openApps === undefined && !openAppsFailed}>
           <header class="section-header">
             <h2 class="section-title" id="open-apps-title">
               Abertos
             </h2>
             <span class="section-note">Mais recente primeiro</span>
           </header>
-          <ul class="open-app-row">
-            {stillOpen.map((app) => (
-              <li key={app.package} class="open-app">
-                <button
-                  type="button"
-                  class={`app-tile${state(`app:${app.package}`)}`}
-                  aria-label={`Voltar para ${app.label}`}
-                  aria-busy={busy.has(`app:${app.package}`)}
-                  onClick={() => open(`app:${app.package}`, { package: app.package })}
-                >
-                  <Picture id={app.picture} class="app-banner" />
-                  <span class="app-label">
-                    {app.label}
-                    {app.playing && (
-                      <span class="playing">
-                        <Icon name="graphicEq" size={16} />
-                        Tocando
+          {stillOpen ? (
+            <>
+              <ul class="open-app-row">
+                {stillOpen.map((app) => (
+                  <li key={app.package} class="open-app">
+                    <button
+                      type="button"
+                      class={`app-tile${state(`app:${app.package}`)}`}
+                      aria-label={`Voltar para ${app.label}`}
+                      aria-busy={busy.has(`app:${app.package}`)}
+                      onClick={() => open(`app:${app.package}`, { package: app.package })}
+                    >
+                      <Picture id={app.picture} class="app-banner" />
+                      <span class="app-label">
+                        {app.label}
+                        {app.playing && (
+                          <span class="playing">
+                            <Icon name="graphicEq" size={16} />
+                            Tocando
+                          </span>
+                        )}
                       </span>
+                      <HapticFeedback />
+                    </button>
+                    {!app.playing && (
+                      <button
+                        type="button"
+                        class={`close-app${state(`close:${app.package}`)}`}
+                        aria-label={`Fechar ${app.label}`}
+                        aria-busy={busy.has(`close:${app.package}`)}
+                        onClick={() => close(app)}
+                      >
+                        <Icon name="close" size={20} />
+                        <HapticFeedback />
+                      </button>
                     )}
-                  </span>
-                  <HapticFeedback />
-                </button>
-                {!app.playing && (
-                  <button
-                    type="button"
-                    class={`close-app${state(`close:${app.package}`)}`}
-                    aria-label={`Fechar ${app.label}`}
-                    aria-busy={busy.has(`close:${app.package}`)}
-                    onClick={() => close(app)}
-                  >
-                    <Icon name="close" size={20} />
-                    <HapticFeedback />
-                  </button>
-                )}
-              </li>
-            ))}
-          </ul>
-          <p class="section-help">Fechar encerra o app na TV. Apps tocando música não podem ser fechados.</p>
+                  </li>
+                ))}
+              </ul>
+              <p class="section-help">Fechar encerra o app na TV. Apps tocando música não podem ser fechados.</p>
+            </>
+          ) : openAppsFailed ? (
+            <p class="tab-notice" role="status">Não deu para carregar os apps abertos. Tente abrir esta aba de novo.</p>
+          ) : (
+            <ListSkeleton of="open-apps" label="Carregando os apps abertos…" />
+          )}
         </section>
       )}
 
-      {!!inputs?.length && (
-        <section class="tab-section" aria-labelledby="inputs-title">
+      {(inputs === undefined || inputs.length > 0) && (
+        <section class="tab-section" aria-labelledby="inputs-title" aria-busy={inputs === undefined && !inputsFailed}>
           <h2 class="section-title" id="inputs-title">
             Entradas
           </h2>
-          <div class="input-row">
-            {inputs.map((input) => (
-              <button
-                type="button"
-                key={input.input}
-                class={`input-card${state(`input:${input.input}`)}`}
-                aria-label={`Mudar para ${input.name}`}
-                aria-busy={busy.has(`input:${input.input}`)}
-                onClick={() => open(`input:${input.input}`, { input: input.input })}
-              >
-                <Icon name={input.kind === "antenna" ? "settingsInputAntenna" : "settingsInputHdmi"} size={24} />
-                <span class="input-name">{input.name}</span>
-                {input.port !== input.name && <span class="input-port">{input.port}</span>}
-                <HapticFeedback />
-              </button>
-            ))}
-          </div>
+          {inputs ? (
+            <div class="input-row">
+              {inputs.map((input) => (
+                <button
+                  type="button"
+                  key={input.input}
+                  class={`input-card${state(`input:${input.input}`)}`}
+                  aria-label={`Mudar para ${input.name}`}
+                  aria-busy={busy.has(`input:${input.input}`)}
+                  onClick={() => open(`input:${input.input}`, { input: input.input })}
+                >
+                  <Icon name={input.kind === "antenna" ? "settingsInputAntenna" : "settingsInputHdmi"} size={24} />
+                  <span class="input-name">{input.name}</span>
+                  {input.port !== input.name && <span class="input-port">{input.port}</span>}
+                  <HapticFeedback />
+                </button>
+              ))}
+            </div>
+          ) : inputsFailed ? (
+            <p class="tab-notice" role="status">Não deu para carregar as entradas da TV. Tente abrir esta aba de novo.</p>
+          ) : (
+            <ListSkeleton of="inputs" label="Carregando as entradas da TV…" />
+          )}
         </section>
       )}
 
-      <section class="tab-section" aria-labelledby="apps-title">
+      <section class="tab-section" aria-labelledby="apps-title" aria-busy={apps === undefined && !appsFailed}>
         <h2 class="section-title" id="apps-title">
           Todos os apps
         </h2>
@@ -130,8 +145,10 @@ export function AppsTab() {
               </button>
             ))}
           </div>
+        ) : appsFailed ? (
+          <p class="tab-notice" role="status">Não deu para carregar os apps da TV. Tente abrir esta aba de novo.</p>
         ) : (
-          <p class="tab-notice">Carregando os apps da TV…</p>
+          <ListSkeleton of="apps" label="Carregando os apps da TV…" />
         )}
       </section>
     </TabPage>

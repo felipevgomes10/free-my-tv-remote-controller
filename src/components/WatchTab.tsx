@@ -1,10 +1,11 @@
 import { useEffect, useState } from "preact/hooks";
 import { RequestFailed } from "../bridge";
-import { useActions, useCompanion, useList, useListAnswer } from "../companion";
+import { useActions, useCompanion, useListAnswer } from "../companion";
 import { tick } from "../haptics";
 import { HapticFeedback } from "./HapticFeedback";
 import { Picture } from "../pictures";
 import { Icon } from "./Icon";
+import { ListSkeleton } from "./ListSkeleton";
 import { TabPage } from "./TabPage";
 import { explorarProblem, KIND_LABEL, type TitleSummary, TitleScreen } from "./TitleScreen";
 
@@ -49,7 +50,7 @@ function timeLeft(minutes: number): string {
 /** The Assistir tab: what to watch, each resuming or opening on the TV. */
 export function WatchTab() {
   const { status } = useCompanion();
-  const upNext = useList<UpNext>("up-next");
+  const { items: upNext, failed: upNextFailed } = useListAnswer<UpNext>("up-next");
   const trending = useListAnswer<Trending>("trending");
   const [open, setOpen] = useState<TitleSummary>();
   const [query, setQuery] = useState("");
@@ -112,47 +113,53 @@ export function WatchTab() {
         </section>
       ) : (
         <>
-          {!!upNext?.length && (
-            <section class="tab-section" aria-labelledby="up-next-title">
+          {(upNext === undefined || upNext.length > 0) && (
+            <section class="tab-section" aria-labelledby="up-next-title" aria-busy={upNext === undefined && !upNextFailed}>
               <h2 class="section-title" id="up-next-title">
                 Continuar assistindo
               </h2>
-              <ul class="up-next-list">
-                {upNext.map((entry) => {
-                  const title = entry.title ?? `Continuar no ${entry.app}`;
-                  return (
-                    <li key={entry.upNext}>
-                      <button
-                        type="button"
-                        class={`up-next${busy.has(entry.upNext) ? " busy" : ""}${failed.has(entry.upNext) ? " failed" : ""}`}
-                        aria-label={entry.title ? `Continuar ${entry.title}` : title}
-                        aria-busy={busy.has(entry.upNext)}
-                        onClick={() => resume(entry)}
-                      >
-                        <span class="up-next-still">
-                          <Picture id={entry.picture} class="up-next-picture" />
-                          {entry.progress != null && (
-                            <span class="up-next-progress">
-                              <span style={{ width: `${Math.round(entry.progress * 100)}%` }} />
-                            </span>
-                          )}
-                        </span>
-                        <span class="up-next-text">
-                          <span class="up-next-title">{title}</span>
-                          {entry.episode && <span class="up-next-episode">{entry.episode}</span>}
-                          <span class="up-next-app">{entry.minutesLeft != null ? `${entry.app}, ${timeLeft(entry.minutesLeft)}` : entry.app}</span>
-                        </span>
-                        <Icon name="playArrow" size={26} />
-                        <HapticFeedback />
-                      </button>
-                    </li>
-                  );
-                })}
-              </ul>
+              {upNext ? (
+                <ul class="up-next-list">
+                  {upNext.map((entry) => {
+                    const title = entry.title ?? `Continuar no ${entry.app}`;
+                    return (
+                      <li key={entry.upNext}>
+                        <button
+                          type="button"
+                          class={`up-next${busy.has(entry.upNext) ? " busy" : ""}${failed.has(entry.upNext) ? " failed" : ""}`}
+                          aria-label={entry.title ? `Continuar ${entry.title}` : title}
+                          aria-busy={busy.has(entry.upNext)}
+                          onClick={() => resume(entry)}
+                        >
+                          <span class="up-next-still">
+                            <Picture id={entry.picture} class="up-next-picture" />
+                            {entry.progress != null && (
+                              <span class="up-next-progress">
+                                <span style={{ width: `${Math.round(entry.progress * 100)}%` }} />
+                              </span>
+                            )}
+                          </span>
+                          <span class="up-next-text">
+                            <span class="up-next-title">{title}</span>
+                            {entry.episode && <span class="up-next-episode">{entry.episode}</span>}
+                            <span class="up-next-app">{entry.minutesLeft != null ? `${entry.app}, ${timeLeft(entry.minutesLeft)}` : entry.app}</span>
+                          </span>
+                          <Icon name="playArrow" size={26} />
+                          <HapticFeedback />
+                        </button>
+                      </li>
+                    );
+                  })}
+                </ul>
+              ) : upNextFailed ? (
+                <p class="tab-notice" role="status">Não deu para carregar o que você estava assistindo. Tente abrir esta aba de novo.</p>
+              ) : (
+                <ListSkeleton of="up-next" label="Carregando o que você estava assistindo…" />
+              )}
             </section>
           )}
 
-          <section class="tab-section" aria-labelledby="trending-title">
+          <section class="tab-section" aria-labelledby="trending-title" aria-busy={trending.items === undefined && !trending.failed}>
             <header class="section-header">
               <h2 class="section-title" id="trending-title">
                 Em alta hoje
@@ -180,8 +187,10 @@ export function WatchTab() {
                   </li>
                 ))}
               </ul>
+            ) : trending.items || trending.failed ? (
+              <p class="tab-notice" role="status">{trending.failed ? explorarProblem(trending.failed, "os destaques de hoje") : "Nada em alta agora."}</p>
             ) : (
-              <p class="tab-notice">{trending.failed ? explorarProblem(trending.failed, "os destaques de hoje") : trending.items ? "Nada em alta agora." : "Carregando os destaques…"}</p>
+              <ListSkeleton of="trending" label="Carregando os destaques…" />
             )}
           </section>
         </>

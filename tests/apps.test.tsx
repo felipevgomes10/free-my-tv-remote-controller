@@ -33,6 +33,42 @@ async function openApps() {
 
 const sent = (type: string, field: string) => bridge.received.find((m) => m.type === type && field in m);
 
+describe("Loading the Apps tab", () => {
+  it("keeps each list's skeleton until its own answer, including an empty answer", async () => {
+    bridge.silentOn.add("list");
+    await openApps();
+    const pending = () => screen.queryAllByRole("status", { name: /^Carregando/ });
+    expect(pending()).toHaveLength(3);
+    expect(screen.getAllByRole("region").every((section) => section.getAttribute("aria-busy") === "true")).toBe(true);
+    expect(screen.queryAllByRole("button")).toHaveLength(0);
+
+    bridge.push("apps", examples["list-apps"].items);
+    await screen.findByRole("button", { name: "Abrir Netflix" });
+    expect(pending()).toHaveLength(2);
+    bridge.push("open-apps", []);
+    await waitFor(() => expect(screen.queryByRole("heading", { name: "Abertos" })).toBeNull());
+    expect(pending()).toHaveLength(1);
+    bridge.push("inputs", []);
+    await waitFor(() => expect(pending()).toHaveLength(0));
+    expect(screen.queryByRole("heading", { name: "Entradas" })).toBeNull();
+
+    fireEvent.click(screen.getByRole("tab", { name: "Controle" }));
+    fireEvent.click(screen.getByRole("tab", { name: "Apps" }));
+    expect(pending()).toHaveLength(0);
+    expect(screen.getByRole("button", { name: "Abrir Netflix" })).toBeTruthy();
+  });
+
+  it("replaces failed requests with a notice rather than leaving skeletons running", async () => {
+    bridge.failing.list = "error";
+    await openApps();
+    await screen.findByText("Não deu para carregar os apps da TV. Tente abrir esta aba de novo.");
+    expect(screen.getByText("Não deu para carregar os apps abertos. Tente abrir esta aba de novo.")).toBeTruthy();
+    expect(screen.getByText("Não deu para carregar as entradas da TV. Tente abrir esta aba de novo.")).toBeTruthy();
+    expect(screen.queryAllByRole("status", { name: /^Carregando/ })).toHaveLength(0);
+    expect(screen.getAllByRole("region").every((section) => section.getAttribute("aria-busy") === "false")).toBe(true);
+  });
+});
+
 describe("Abertos", () => {
   it("shows the Open Apps, most recent first; a playing app says Tocando and has no ✕", async () => {
     await openApps();

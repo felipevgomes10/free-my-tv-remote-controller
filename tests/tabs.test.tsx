@@ -60,7 +60,7 @@ describe("the tabs", () => {
     render(<App bridgeUrl={BRIDGE_URL} />);
     await screen.findByText("TV da sala");
     fireEvent.click(tab("Apps"));
-    expect(screen.queryByRole("status")).toBeNull();
+    await waitFor(() => expect(screen.queryAllByRole("status")).toHaveLength(0));
   });
 });
 

@@ -7976,6 +7976,935 @@
           "letterSpacing": 4
         }
       ]
+    },
+    {
+      "type": "frame",
+      "id": "l7u41",
+      "x": 0,
+      "y": 5000,
+      "name": "Apps — Carregando",
+      "context": "Skeleton inicial: títulos e navegação permanecem; banners, nomes de apps e entradas aguardam os dados da TV. Usa o token glass e barras arredondadas da Home.",
+      "clip": true,
+      "width": 402,
+      "height": 874,
+      "fill": "$bg",
+      "layout": "vertical",
+      "children": [
+        {
+          "id": "NVEhF",
+          "type": "ref",
+          "ref": "TeWJu",
+          "name": "Status Bar"
+        },
+        {
+          "type": "frame",
+          "id": "KWq5a",
+          "name": "Conteúdo",
+          "clip": true,
+          "width": "fill_container",
+          "height": "fill_container",
+          "layout": "vertical",
+          "gap": 28,
+          "padding": [
+            4,
+            0,
+            16,
+            0
+          ],
+          "children": [
+            {
+              "type": "frame",
+              "id": "x1Tzu",
+              "name": "Título",
+              "width": "fill_container",
+              "layout": "vertical",
+              "gap": 14,
+              "padding": [
+                0,
+                20
+              ],
+              "children": [
+                {
+                  "type": "text",
+                  "id": "unkFU",
+                  "name": "Título",
+                  "fill": "$text-primary",
+                  "content": "Apps",
+                  "fontFamily": "$font",
+                  "fontSize": 28,
+                  "fontWeight": "700"
+                }
+              ]
+            },
+            {
+              "type": "frame",
+              "id": "aAx8Y",
+              "name": "Abertos",
+              "width": "fill_container",
+              "layout": "vertical",
+              "gap": 14,
+              "padding": [
+                0,
+                20
+              ],
+              "children": [
+                {
+                  "type": "frame",
+                  "id": "O6pEJ",
+                  "name": "Cabeçalho",
+                  "width": "fill_container",
+                  "justifyContent": "space_between",
+                  "alignItems": "end",
+                  "children": [
+                    {
+                      "type": "text",
+                      "id": "ekPxV",
+                      "name": "Título",
+                      "fill": "$text-primary",
+                      "content": "Abertos",
+                      "fontFamily": "$font",
+                      "fontSize": 20,
+                      "fontWeight": "700"
+                    },
+                    {
+                      "type": "text",
+                      "id": "ojvm3",
+                      "name": "Detalhe",
+                      "fill": "$text-secondary",
+                      "content": "Mais recente primeiro",
+                      "fontFamily": "$font",
+                      "fontSize": 13,
+                      "fontWeight": "normal"
+                    }
+                  ]
+                },
+                {
+                  "type": "frame",
+                  "id": "Lxqmu",
+                  "name": "Apps abertos carregando",
+                  "width": "fill_container",
+                  "gap": 14,
+                  "children": [
+                    {
+                      "type": "frame",
+                      "id": "XWpsZ",
+                      "name": "App carregando 1",
+                      "width": 168,
+                      "layout": "vertical",
+                      "gap": 8,
+                      "children": [
+                        {
+                          "type": "rectangle",
+                          "cornerRadius": 14,
+                          "id": "rCY4G",
+                          "name": "Banner carregando",
+                          "fill": "$glass",
+                          "width": 168,
+                          "height": 95
+                        },
+                        {
+                          "type": "frame",
+                          "id": "p5hDz",
+                          "name": "Área do nome",
+                          "width": "fill_container",
+                          "height": 18,
+                          "alignItems": "center",
+                          "children": [
+                            {
+                              "type": "rectangle",
+                              "cornerRadius": 6,
+                              "id": "AbFXu",
+                              "name": "Nome carregando",
+                              "fill": "$glass",
+                              "width": 104,
+                              "height": 10
+                            }
+                          ]
+                        }
+                      ]
+                    },
+                    {
+                      "type": "frame",
+                      "id": "Yn3IR",
+                      "name": "App carregando 2",
+                      "width": 168,
+                      "layout": "vertical",
+                      "gap": 8,
+                      "children": [
+                        {
+                          "type": "rectangle",
+                          "cornerRadius": 14,
+                          "id": "jfNfO",
+                          "name": "Banner carregando",
+                          "fill": "$glass",
+                          "width": 168,
+                          "height": 95
+                        },
+                        {
+                          "type": "frame",
+                          "id": "b8nFM",
+                          "name": "Área do nome",
+                          "width": "fill_container",
+                          "height": 18,
+                          "alignItems": "center",
+                          "children": [
+                            {
+                              "type": "rectangle",
+                              "cornerRadius": 6,
+                              "id": "AbPhg",
+                              "name": "Nome carregando",
+                              "fill": "$glass",
+                              "width": 88,
+                              "height": 10
+                            }
+                          ]
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "type": "frame",
+              "id": "iSpwp",
+              "name": "Entradas",
+              "width": "fill_container",
+              "layout": "vertical",
+              "gap": 14,
+              "padding": [
+                0,
+                20
+              ],
+              "children": [
+                {
+                  "type": "text",
+                  "id": "TN6ha",
+                  "name": "Título",
+                  "fill": "$text-primary",
+                  "content": "Entradas",
+                  "fontFamily": "$font",
+                  "fontSize": 20,
+                  "fontWeight": "700"
+                },
+                {
+                  "type": "frame",
+                  "id": "HPZ7D",
+                  "name": "Entradas carregando",
+                  "width": "fill_container",
+                  "gap": 10,
+                  "children": [
+                    {
+                      "type": "rectangle",
+                      "cornerRadius": 18,
+                      "id": "N9Mj2h",
+                      "name": "Entrada carregando 1",
+                      "fill": "$glass",
+                      "width": "fill_container",
+                      "height": 96
+                    },
+                    {
+                      "type": "rectangle",
+                      "cornerRadius": 18,
+                      "id": "Rcdz5",
+                      "name": "Entrada carregando 2",
+                      "fill": "$glass",
+                      "width": "fill_container",
+                      "height": 96
+                    },
+                    {
+                      "type": "rectangle",
+                      "cornerRadius": 18,
+                      "id": "hgZxS",
+                      "name": "Entrada carregando 3",
+                      "fill": "$glass",
+                      "width": "fill_container",
+                      "height": 96
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "type": "frame",
+              "id": "Xuvdr",
+              "name": "Todos os apps",
+              "width": "fill_container",
+              "layout": "vertical",
+              "gap": 14,
+              "padding": [
+                0,
+                20
+              ],
+              "children": [
+                {
+                  "type": "text",
+                  "id": "WKFxm",
+                  "name": "Título",
+                  "fill": "$text-primary",
+                  "content": "Todos os apps",
+                  "fontFamily": "$font",
+                  "fontSize": 20,
+                  "fontWeight": "700"
+                },
+                {
+                  "type": "frame",
+                  "id": "rQQXu",
+                  "name": "Linha 1",
+                  "width": "fill_container",
+                  "gap": 11.5,
+                  "children": [
+                    {
+                      "type": "rectangle",
+                      "cornerRadius": 14,
+                      "id": "A5BZ3k",
+                      "name": "App instalado carregando",
+                      "fill": "$glass",
+                      "width": "fill_container",
+                      "height": 64
+                    },
+                    {
+                      "type": "rectangle",
+                      "cornerRadius": 14,
+                      "id": "mGHNR",
+                      "name": "App instalado carregando",
+                      "fill": "$glass",
+                      "width": "fill_container",
+                      "height": 64
+                    },
+                    {
+                      "type": "rectangle",
+                      "cornerRadius": 14,
+                      "id": "tOQtq",
+                      "name": "App instalado carregando",
+                      "fill": "$glass",
+                      "width": "fill_container",
+                      "height": 64
+                    }
+                  ]
+                },
+                {
+                  "type": "frame",
+                  "id": "Emcdp",
+                  "name": "Linha 2",
+                  "width": "fill_container",
+                  "gap": 11.5,
+                  "children": [
+                    {
+                      "type": "rectangle",
+                      "cornerRadius": 14,
+                      "id": "AWKEW",
+                      "name": "App instalado carregando",
+                      "fill": "$glass",
+                      "width": "fill_container",
+                      "height": 64
+                    },
+                    {
+                      "type": "rectangle",
+                      "cornerRadius": 14,
+                      "id": "Q92MWq",
+                      "name": "App instalado carregando",
+                      "fill": "$glass",
+                      "width": "fill_container",
+                      "height": 64
+                    },
+                    {
+                      "type": "rectangle",
+                      "cornerRadius": 14,
+                      "id": "uQmeW",
+                      "name": "App instalado carregando",
+                      "fill": "$glass",
+                      "width": "fill_container",
+                      "height": 64
+                    }
+                  ]
+                },
+                {
+                  "type": "frame",
+                  "id": "Pv6zg",
+                  "name": "Linha 3",
+                  "width": "fill_container",
+                  "gap": 11.5,
+                  "children": [
+                    {
+                      "type": "rectangle",
+                      "cornerRadius": 14,
+                      "id": "TqJlw",
+                      "name": "App instalado carregando",
+                      "fill": "$glass",
+                      "width": "fill_container",
+                      "height": 64
+                    },
+                    {
+                      "type": "rectangle",
+                      "cornerRadius": 14,
+                      "id": "I50XsL",
+                      "name": "App instalado carregando",
+                      "fill": "$glass",
+                      "width": "fill_container",
+                      "height": 64
+                    },
+                    {
+                      "type": "rectangle",
+                      "cornerRadius": 14,
+                      "id": "g9k5Er",
+                      "name": "App instalado carregando",
+                      "fill": "$glass",
+                      "width": "fill_container",
+                      "height": 64
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "id": "d5zeNS",
+          "type": "ref",
+          "ref": "asdgV",
+          "name": "Tab Bar",
+          "descendants": {
+            "v58aLr": {
+              "fill": "#00000000"
+            },
+            "l3IyJJ": {
+              "fill": "$text-secondary"
+            },
+            "n6cj3d": {
+              "fill": "$text-secondary"
+            },
+            "l128k": {
+              "fill": "$glass-strong"
+            },
+            "Tje9X": {
+              "fill": "$text-primary"
+            },
+            "AuBCs": {
+              "fill": "$text-primary"
+            },
+            "EghkP": {
+              "fill": "#00000000"
+            },
+            "pIZqQ": {
+              "fill": "$text-secondary"
+            },
+            "QDOW1": {
+              "fill": "$text-secondary"
+            }
+          }
+        },
+        {
+          "id": "d6yPyh",
+          "type": "ref",
+          "ref": "s4ScFK",
+          "name": "Home Indicator"
+        }
+      ]
+    },
+    {
+      "type": "frame",
+      "id": "VcLYW",
+      "x": 482,
+      "y": 5000,
+      "name": "Assistir — Carregando",
+      "context": "Skeleton inicial: título, busca, seções e navegação permanecem; miniaturas, títulos, episódios, serviços e duração aguardam os dados. Mesmo token glass e barras arredondadas da Home.",
+      "clip": true,
+      "width": 402,
+      "height": 874,
+      "fill": "$bg",
+      "layout": "vertical",
+      "children": [
+        {
+          "id": "B5U2e",
+          "type": "ref",
+          "ref": "TeWJu",
+          "name": "Status Bar"
+        },
+        {
+          "type": "frame",
+          "id": "KXwsB",
+          "name": "Conteúdo",
+          "clip": true,
+          "width": "fill_container",
+          "height": "fill_container",
+          "layout": "vertical",
+          "gap": 28,
+          "padding": [
+            4,
+            0,
+            16,
+            0
+          ],
+          "children": [
+            {
+              "type": "frame",
+              "id": "yssVF",
+              "name": "Título",
+              "width": "fill_container",
+              "layout": "vertical",
+              "gap": 16,
+              "padding": [
+                0,
+                20
+              ],
+              "children": [
+                {
+                  "type": "text",
+                  "id": "abSuB",
+                  "name": "Título",
+                  "fill": "$text-primary",
+                  "content": "Assistir",
+                  "fontFamily": "$font",
+                  "fontSize": 28,
+                  "fontWeight": "700"
+                },
+                {
+                  "type": "frame",
+                  "id": "c0gJyJ",
+                  "name": "Buscar",
+                  "width": "fill_container",
+                  "height": 48,
+                  "fill": "$glass",
+                  "cornerRadius": 24,
+                  "gap": 10,
+                  "padding": [
+                    0,
+                    16
+                  ],
+                  "alignItems": "center",
+                  "children": [
+                    {
+                      "type": "icon",
+                      "id": "Cdxpk",
+                      "name": "Ícone",
+                      "width": 22,
+                      "height": 22,
+                      "icon": "search",
+                      "library": "Material Symbols Rounded",
+                      "weight": 500,
+                      "fill": "$text-secondary"
+                    },
+                    {
+                      "type": "text",
+                      "id": "OehHt",
+                      "name": "Dica",
+                      "fill": "$text-secondary",
+                      "content": "Buscar filmes e séries",
+                      "fontFamily": "$font",
+                      "fontSize": 17,
+                      "fontWeight": "normal"
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "type": "frame",
+              "id": "ckgxu",
+              "name": "Continuar assistindo",
+              "width": "fill_container",
+              "layout": "vertical",
+              "gap": 14,
+              "padding": [
+                0,
+                20
+              ],
+              "children": [
+                {
+                  "type": "text",
+                  "id": "IyIty",
+                  "name": "Título",
+                  "fill": "$text-primary",
+                  "content": "Continuar assistindo",
+                  "fontFamily": "$font",
+                  "fontSize": 20,
+                  "fontWeight": "700"
+                },
+                {
+                  "type": "frame",
+                  "id": "Cd6EL",
+                  "name": "Obra carregando 1",
+                  "width": "fill_container",
+                  "height": 72,
+                  "gap": 14,
+                  "alignItems": "center",
+                  "children": [
+                    {
+                      "type": "rectangle",
+                      "cornerRadius": 12,
+                      "id": "kdTRa",
+                      "name": "Miniatura carregando",
+                      "fill": "$glass",
+                      "width": 128,
+                      "height": 72
+                    },
+                    {
+                      "type": "frame",
+                      "id": "c0t71",
+                      "name": "Informações carregando",
+                      "width": "fill_container",
+                      "layout": "vertical",
+                      "gap": 9,
+                      "children": [
+                        {
+                          "type": "rectangle",
+                          "cornerRadius": 6,
+                          "id": "kC615",
+                          "name": "Título carregando",
+                          "fill": "$glass",
+                          "width": 158,
+                          "height": 12
+                        },
+                        {
+                          "type": "rectangle",
+                          "cornerRadius": 6,
+                          "id": "c2bqP",
+                          "name": "Episódio carregando",
+                          "fill": "$glass",
+                          "width": 112,
+                          "height": 10
+                        },
+                        {
+                          "type": "rectangle",
+                          "cornerRadius": 6,
+                          "id": "Bk69p",
+                          "name": "App e duração carregando",
+                          "fill": "$glass",
+                          "width": 136,
+                          "height": 9
+                        }
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "type": "frame",
+                  "id": "Yecaf",
+                  "name": "Obra carregando 2",
+                  "width": "fill_container",
+                  "height": 72,
+                  "gap": 14,
+                  "alignItems": "center",
+                  "children": [
+                    {
+                      "type": "rectangle",
+                      "cornerRadius": 12,
+                      "id": "g9jWRz",
+                      "name": "Miniatura carregando",
+                      "fill": "$glass",
+                      "width": 128,
+                      "height": 72
+                    },
+                    {
+                      "type": "frame",
+                      "id": "f0Nlwa",
+                      "name": "Informações carregando",
+                      "width": "fill_container",
+                      "layout": "vertical",
+                      "gap": 9,
+                      "children": [
+                        {
+                          "type": "rectangle",
+                          "cornerRadius": 6,
+                          "id": "ETI1f",
+                          "name": "Título carregando",
+                          "fill": "$glass",
+                          "width": 138,
+                          "height": 12
+                        },
+                        {
+                          "type": "rectangle",
+                          "cornerRadius": 6,
+                          "id": "u6ajN",
+                          "name": "Episódio carregando",
+                          "fill": "$glass",
+                          "width": 124,
+                          "height": 10
+                        },
+                        {
+                          "type": "rectangle",
+                          "cornerRadius": 6,
+                          "id": "OKwEW",
+                          "name": "App e duração carregando",
+                          "fill": "$glass",
+                          "width": 120,
+                          "height": 9
+                        }
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "type": "frame",
+                  "id": "iD2pO",
+                  "name": "Obra carregando 3",
+                  "width": "fill_container",
+                  "height": 72,
+                  "gap": 14,
+                  "alignItems": "center",
+                  "children": [
+                    {
+                      "type": "rectangle",
+                      "cornerRadius": 12,
+                      "id": "sxGCT",
+                      "name": "Miniatura carregando",
+                      "fill": "$glass",
+                      "width": 128,
+                      "height": 72
+                    },
+                    {
+                      "type": "frame",
+                      "id": "S72yZ",
+                      "name": "Informações carregando",
+                      "width": "fill_container",
+                      "layout": "vertical",
+                      "gap": 9,
+                      "children": [
+                        {
+                          "type": "rectangle",
+                          "cornerRadius": 6,
+                          "id": "S8FRh",
+                          "name": "Título carregando",
+                          "fill": "$glass",
+                          "width": 148,
+                          "height": 12
+                        },
+                        {
+                          "type": "rectangle",
+                          "cornerRadius": 6,
+                          "id": "oQiNV",
+                          "name": "Episódio carregando",
+                          "fill": "$glass",
+                          "width": 96,
+                          "height": 10
+                        },
+                        {
+                          "type": "rectangle",
+                          "cornerRadius": 6,
+                          "id": "ZKgIn",
+                          "name": "App e duração carregando",
+                          "fill": "$glass",
+                          "width": 144,
+                          "height": 9
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "type": "frame",
+              "id": "xKoCi",
+              "name": "Em alta hoje",
+              "width": "fill_container",
+              "layout": "vertical",
+              "gap": 14,
+              "padding": [
+                0,
+                20
+              ],
+              "children": [
+                {
+                  "type": "frame",
+                  "id": "ibnFd",
+                  "name": "Cabeçalho",
+                  "width": "fill_container",
+                  "justifyContent": "space_between",
+                  "alignItems": "end",
+                  "children": [
+                    {
+                      "type": "text",
+                      "id": "zcO2i",
+                      "name": "Título",
+                      "fill": "$text-primary",
+                      "content": "Em alta hoje",
+                      "fontFamily": "$font",
+                      "fontSize": 20,
+                      "fontWeight": "700"
+                    },
+                    {
+                      "type": "text",
+                      "id": "O6PzSG",
+                      "name": "Fonte",
+                      "fill": "$text-secondary",
+                      "content": "Do Explorar",
+                      "fontFamily": "$font",
+                      "fontSize": 13,
+                      "fontWeight": "normal"
+                    }
+                  ]
+                },
+                {
+                  "type": "frame",
+                  "id": "s8p7h",
+                  "name": "Destaques carregando",
+                  "width": "fill_container",
+                  "gap": 14,
+                  "children": [
+                    {
+                      "type": "frame",
+                      "id": "KjLmQ",
+                      "name": "Destaque carregando 1",
+                      "width": "fill_container",
+                      "layout": "vertical",
+                      "gap": 8,
+                      "children": [
+                        {
+                          "type": "rectangle",
+                          "cornerRadius": 14,
+                          "id": "kmvOo",
+                          "name": "Imagem carregando",
+                          "fill": "$glass",
+                          "width": "fill_container",
+                          "height": 98
+                        },
+                        {
+                          "type": "frame",
+                          "id": "C56Mf",
+                          "name": "Área do título",
+                          "width": "fill_container",
+                          "height": 18,
+                          "alignItems": "center",
+                          "children": [
+                            {
+                              "type": "rectangle",
+                              "cornerRadius": 6,
+                              "id": "nsRrq",
+                              "name": "Título carregando",
+                              "fill": "$glass",
+                              "width": 122,
+                              "height": 10
+                            }
+                          ]
+                        },
+                        {
+                          "type": "frame",
+                          "id": "Ds97F",
+                          "name": "Área do gênero",
+                          "width": "fill_container",
+                          "height": 16,
+                          "alignItems": "center",
+                          "children": [
+                            {
+                              "type": "rectangle",
+                              "cornerRadius": 6,
+                              "id": "intB4",
+                              "name": "Gênero carregando",
+                              "fill": "$glass",
+                              "width": 88,
+                              "height": 9
+                            }
+                          ]
+                        }
+                      ]
+                    },
+                    {
+                      "type": "frame",
+                      "id": "abeU1",
+                      "name": "Destaque carregando 2",
+                      "width": "fill_container",
+                      "layout": "vertical",
+                      "gap": 8,
+                      "children": [
+                        {
+                          "type": "rectangle",
+                          "cornerRadius": 14,
+                          "id": "aTcOW",
+                          "name": "Imagem carregando",
+                          "fill": "$glass",
+                          "width": "fill_container",
+                          "height": 98
+                        },
+                        {
+                          "type": "frame",
+                          "id": "SkZ5c",
+                          "name": "Área do título",
+                          "width": "fill_container",
+                          "height": 18,
+                          "alignItems": "center",
+                          "children": [
+                            {
+                              "type": "rectangle",
+                              "cornerRadius": 6,
+                              "id": "d2gbK",
+                              "name": "Título carregando",
+                              "fill": "$glass",
+                              "width": 104,
+                              "height": 10
+                            }
+                          ]
+                        },
+                        {
+                          "type": "frame",
+                          "id": "UdXZx",
+                          "name": "Área do gênero",
+                          "width": "fill_container",
+                          "height": 16,
+                          "alignItems": "center",
+                          "children": [
+                            {
+                              "type": "rectangle",
+                              "cornerRadius": 6,
+                              "id": "WdS7p",
+                              "name": "Gênero carregando",
+                              "fill": "$glass",
+                              "width": 76,
+                              "height": 9
+                            }
+                          ]
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "id": "E0eFHn",
+          "type": "ref",
+          "ref": "asdgV",
+          "name": "Tab Bar",
+          "descendants": {
+            "v58aLr": {
+              "fill": "#00000000"
+            },
+            "l3IyJJ": {
+              "fill": "$text-secondary"
+            },
+            "n6cj3d": {
+              "fill": "$text-secondary"
+            },
+            "l128k": {
+              "fill": "#00000000"
+            },
+            "Tje9X": {
+              "fill": "$text-secondary"
+            },
+            "AuBCs": {
+              "fill": "$text-secondary"
+            },
+            "EghkP": {
+              "fill": "$glass-strong"
+            },
+            "pIZqQ": {
+              "fill": "$text-primary"
+            },
+            "QDOW1": {
+              "fill": "$text-primary"
+            }
+          }
+        },
+        {
+          "id": "bhTLW",
+          "type": "ref",
+          "ref": "s4ScFK",
+          "name": "Home Indicator"
+        }
+      ]
     }
   ],
   "variables": {

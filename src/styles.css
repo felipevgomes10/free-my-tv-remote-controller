@@ -677,6 +677,127 @@ button {
   gap: 20px;
 }
 
+/* Match the Home's glass silhouettes and gentle 900 ms pulse (Skeleton.kt). */
+
+.skeleton-items {
+  display: grid;
+  gap: 14px;
+  animation: skeleton-pulse 900ms cubic-bezier(0.4, 0, 0.2, 1) infinite alternate;
+}
+
+@keyframes skeleton-pulse {
+  from { opacity: 0.45; }
+  to { opacity: 1; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .skeleton-items {
+    animation: none;
+  }
+}
+
+.skeleton-item,
+.skeleton-text {
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+  gap: 8px;
+}
+
+.skeleton-picture,
+.skeleton-line {
+  display: block;
+  background: var(--glass);
+  border-radius: 6px;
+}
+
+.skeleton-picture {
+  width: 100%;
+  aspect-ratio: 16 / 9;
+  border-radius: 14px;
+}
+
+.skeleton-line {
+  width: 70%;
+  height: 10px;
+}
+
+.skeleton-line:nth-child(2) {
+  width: 55%;
+  height: 9px;
+}
+
+.skeleton-item:nth-child(even) .skeleton-line:first-child {
+  width: 60%;
+}
+
+.skeleton-open-apps .skeleton-items {
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  max-width: 350px;
+}
+
+.skeleton-open-apps .skeleton-text {
+  justify-content: center;
+  height: 18px;
+}
+
+.skeleton-inputs .skeleton-items,
+.skeleton-apps .skeleton-items {
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 12px;
+}
+
+.skeleton-inputs .skeleton-items {
+  gap: 10px;
+}
+
+.skeleton-inputs .skeleton-picture {
+  height: 96px;
+  aspect-ratio: auto;
+  border-radius: 18px;
+}
+
+.skeleton-up-next .skeleton-item {
+  flex-direction: row;
+  align-items: center;
+  gap: 14px;
+}
+
+.skeleton-up-next .skeleton-picture {
+  flex: none;
+  width: 128px;
+  border-radius: 12px;
+}
+
+.skeleton-up-next .skeleton-text {
+  flex: 1;
+  gap: 9px;
+}
+
+.skeleton-up-next .skeleton-line:first-child {
+  width: 72%;
+  height: 12px;
+}
+
+.skeleton-up-next .skeleton-line:nth-child(2) {
+  width: 52%;
+  height: 10px;
+}
+
+.skeleton-up-next .skeleton-line:nth-child(3) {
+  width: 64%;
+  height: 9px;
+}
+
+.skeleton-trending .skeleton-items {
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+}
+
+.skeleton-trending .skeleton-text {
+  gap: 12px;
+  padding: 4px 0;
+}
+
 /* The Apps tab. */
 
 .tab-section {

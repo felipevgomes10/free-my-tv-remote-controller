@@ -33,6 +33,39 @@ async function openWatch() {
   fireEvent.click(screen.getByRole("tab", { name: "Assistir" }));
 }
 
+describe("Loading the Watch tab", () => {
+  it("keeps search and navigation available while its lists arrive independently", async () => {
+    bridge.silentOn.add("list");
+    await openWatch();
+    const pending = () => screen.queryAllByRole("status", { name: /^Carregando/ });
+    expect(pending()).toHaveLength(2);
+    expect(screen.getByRole("searchbox", { name: "Buscar filmes e séries" })).toBeTruthy();
+    expect(screen.getByRole("tab", { name: "Apps" })).toBeTruthy();
+    expect(screen.queryAllByRole("button")).toHaveLength(0);
+
+    bridge.push("up-next", examples["list-up-next"].items);
+    await screen.findByRole("button", { name: "Continuar Sombras do Norte" });
+    expect(pending()).toHaveLength(1);
+    bridge.push("trending", []);
+    await screen.findByText("Nada em alta agora.");
+    expect(pending()).toHaveLength(0);
+
+    bridge.push("up-next", []);
+    await waitFor(() => expect(screen.queryByRole("heading", { name: "Continuar assistindo" })).toBeNull());
+    expect(pending()).toHaveLength(0);
+  });
+
+  it("ends the loading state when either list fails", async () => {
+    bridge.failing["list:up-next"] = "error";
+    bridge.failing["list:trending"] = "offline";
+    await openWatch();
+    await screen.findByText("Não deu para carregar o que você estava assistindo. Tente abrir esta aba de novo.");
+    await screen.findByText("A TV está sem internet: não deu para trazer os destaques de hoje.");
+    expect(screen.queryAllByRole("status", { name: /^Carregando/ })).toHaveLength(0);
+    expect(screen.getAllByRole("region").every((section) => section.getAttribute("aria-busy") === "false")).toBe(true);
+  });
+});
+
 describe("Continuar assistindo", () => {
   it("shows each entry with its picture, progress, episode, app and time left", async () => {
     await openWatch();
