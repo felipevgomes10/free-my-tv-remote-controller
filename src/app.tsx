@@ -67,7 +67,7 @@ function Connected({ bridgeUrl, credential, onPairAgain }: { bridgeUrl: string; 
     return (
       <MessageScreen
         icon="mobileOff"
-        title="Este iPhone não está mais pareado"
+        title="Este aparelho não está mais pareado"
         action={{ label: "Parear de novo", onClick: onPairAgain }}
       >
         <p class="explanation">

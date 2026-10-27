@@ -2,8 +2,8 @@ import type { IconName } from "../icons";
 import { Icon } from "./Icon";
 
 const steps: [string, IconName][] = [
-  ["Toque em Compartilhar, na barra do Safari.", "iosShare"],
-  ["Escolha Adicionar à Tela de Início.", "addBox"],
+  ["Abra o menu do navegador ou toque em Compartilhar.", "iosShare"],
+  ["Escolha Adicionar à Tela de Início ou Instalar app.", "addBox"],
   ["Abra o FMTV Controller pelo novo ícone.", "touchApp"],
 ];
 
@@ -30,7 +30,7 @@ export function AddToHomeScreen({ onPairHere }: { onPairHere: () => void }) {
       </ol>
       <div class="spacer" />
       <button type="button" class="text-button" onClick={onPairHere}>
-        Parear no Safari mesmo assim
+        Parear neste navegador
       </button>
     </main>
   );

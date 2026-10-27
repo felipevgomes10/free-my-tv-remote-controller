@@ -148,11 +148,11 @@ describe("the bridge's states", () => {
     bridge = new FakeBridge();
     bridge.answer = "revoked";
     render(<App bridgeUrl={BRIDGE_URL} />);
-    expect(await screen.findByText("Este iPhone não está mais pareado")).toBeTruthy();
+    expect(await screen.findByText("Este aparelho não está mais pareado")).toBeTruthy();
     await waitAll(RECONNECT_DELAYS_MS.at(-1)! * 2);
     expect(bridge.received.filter((m) => m.type === "hello")).toHaveLength(1);
     fireEvent.click(screen.getByRole("button", { name: "Parear de novo" }));
-    expect(screen.getByText("Parear este iPhone")).toBeTruthy();
+    expect(screen.getByText("Parear este aparelho")).toBeTruthy();
     expect(localStorage.getItem("fmtv-controller.credential")).toBeNull();
   });
 
@@ -161,7 +161,7 @@ describe("the bridge's states", () => {
     render(<App bridgeUrl={BRIDGE_URL} />);
     await screen.findByText("TV da sala");
     bridge.sendState("revoked");
-    expect(await screen.findByText("Este iPhone não está mais pareado")).toBeTruthy();
+    expect(await screen.findByText("Este aparelho não está mais pareado")).toBeTruthy();
   });
 
   it("reloads once when the bridge asks for a newer page, and never loops", async () => {

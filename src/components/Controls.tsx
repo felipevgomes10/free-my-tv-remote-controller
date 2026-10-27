@@ -84,7 +84,7 @@ function OutOfReach({ status, onTryTurnOn }: { status: Status; onTryTurnOn: () =
         <p class="out-of-reach-detail">
           {failed
             ? "A TV não respondeu. Ligue-a pelo controle físico; o FMTV Controller volta sozinho em seguida."
-            : "A TV pode estar desligada ou este iPhone em outra rede Wi-Fi. O controle volta sozinho quando a TV responder."}
+            : "A TV pode estar desligada ou este aparelho em outra rede Wi-Fi. O controle volta sozinho quando a TV responder."}
         </p>
       </div>
       <button type="button" class="pill-button" onClick={onTryTurnOn} disabled={status === "turning-on"}>

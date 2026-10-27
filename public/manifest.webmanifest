@@ -1,7 +1,7 @@
 {
   "name": "FMTV Controller",
   "short_name": "FMTV Controller",
-  "description": "Controle a TV com o Free My TV pelo iPhone.",
+  "description": "Controle a TV com o Free My TV pelo celular.",
   "lang": "pt-BR",
   "start_url": "/",
   "scope": "/",

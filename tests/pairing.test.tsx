@@ -23,7 +23,7 @@ function asIos(standalone: boolean) {
 }
 
 const codeField = () => screen.getByLabelText("Código da TV");
-const nameField = () => screen.getByLabelText("Nome deste iPhone");
+const nameField = () => screen.getByLabelText("Nome deste aparelho");
 const pairButton = () => screen.getByRole("button", { name: "Parear" }) as HTMLButtonElement;
 
 function fill(code: string, name: string) {
@@ -42,14 +42,14 @@ describe("the first open", () => {
   it("goes straight to the form in the app opened from the Home Screen", () => {
     asIos(true);
     render(<App bridgeUrl={BRIDGE_URL} />);
-    expect(screen.getByText("Parear este iPhone")).toBeTruthy();
+    expect(screen.getByText("Parear este aparelho")).toBeTruthy();
   });
 
   it("still lets a Safari tab pair, when asked to", () => {
     asIos(false);
     render(<App bridgeUrl={BRIDGE_URL} />);
-    fireEvent.click(screen.getByRole("button", { name: "Parear no Safari mesmo assim" }));
-    expect(screen.getByText("Parear este iPhone")).toBeTruthy();
+    fireEvent.click(screen.getByRole("button", { name: "Parear neste navegador" }));
+    expect(screen.getByText("Parear este aparelho")).toBeTruthy();
   });
 });
 
@@ -81,7 +81,7 @@ describe("Pairing", () => {
     unmount();
     render(<App bridgeUrl={BRIDGE_URL} />);
     expect(await screen.findByRole("application")).toBeTruthy();
-    expect(screen.queryByText("Parear este iPhone")).toBeNull();
+    expect(screen.queryByText("Parear este aparelho")).toBeNull();
   });
 
   it.each([
@@ -112,7 +112,7 @@ describe("Pairing", () => {
     fill("4827", "iPhone da Ana");
     fireEvent.click(pairButton());
     expect((await screen.findByRole("alert")).textContent).toBe(
-      "Sem conexão com a TV. Confira se o iPhone está no mesmo Wi-Fi da TV.",
+      "Sem conexão com a TV. Confira se o aparelho está no mesmo Wi-Fi da TV.",
     );
   });
 });

@@ -8,7 +8,7 @@ const refusals: Record<PairingRefusal, string> = {
   "wrong-code": "Código errado. Confira o código na TV e tente de novo.",
   "pairing-closed": "A tela de pareamento foi fechada na TV. Abra Parear aparelho de novo e use o código novo.",
   "too-many-tries": "Tentativas demais. A TV mostrou um código novo: digite esse.",
-  unreachable: "Sem conexão com a TV. Confira se o iPhone está no mesmo Wi-Fi da TV.",
+  unreachable: "Sem conexão com a TV. Confira se o aparelho está no mesmo Wi-Fi da TV.",
 };
 
 export function PairingScreen({ onPaired }: { onPaired: (credential: string) => void }) {
@@ -32,7 +32,7 @@ export function PairingScreen({ onPaired }: { onPaired: (credential: string) => 
   return (
     <form class="screen message-screen pairing" onSubmit={submit}>
       <div class="message-text">
-        <h1 class="title">Parear este iPhone</h1>
+        <h1 class="title">Parear este aparelho</h1>
         <p class="explanation">
           Na TV, abra Configurações → FMTV Controller → Parear aparelho e digite aqui o código que aparece.
         </p>
@@ -73,18 +73,18 @@ export function PairingScreen({ onPaired }: { onPaired: (credential: string) => 
 
       <div class="field">
         <label class="field-label" for="phone-name">
-          Nome deste iPhone
+          Nome deste aparelho
         </label>
         <input
           id="phone-name"
           class="text-input"
-          placeholder="iPhone da Ana"
+          placeholder="Celular da Ana"
           autoComplete="off"
           maxLength={40}
           value={name}
           onInput={(event) => setName(event.currentTarget.value)}
         />
-        <p class="field-help">É por este nome que o iPhone aparece na lista de aparelhos pareados da TV.</p>
+        <p class="field-help">É por este nome que o aparelho aparece na lista de aparelhos pareados da TV.</p>
       </div>
 
       <div class="spacer" />
