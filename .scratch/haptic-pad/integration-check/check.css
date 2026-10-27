@@ -1,0 +1,14 @@
+.check-shell { height: 100dvh; max-width: 560px; margin: auto; display: flex; flex-direction: column; gap: 16px; padding: max(20px, env(safe-area-inset-top)) 20px max(24px, env(safe-area-inset-bottom)); }
+.check-shell header { flex: none; }
+.check-shell h1 { font-size: 24px; margin: 8px 0; }
+.check-shell header p { color: #a5a5ae; font-size: 14px; margin: 8px 0; }
+.check-shell header .check-tag { font-size: 11px; color: #93c5fd; letter-spacing: .06em; }
+.check-command { text-align: center; margin: 0; font: 16px ui-monospace, monospace; }
+.check-shell details { flex: none; max-height: 42dvh; overflow-y: auto; touch-action: pan-y; font-size: 13px; }
+.check-shell summary { min-height: 36px; cursor: pointer; }
+.check-shell details p { color: #a5a5ae; }
+.check-field { display: flex; align-items: center; justify-content: space-between; gap: 12px; margin: 10px 0; }
+.check-shell button, .check-shell select, .check-shell textarea { color: inherit; background: #ffffff1f; font: inherit; border: 1px solid #ffffff30; border-radius: 10px; padding: 10px; min-height: 44px; }
+.check-shell button { margin: 4px; }
+.check-shell textarea { width: 100%; min-height: 160px; user-select: text; }
+.check-shell pre { user-select: text; }

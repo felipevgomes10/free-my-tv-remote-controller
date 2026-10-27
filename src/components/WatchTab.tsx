@@ -2,6 +2,7 @@ import { useEffect, useState } from "preact/hooks";
 import { RequestFailed } from "../bridge";
 import { useActions, useCompanion, useList, useListAnswer } from "../companion";
 import { tick } from "../haptics";
+import { HapticFeedback } from "./HapticFeedback";
 import { Picture } from "../pictures";
 import { Icon } from "./Icon";
 import { TabPage } from "./TabPage";
@@ -98,6 +99,7 @@ export function WatchTab() {
                       <span class="up-next-title">{result.name}</span>
                       <span class="up-next-app">{[KIND_LABEL[result.kind], result.year].filter((fact) => fact != null).join(", ")}</span>
                     </span>
+                    <HapticFeedback />
                   </button>
                 </li>
               ))}
@@ -141,6 +143,7 @@ export function WatchTab() {
                           <span class="up-next-app">{entry.minutesLeft != null ? `${entry.app}, ${timeLeft(entry.minutesLeft)}` : entry.app}</span>
                         </span>
                         <Icon name="playArrow" size={26} />
+                        <HapticFeedback />
                       </button>
                     </li>
                   );
@@ -172,6 +175,7 @@ export function WatchTab() {
                       <span class="trending-backdrop">{title.backdrop && <img src={title.backdrop} alt="" loading="lazy" />}</span>
                       <span class="trending-name">{title.name}</span>
                       <span class="trending-meta">{[KIND_LABEL[title.kind], title.genre?.toLowerCase()].filter(Boolean).join(", ")}</span>
+                      <HapticFeedback />
                     </button>
                   </li>
                 ))}

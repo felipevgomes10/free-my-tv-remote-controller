@@ -1,6 +1,7 @@
 import { useEffect, useState } from "preact/hooks";
 import { useActions, useCompanion, useList } from "../companion";
 import { tick } from "../haptics";
+import { HapticFeedback } from "./HapticFeedback";
 import { Picture } from "../pictures";
 import { Icon } from "./Icon";
 import { TabPage } from "./TabPage";
@@ -62,6 +63,7 @@ export function AppsTab() {
                       </span>
                     )}
                   </span>
+                  <HapticFeedback />
                 </button>
                 {!app.playing && (
                   <button
@@ -72,6 +74,7 @@ export function AppsTab() {
                     onClick={() => close(app)}
                   >
                     <Icon name="close" size={20} />
+                    <HapticFeedback />
                   </button>
                 )}
               </li>
@@ -99,6 +102,7 @@ export function AppsTab() {
                 <Icon name={input.kind === "antenna" ? "settingsInputAntenna" : "settingsInputHdmi"} size={24} />
                 <span class="input-name">{input.name}</span>
                 {input.port !== input.name && <span class="input-port">{input.port}</span>}
+                <HapticFeedback />
               </button>
             ))}
           </div>
@@ -122,6 +126,7 @@ export function AppsTab() {
               >
                 <Picture id={app.picture} class="app-banner" />
                 <span class="app-label">{app.label}</span>
+                <HapticFeedback />
               </button>
             ))}
           </div>

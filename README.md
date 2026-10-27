@@ -61,7 +61,7 @@ Page v0.2.0, with the Home's v0.6.0, adds the Shortcut Buttons and the Apps and 
 **The controls**
 - **Touchpad** — swipe to move the TV's focus, one step every 48 px; tap for OK; touch and hold to hold OK, which opens Edit Mode on the Home. A tap is never mistaken for a short swipe.
 - **Buttons** — Voltar, Home (twice for the App Switcher, held for the Notification Panel, as on the Remote), play/pause, mute, and volume, which keeps changing while held. Power sits apart at the top, away from the thumb.
-- **Haptics** — a tick for every step and press where iOS allows it (it didn't on the owner's iPhone 17 Pro); the controls work the same without one.
+- **Haptics** — Safari uses a native switch label for button taps, and a directly dragged native switch for the Touchpad. The switch's coordinates follow the real finger to produce ticks during navigation; no synthetic click is used. Native tracking has an initial delay, and several steps in one touch event may share a tick. Browsers with the Vibration API use that API instead. The controls work the same without haptics.
 - **Shortcut Buttons** — under the Touchpad, a row with the Remote's Netflix, Globoplay, Prime Video, Disney+, YouTube and Input buttons, each named after what the Owner assigned to it and doing what the Remote's button does.
 
 **The Apps tab** (page v0.2.0 with the Home's v0.6.0)
@@ -96,7 +96,7 @@ Page v0.2.0, with the Home's v0.6.0, adds the Shortcut Buttons and the Apps and 
 - **Parear aparelho** — the TV's address as a QR code and a 4-digit code that exists only while the screen is open and changes after each phone, or after 3 wrong tries.
 - **Aparelhos pareados** — every Paired Phone by its name, each revocable; a revoked iPhone is closed at once.
 
-**Status:** working on the owner's TCL with an iPhone 17 Pro, since page v0.1.0 and the Home's v0.5.0: in the Home, YouTube and Netflix, a key takes about as long as the Remote's, pairing and revoking work, and Linking survives a reboot of the TV. iOS gives no haptic tick on that iPhone; the controls work the same without it. The Shortcut Buttons and the Apps and Assistir tabs of v0.2.0 are checked on the Android TV emulator with the real Home and TMDB; their walk on the TV is still to come.
+**Status:** working on the owner's TCL with an iPhone 17 Pro, since page v0.1.0 and the Home's v0.5.0: in the Home, YouTube and Netflix, a key takes about as long as the Remote's, pairing and revoking work, and Linking survives a reboot of the TV. The original script-triggered haptic gave no tick on that iPhone, consistent with [WebKit's trusted-event requirement](https://github.com/WebKit/WebKit/commit/fc1ef83). On iOS 26.6.2 the owner confirmed haptics during real native dragging in the standalone prototype, including immediate, reverse and fast swipes. Its report records 54 navigation steps and 41 candidate requests (13 early steps); exact physical pulse counts are not measured. The owner then checked the integrated production pad locally and confirmed swipe haptics, a single OK on tap, and hold-start/hold-end on holding and releasing. The Shortcut Buttons and the Apps and Assistir tabs of v0.2.0 are checked on the Android TV emulator with the real Home and TMDB; their walk on the TV is still to come.
 
 ## How it works
 
@@ -191,7 +191,7 @@ src/
 ├── pictures.tsx     the Home's pictures, fetched once with the credential in a header
 ├── connection.ts    one connection kept alive: retries, Tentar ligar, reload once
 ├── gestures.ts      the Touchpad's taps, holds and swipes, turned into keys
-├── haptics.ts       the haptic tick, through Safari's switch control
+├── haptics.ts       the optional Vibration API tick (Safari uses components/HapticFeedback.tsx)
 ├── pairing.ts       Pairing's request, and telling a Safari tab from the Home Screen app
 ├── protocol.ts      the protocol's messages and version
 ├── service-worker.js  the network-first copy of the page (ADR 0004)

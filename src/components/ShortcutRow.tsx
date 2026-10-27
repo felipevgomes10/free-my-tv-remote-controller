@@ -1,5 +1,6 @@
 import { useActions, useCompanion, useList } from "../companion";
 import { tick } from "../haptics";
+import { HapticFeedback } from "./HapticFeedback";
 
 type Shortcut = { shortcut: string; label: string };
 
@@ -25,6 +26,7 @@ export function ShortcutRow() {
           }}
         >
           {label}
+          <HapticFeedback />
         </button>
       ))}
     </fieldset>

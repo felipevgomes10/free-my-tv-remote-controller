@@ -2,6 +2,7 @@ import { useLayoutEffect, useRef, useState } from "preact/hooks";
 import { RequestFailed } from "../bridge";
 import { useCompanion } from "../companion";
 import { tick } from "../haptics";
+import { HapticFeedback } from "./HapticFeedback";
 import { Icon } from "./Icon";
 
 const errors: Record<string, string> = {
@@ -53,6 +54,7 @@ export function MultitaskingButton() {
         disabled={status !== "ready" || pending} onClick={open}>
         <Icon name="multitasking" size={22} />
         <span>{pending ? "Abrindo…" : "Multitarefas"}</span>
+        <HapticFeedback />
       </button>
       {error && <p class="multitasking-error" role="alert">{error}</p>}
     </div>

@@ -49,6 +49,28 @@ body {
   display: inline-flex;
 }
 
+/* The transparent label receives Safari's trusted tap; it adds no tab stop. */
+button {
+  position: relative;
+}
+
+.haptic-trigger {
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  border-radius: inherit;
+  touch-action: inherit;
+}
+
+.haptic-trigger input {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  margin: 0;
+  visibility: hidden;
+  pointer-events: none;
+}
+
 /* Controles */
 
 .controls {
@@ -119,6 +141,23 @@ body {
   touch-action: none;
 }
 
+/* The finger must drag this rendered native switch itself for Safari haptics. */
+.touchpad-switch {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  width: 2048px;
+  height: 1024px;
+  margin: 0;
+  padding: 0;
+  opacity: 0.001;
+  transform: translate(-50%, -50%);
+  touch-action: none;
+  direction: ltr;
+  writing-mode: horizontal-tb;
+  z-index: 1;
+}
+
 .touchpad-hint {
   position: absolute;
   inset: auto 0 24px;
@@ -132,6 +171,7 @@ body {
 .touchpad-light {
   position: absolute;
   pointer-events: none;
+  z-index: 2;
   width: 88px;
   height: 88px;
   border-radius: 50%;

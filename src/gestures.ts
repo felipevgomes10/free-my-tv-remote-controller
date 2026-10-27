@@ -36,22 +36,25 @@ export class TouchpadGestures {
     }, HOLD_MS);
   }
 
-  move(x: number, y: number) {
-    if (!this.start || this.holding) return;
-    if (!this.moved && Math.hypot(x - this.start.x, y - this.start.y) < SLOP_PX) return;
+  /** Returns how many navigation steps were emitted, for the native haptic surface. */
+  move(x: number, y: number): number {
+    if (!this.start || this.holding) return 0;
+    if (!this.moved && Math.hypot(x - this.start.x, y - this.start.y) < SLOP_PX) return 0;
     if (!this.moved) {
       this.moved = true;
       clearTimeout(this.holdTimer);
     }
+    let steps = 0;
     for (;;) {
       const dx = x - this.origin.x;
       const dy = y - this.origin.y;
-      if (Math.max(Math.abs(dx), Math.abs(dy)) < STEP_PX) return;
+      if (Math.max(Math.abs(dx), Math.abs(dy)) < STEP_PX) return steps;
       const direction: Direction =
         Math.abs(dx) >= Math.abs(dy) ? (dx > 0 ? "right" : "left") : dy > 0 ? "down" : "up";
       if (direction === "right" || direction === "left") this.origin.x += Math.sign(dx) * STEP_PX;
       else this.origin.y += Math.sign(dy) * STEP_PX;
       this.output.key(direction, "press");
+      steps++;
     }
   }
 

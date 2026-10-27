@@ -1,7 +1,8 @@
 import { useLayoutEffect, useMemo, useRef, useState } from "preact/hooks";
 import { TouchpadGestures } from "../gestures";
 import { capture } from "../capture";
-import { tick } from "../haptics";
+import { hasNativeSwitchHaptics, tick } from "../haptics";
+import { TouchpadSwitch } from "./TouchpadSwitch";
 import type { Key, KeyAction } from "../protocol";
 
 type Point = { x: number; y: number };
@@ -24,20 +25,53 @@ export function Touchpad({ send, enabled = true }: { send: (key: Key, action: Ke
   );
 
   useLayoutEffect(() => {
+    const interrupt = () => {
+      touching.current = undefined;
+      gestures.cancel();
+      setLight(undefined);
+    };
+    const onHidden = () => { if (document.hidden) interrupt(); };
     if (!enabled) {
       touching.current = undefined;
       gestures.cancel();
       setLight(undefined);
     }
+    window.addEventListener("blur", interrupt);
+    document.addEventListener("visibilitychange", onHidden);
     return () => {
       touching.current = undefined;
       gestures.cancel();
+      window.removeEventListener("blur", interrupt);
+      document.removeEventListener("visibilitychange", onHidden);
     };
   }, [enabled, gestures]);
 
-  const at = (event: PointerEvent) => {
+  const at = (x: number, y: number) => {
     const box = surface.current!.getBoundingClientRect();
-    return { x: event.clientX - box.left, y: event.clientY - box.top };
+    return { x: x - box.left, y: y - box.top };
+  };
+
+  const start = (id: number, x: number, y: number) => {
+    if (!enabled || touching.current !== undefined) return false;
+    const p = at(x, y);
+    touching.current = id;
+    setUsed(true);
+    setLight(p);
+    gestures.down(p.x, p.y);
+    return true;
+  };
+  const move = (id: number, x: number, y: number) => {
+    if (!enabled || touching.current !== id) return 0;
+    const p = at(x, y);
+    setLight(p);
+    return gestures.move(p.x, p.y);
+  };
+  const end = (id: number, cancelled = false) => {
+    if (touching.current !== id) return;
+    touching.current = undefined;
+    if (cancelled) gestures.cancel();
+    else gestures.up();
+    setLight(undefined);
   };
 
   return (
@@ -48,41 +82,25 @@ export function Touchpad({ send, enabled = true }: { send: (key: Key, action: Ke
       aria-disabled={!enabled}
       aria-label="Área de toque: deslize para mover, toque para OK"
       onPointerDown={(event) => {
-        if (!enabled || touching.current !== undefined) return;
-        capture(surface.current!, event.pointerId);
-        const p = at(event);
-        touching.current = event.pointerId;
-        setUsed(true);
-        setLight(p);
-        gestures.down(p.x, p.y);
+        if (start(event.pointerId, event.clientX, event.clientY)) capture(event.target as Element, event.pointerId);
       }}
       onPointerMove={(event) => {
-        if (touching.current !== event.pointerId) return;
-        const p = at(event);
-        setLight(p);
-        gestures.move(p.x, p.y);
+        move(event.pointerId, event.clientX, event.clientY);
       }}
       onPointerUp={(event) => {
-        if (touching.current !== event.pointerId) return;
-        touching.current = undefined;
-        gestures.up();
-        setLight(undefined);
+        end(event.pointerId);
       }}
       onPointerCancel={(event) => {
-        if (touching.current !== event.pointerId) return;
-        touching.current = undefined;
-        gestures.cancel();
-        setLight(undefined);
+        end(event.pointerId, true);
       }}
       onLostPointerCapture={(event) => {
-        if (touching.current !== event.pointerId) return;
-        touching.current = undefined;
-        gestures.cancel();
-        setLight(undefined);
+        end(event.pointerId, true);
       }}
     >
       {light && <span class="touchpad-light" aria-hidden="true" style={{ left: `${light.x}px`, top: `${light.y}px` }} />}
       {!used && enabled && <p class="touchpad-hint">Deslize para mover. Toque para OK.</p>}
+      {hasNativeSwitchHaptics() && <TouchpadSwitch enabled={enabled} onStart={start} onMove={move}
+        onEnd={(id) => end(id)} onCancel={(id) => end(id, true)} />}
     </div>
   );
 }

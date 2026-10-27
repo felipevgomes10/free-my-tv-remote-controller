@@ -2,6 +2,7 @@ import { useEffect, useState } from "preact/hooks";
 import { RequestFailed } from "../bridge";
 import { useActions, useCompanion } from "../companion";
 import { tick } from "../haptics";
+import { HapticFeedback } from "./HapticFeedback";
 import { Picture } from "../pictures";
 import { Icon } from "./Icon";
 
@@ -80,6 +81,7 @@ export function TitleScreen({ summary, onBack }: { summary: TitleSummary; onBack
       <div class="title-backdrop">{backdrop && <img src={backdrop} alt="" />}</div>
       <button type="button" class="title-back" aria-label="Voltar" onClick={onBack}>
         <Icon name="arrowBack" size={24} />
+        <HapticFeedback />
       </button>
 
       <div class="title-body">
@@ -109,6 +111,7 @@ export function TitleScreen({ summary, onBack }: { summary: TitleSummary; onBack
               <button type="button" class={`trailer-button${state("trailer")}`} aria-busy={busy.has("trailer")} onClick={() => open("trailer", { trailer: true })}>
                 <Icon name="playArrow" size={24} />
                 Ver trailer na TV
+                <HapticFeedback />
               </button>
             )}
 
@@ -140,6 +143,7 @@ export function TitleScreen({ summary, onBack }: { summary: TitleSummary; onBack
                           onClick={() => open(`service:${service.service}`, { service: service.service })}
                         >
                           Abrir na TV
+                          <HapticFeedback />
                         </button>
                       )}
                     </li>
