@@ -1,0 +1,70 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="theme-color" content="#101411">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-title" content="Teste de mídia">
+  <link rel="manifest" href="/manifest.webmanifest">
+  <link rel="apple-touch-icon" href="/icon.png">
+  <link rel="icon" href="/icon.png">
+  <link rel="stylesheet" href="/style.css">
+  <script type="module" src="/app.js"></script>
+  <title>FMTV · Teste de mídia</title>
+</head>
+<body>
+<main>
+  <header><p class="eyebrow">FMTV / LABORATÓRIO</p><h1>Mídia na tela bloqueada</h1><p>Protótipo isolado · A TV desta página é simulada.</p></header>
+  <section aria-label="Estado do ensaio">
+    <p id="connection" role="status">Conectando ao simulador…</p>
+    <p id="capabilities"></p>
+    <div class="track"><img id="art" width="72" height="72" alt=""><div><h2 id="title">Aguardando TV simulada</h2><p id="tv-state">Sem retrato</p></div></div>
+    <p id="session-state">Media Session desativada.</p>
+    <p id="audio-state">Áudio auxiliar não iniciado.</p>
+    <p id="message" role="status"></p>
+  </section>
+
+  <section id="phone-controls">
+    <h2>1. Preparar o ensaio</h2>
+    <label>Modo <select id="mode"><option value="silence">Arquivo de silêncio em loop</option><option value="metadata">Somente metadados, sem áudio</option><option value="tone">Referência audível · tom baixo de 12 segundos</option></select></label>
+    <label>Quando a TV simulada pausar <select id="policy"><option value="keep">Manter o áudio auxiliar tocando</option><option value="follow">Pausar também o áudio auxiliar</option></select></label>
+    <p class="hint">A referência audível produz som no telefone. O modo silêncio usa áudio sem mute; o estado exibido deve continuar representando a TV simulada.</p>
+    <div class="buttons"><button id="activate">Ativar ensaio</button><button id="deactivate" class="secondary" disabled>Desativar</button></div>
+    <p class="hint">Depois de ativar, bloqueie o iPhone e use os controles do sistema. Os botões abaixo testam apenas o envio pela página.</p>
+    <div class="buttons"><button data-action="play" class="secondary">Play pela página</button><button data-action="pause" class="secondary">Pause pela página</button></div>
+    <p id="action-support" class="hint">Ações ainda não registradas.</p>
+  </section>
+
+  <section id="operator" hidden>
+    <h2>Operar a TV simulada</h2>
+    <p>Mantenha esta página no computador para mudar a reprodução enquanto o iPhone está bloqueado. Os comandos desta página não provam que o iPhone respondeu.</p>
+    <label>Ação <select id="operator-action"><option value="pause">Pausar</option><option value="play">Reproduzir</option><option value="next">Próximo título</option><option value="previous">Título anterior</option><option value="seek">Mudar posição</option><option value="end">Encerrar sessão</option><option value="start">Iniciar nova sessão</option></select></label>
+    <label>Posição em segundos, para mudar posição <input id="seek" type="number" min="0" max="2700" value="120"></label>
+    <label>Executar após quantos segundos? <input id="delay" type="number" min="0" max="900" value="0"></label>
+    <div class="buttons"><button id="operate">Enviar ao simulador</button><button id="cancel" class="secondary">Cancelar agendamentos</button></div>
+  </section>
+
+  <section id="observations">
+    <h2>2. Registrar o que aconteceu no iPhone</h2>
+    <p>Preencha somente o que você observou. Os eventos JavaScript não confirmam o cartão nem os botões na tela bloqueada.</p>
+    <label>Modelo do iPhone <input id="model" placeholder="Ex.: iPhone 15" maxlength="100"></label>
+    <label>Versão do iOS <input id="ios" placeholder="Ajustes → Geral → Sobre" maxlength="40"></label>
+    <label>Forma de abertura <select id="opening"><option>Não informado</option><option>Aba do Safari</option><option>Ícone adicionado pelo Safari</option><option>Ícone adicionado pelo Chrome</option><option>Outra forma</option></select></label>
+    <div id="checks"></div>
+    <label>Tempos medidos e observações <textarea id="notes" rows="4" maxlength="12000" placeholder="Ex.: após 5 min bloqueado, Pause respondeu em 1 s. A chamada…"></textarea></label>
+  </section>
+
+  <section>
+    <h2>3. Exportar antes de sair</h2>
+    <p>Os dados ficam somente na memória. Recarregar perde os eventos deste navegador. Exporte antes de iniciar outra comparação.</p>
+    <div class="buttons"><button id="export">Gerar relatório</button><button id="new-run" class="secondary">Novo ensaio</button></div>
+    <label>Resumo para copiar <textarea id="report" rows="9" readonly placeholder="O resumo aparecerá aqui."></textarea></label>
+    <a id="download" hidden download="fmtv-media-session.json">Baixar JSON completo com os eventos</a>
+  </section>
+  <details><summary>Eventos recentes · instrumentação</summary><pre id="events"></pre></details>
+  <footer><a href="/?operator=1">Abrir operador</a> · O teste não acessa sua TV nem o pareamento do Controller.</footer>
+</main>
+<audio id="audio" preload="none"></audio>
+</body>
+</html>

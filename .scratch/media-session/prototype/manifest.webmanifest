@@ -1,0 +1,11 @@
+{
+  "id": "/fmtv-media-session-lab",
+  "name": "FMTV · Teste de mídia",
+  "short_name": "Teste de mídia",
+  "start_url": "/",
+  "scope": "/",
+  "display": "standalone",
+  "background_color": "#101411",
+  "theme_color": "#101411",
+  "icons": [{ "src": "/icon.png", "sizes": "512x512", "type": "image/png" }]
+}
