@@ -60,6 +60,10 @@ _Avoid_: Remote tab, home tab
 The Web Remote's tab listing the TV's Open Apps, Inputs and every installed app, each opening on the TV.
 _Avoid_: Launcher, library
 
+**Multitarefas button** (Botão Multitarefas):
+The dedicated button on the Controls tab that opens the Home's App Switcher over the app currently visible on the TV, keeping that app visible underneath. Distinct from Abertos in the Apps tab, which lists and controls Open Apps on the phone.
+_Avoid_: Recents button, Home double press, Shortcut Button
+
 **Watch tab** (Assistir):
 The Web Remote's tab for what to watch: search, the Up Next Tray's entries, Explorar's trending Titles and a Title's screen.
 _Avoid_: Explorar tab, discover
