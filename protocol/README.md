@@ -65,7 +65,15 @@ Each feature's list items and `open` fields. An `open` names its target by exact
 | Continuar assistindo | `up-next` | [`list-up-next.json`](examples/list-up-next.json) | `upNext` (the entry), `title` (null for an app's own entry, shown as "Continuar no <app>"), `episode`, `app` (its label), `minutesLeft` and `progress` (0 to 1) when the app tells them, and `picture` (the title's still, or the app's banner); most recently watched first | `upNext` ([`open-up-next.json`](examples/open-up-next.json)): resumes it on the TV, as its tile does |
 | Em alta hoje | `trending` | [`list-trending.json`](examples/list-trending.json) | `kind` (`movie` or `series`), `tmdbId`, `name`, `genre` (the main one) and `backdrop` (a TMDB image URL); Explorar's trending Titles of the day. Answered `failed` with `missing-token` when the TV has no TMDB token, or `offline` | `kind`, `tmdbId` and `service` ([`open-service.json`](examples/open-service.json)): opens the Title in that service's app, or its Play Store page when the app isn't on the TV, as Onde assistir does; `kind`, `tmdbId` and `trailer` ([`open-trailer.json`](examples/open-trailer.json)): plays the Title's Trailer on the Home's Trailer screen |
 
-### Pictures
+### Dedicated App Switcher button
+
+`open-app-switcher` ([request](examples/open-app-switcher.json)) is an additive version-2 request from the Controls tab's Multitarefas button. It shows the Home's App Switcher over the TV's current live app without sending Home or opening Android's system Recents. Repeated requests keep one overlay and preserve focus; they never toggle it.
+
+The Home answers [done](examples/app-switcher-shown.json) with the same `id` only once the overlay is shown and navigable (or already open). It answers `failed` with [overlay-unavailable](examples/app-switcher-unavailable.json) when the service/window cannot show, [busy](examples/app-switcher-busy.json) during an incompatible operation, or [error](examples/app-switcher-error.json) for an unexpected failure. Only ready, authenticated connections may invoke it. An older bridge returns `unknown-request`; the page asks the owner to update the Home. The existing 5-second timeout applies; reconnect never replays it. No dismissal push or persistent phone-side open state is introduced.
+
+Back dismisses the overlay without relaunching the app beneath it; selecting an Open App dismisses and switches to it. Existing keys navigate it. Home and assigned Shortcut Buttons retain their original behaviour.
+
+### Pictures (HTTP)
 
 Items name the Home's pictures (App Banners, Up Next stills) by an opaque `picture` id. The page fetches `GET /pictures/{id}` from the bridge with `Authorization: Bearer <credential>`, never with the credential in the URL; the bridge answers `401` to anything else. TMDB's pictures are full `https://image.tmdb.org/…` URLs instead, loaded straight from TMDB.
 

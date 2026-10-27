@@ -74,6 +74,11 @@ export class FakeBridge {
     for (const socket of this.sockets) socket.send(JSON.stringify({ ...examples[`state-${state}`], tvName: this.tvName }));
   }
 
+  /** Complete a pending action explicitly, to exercise duplicate taps and late replies. */
+  sendReply(answer: object) {
+    for (const socket of this.sockets) socket.send(JSON.stringify(answer));
+  }
+
   /** Pushes a list again to every open connection, as the Home does when it changes. */
   push(of: string, items: unknown[]) {
     this.lists[of] = items;
@@ -88,6 +93,7 @@ export class FakeBridge {
     if (message.type === "list") {
       return socket.send(JSON.stringify({ ...examples["list-answer"], id: message.id, of: message.of, items: this.lists[message.of] ?? [] }));
     }
+    if (message.type === "open-app-switcher") return socket.send(JSON.stringify({ ...examples["app-switcher-shown"], id: message.id }));
     socket.send(JSON.stringify({ ...examples.done, id: message.id }));
   }
 

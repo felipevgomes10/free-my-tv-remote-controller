@@ -141,9 +141,36 @@ body {
 
 .buttons {
   display: flex;
+  flex-wrap: wrap;
   justify-content: space-between;
+  row-gap: 16px;
   padding: 0 10px;
 }
+
+.multitasking-action {
+  flex: 0 0 100%;
+}
+
+.multitasking-button {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  width: 100%;
+  min-height: 44px;
+  border: 0;
+  border-radius: 22px;
+  background: var(--glass);
+  color: var(--text-primary);
+  font: inherit;
+  font-size: 14px;
+  touch-action: manipulation;
+}
+
+.multitasking-button:active { background: var(--glass-strong); }
+.multitasking-button:focus-visible { outline: 2px solid var(--text-primary); outline-offset: 2px; }
+.multitasking-button:disabled { opacity: 0.5; }
+.multitasking-error { margin: 8px 0 0; color: var(--text-secondary); font-size: 13px; line-height: 1.35; }
 
 .button-column {
   display: flex;

@@ -60,4 +60,8 @@ Tickets restart at 01 in each repository. Dependencies always name the repositor
 2. [02: Dedicated button](issues/02-multitarefas-button.md).
 3. [03: Integrated page bundle](issues/03-integrated-page-bundle.md).
 
-The Home owns the overlay and its TV validation. This feature does not replace the system Recents screen, change the Open App Limit, add phone-side app previews, change keyboard scope or require a new design file. These documents plan implementation; the button and protocol examples are not implemented by this documentation change.
+The Home owns the overlay and its TV validation. This feature does not replace the system Recents screen, change the Open App Limit, add phone-side app previews, change keyboard scope or require a new design file.
+
+## Implementation status, 2026-10-26
+
+The button, errors, protocol examples and fake bridges are implemented; 99 tests and the production page build pass. The controls were checked at 320 × 740 CSS pixels using the [development viewport fixture](viewport-check.html). A local bundle is integrated into candidate Home APKs. See [bundle and validation notes](validation-results.md) and the Home's acceptance results for the remaining physical TCL/iPhone checks. Nothing has been published and the Home's pinned page version is unchanged.

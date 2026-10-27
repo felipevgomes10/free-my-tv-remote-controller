@@ -4,6 +4,7 @@ import { Icon } from "./Icon";
 import { RemoteButton } from "./RemoteButton";
 import { ShortcutRow } from "./ShortcutRow";
 import { Touchpad } from "./Touchpad";
+import { MultitaskingButton } from "./MultitaskingButton";
 
 type Props = {
   tvName: string;
@@ -32,6 +33,7 @@ export function Controls({ tvName, status, send, onTryTurnOn }: Props) {
       <ShortcutRow />
 
       <fieldset class="control-group buttons" disabled={!ready}>
+        <MultitaskingButton />
         <div class="button-column">
           <RemoteButton label="Voltar" keyName="back" send={send}>
             <Icon name="arrowBack" />

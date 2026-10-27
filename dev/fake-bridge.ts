@@ -132,6 +132,9 @@ function attach(http: Server | null, tvName: string) {
           ws.send(JSON.stringify({ type: "search-results", id: message.id, query: message.query, results }));
         } else if (message.type === "title") {
           ws.send(JSON.stringify({ ...sampleTitle(message.kind, message.tmdbId), id: message.id }));
+        } else if (message.type === "open-app-switcher") {
+          // Show-only. A fake bridge confirms the contract, not live Android window visibility.
+          ws.send(JSON.stringify({ type: "done", id: message.id }));
         } else if (message.type !== "hello") {
           console.log(`[ponte de teste] ${message.type} ${JSON.stringify(message)}`);
           ws.send(JSON.stringify({ type: "done", id: message.id }));
