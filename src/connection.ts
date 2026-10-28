@@ -14,6 +14,8 @@ export type Status =
 
 /** Waits between tries to reach the bridge again, growing up to the last one. */
 export const RECONNECT_DELAYS_MS = [1000, 2000, 4000, 5000];
+/** Let a previously working connection return from phone suspension before showing an outage. */
+export const RESUME_TIMEOUT_MS = 2000;
 /** How long "Tentar ligar a TV" waits for the bridge before saying the TV didn't answer. */
 export const TURN_ON_TIMEOUT_MS = 5000;
 
@@ -35,6 +37,9 @@ export function useConnection(url: string, credential: string) {
   const bridge = useRef<Bridge>(undefined);
   const retry = useRef<ReturnType<typeof setTimeout>>(undefined);
   const turnOn = useRef<ReturnType<typeof setTimeout>>(undefined);
+  const resumeTimer = useRef<ReturnType<typeof setTimeout>>(undefined);
+  const suspended = useRef(false);
+  const resuming = useRef(false);
   const attempt = useRef(0);
   const waking = useRef(false);
   const stopped = useRef(false);
@@ -50,6 +55,9 @@ export function useConnection(url: string, credential: string) {
     if (stopped.current) return;
     bridge.current = connectBridge(url, credential, {
       onState(state, name) {
+        clearTimeout(resumeTimer.current);
+        resuming.current = false;
+        if (state !== "ready" || document.visibilityState === "visible") suspended.current = false;
         setTvName(name);
         saveTvName(name);
         if (state === "ready") {
@@ -64,6 +72,9 @@ export function useConnection(url: string, credential: string) {
         set(state);
       },
       onReload() {
+        clearTimeout(resumeTimer.current);
+        suspended.current = false;
+        resuming.current = false;
         if (reloadOnce()) return;
         bridge.current?.close();
         set("out-of-reach");
@@ -73,7 +84,9 @@ export function useConnection(url: string, credential: string) {
       },
       onClosed() {
         if (current.current === "revoked") return;
-        if (current.current !== "turning-on" && current.current !== "turn-on-failed") set("out-of-reach");
+        if (suspended.current || resuming.current) set("connecting");
+        else if (current.current !== "turning-on" && current.current !== "turn-on-failed") set("out-of-reach");
+        if (suspended.current && document.visibilityState === "hidden") return;
         const delay = RECONNECT_DELAYS_MS[Math.min(attempt.current, RECONNECT_DELAYS_MS.length - 1)];
         attempt.current++;
         retry.current = setTimeout(() => {
@@ -86,9 +99,30 @@ export function useConnection(url: string, credential: string) {
   useEffect(() => {
     stopped.current = false;
     connect();
-    // Back from the lock screen or another app: try now rather than at the next retry.
+    // A suspended socket may still look open. Revalidate it immediately on return,
+    // keeping the controls in place, disabled, during a short reconnection window.
     const onVisible = () => {
-      if (document.visibilityState !== "visible") return;
+      if (document.visibilityState === "hidden") {
+        suspended.current = suspended.current || current.current === "ready" || resuming.current;
+        if (suspended.current) {
+          clearTimeout(retry.current);
+          clearTimeout(resumeTimer.current);
+          resuming.current = false;
+        }
+        return;
+      }
+      if (suspended.current) {
+        suspended.current = false;
+        resuming.current = true;
+        set("connecting");
+        resumeTimer.current = setTimeout(() => {
+          resuming.current = false;
+          if (current.current === "connecting") set("out-of-reach");
+        }, RESUME_TIMEOUT_MS);
+        attempt.current = 0;
+        connect();
+        return;
+      }
       if (current.current === "out-of-reach" || current.current === "turn-on-failed") {
         attempt.current = 0;
         connect();
@@ -100,6 +134,7 @@ export function useConnection(url: string, credential: string) {
       document.removeEventListener("visibilitychange", onVisible);
       clearTimeout(retry.current);
       clearTimeout(turnOn.current);
+      clearTimeout(resumeTimer.current);
       bridge.current?.close();
     };
   }, [connect]);

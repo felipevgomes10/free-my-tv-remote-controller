@@ -145,6 +145,35 @@ describe("The Title screen", () => {
     expect({ ...asked, id: examples["title-request"].id }).toEqual(examples["title-request"]);
   });
 
+  it("keeps the known Title and Back available until the details replace the skeleton", async () => {
+    bridge.silentOn.add("title");
+    await openTitle();
+    const pending = screen.getByRole("status", { name: "Carregando os detalhes…" });
+    expect(pending.closest(".title-body")?.getAttribute("aria-busy")).toBe("true");
+    expect(screen.getByRole("heading", { name: "Último trem", level: 1 })).toBeTruthy();
+    expect(document.querySelector(".title-backdrop img")?.getAttribute("src")).toBe(examples["list-trending"].items[0].backdrop);
+    expect(within(screen.getByRole("article")).getAllByRole("button").map((button) => button.getAttribute("aria-label"))).toEqual(["Voltar"]);
+
+    await waitFor(() => expect(bridge.received.find((message) => message.type === "title")).toBeTruthy());
+    const asked = bridge.received.find((message) => message.type === "title");
+    bridge.sendReply({ ...examples.title, id: asked.id });
+    await screen.findByRole("button", { name: "Ver trailer na TV" });
+    expect(screen.queryByRole("status", { name: "Carregando os detalhes…" })).toBeNull();
+    expect(document.querySelector(".title-body")?.getAttribute("aria-busy")).toBe("false");
+    expect(screen.getByText(examples.title.overview)).toBeTruthy();
+  });
+
+  it("ends the detail skeleton if the TV disconnects and still allows going back", async () => {
+    bridge.silentOn.add("title");
+    await openTitle();
+    expect(screen.getByRole("status", { name: "Carregando os detalhes…" })).toBeTruthy();
+    bridge.goDown();
+    await screen.findByText("Sem conexão com a TV.");
+    expect(screen.queryByRole("status", { name: "Carregando os detalhes…" })).toBeNull();
+    fireEvent.click(screen.getByRole("button", { name: "Voltar" }));
+    expect(await screen.findByRole("heading", { name: "Assistir" })).toBeTruthy();
+  });
+
   it("shows the Title's facts, synopsis and Onde assistir", async () => {
     await openTitle();
     expect(await screen.findByLabelText("Classificação 14")).toBeTruthy();
@@ -183,6 +212,8 @@ describe("The Title screen", () => {
     bridge.failing.title = "offline";
     await openTitle();
     expect(await screen.findByText("A TV está sem internet: não deu para trazer os detalhes desta obra.")).toBeTruthy();
+    expect(screen.queryByRole("status", { name: "Carregando os detalhes…" })).toBeNull();
+    expect(document.querySelector(".title-body")?.getAttribute("aria-busy")).toBe("false");
     fireEvent.click(screen.getByRole("button", { name: "Voltar" }));
     expect(await screen.findByRole("heading", { name: "Em alta hoje" })).toBeTruthy();
   });

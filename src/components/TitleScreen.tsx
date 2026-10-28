@@ -50,6 +50,42 @@ export function explorarProblem(reason: string, what: string): string {
   return `Não deu para trazer ${what} agora.`;
 }
 
+/** Keep the known Title in place while the Home brings its details. */
+function TitleSkeleton({ kind }: { kind: TitleKind }) {
+  return (
+    <div class="title-skeleton" role="status" aria-label="Carregando os detalhes…">
+      <div class="skeleton-items" aria-hidden="true">
+        <div class="title-skeleton-facts title-facts">
+          <span>{KIND_LABEL[kind]}</span>
+          <span class="skeleton-line" />
+          <span class="skeleton-line" />
+        </div>
+        <div class="title-skeleton-overview">
+          <span class="skeleton-line" />
+          <span class="skeleton-line" />
+          <span class="skeleton-line" />
+        </div>
+        <div class="title-skeleton-trailer" />
+        <div class="title-skeleton-where">
+          <h2 class="section-title">Onde assistir</h2>
+          <div class="services">
+            {[0, 1].map((index) => (
+              <div class="service" key={index}>
+                <span class="service-logo title-skeleton-logo" />
+                <span class="service-text title-skeleton-text">
+                  <span class="skeleton-line" />
+                  <span class="skeleton-line" />
+                </span>
+                <span class="title-skeleton-action" />
+              </div>
+            ))}
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+}
+
 /** A Title's screen: its facts, Ver trailer na TV and Onde assistir, each acting on the TV. */
 export function TitleScreen({ summary, onBack }: { summary: TitleSummary; onBack: () => void }) {
   const { status, request } = useCompanion();
@@ -75,6 +111,7 @@ export function TitleScreen({ summary, onBack }: { summary: TitleSummary; onBack
   const colours = title?.ageRating ? AGE_RATING_COLOURS[title.ageRating] : undefined;
   const facts = title ? [KIND_LABEL[title.kind], title.year, title.genres[0]].filter((fact) => fact != null).join(", ") : undefined;
   const length = title?.runtimeMinutes ? duration(title.runtimeMinutes) : title?.seasons ? `${title.seasons} ${title.seasons === 1 ? "temporada" : "temporadas"}` : undefined;
+  const loading = !title && !problem && status === "ready";
 
   return (
     <article class="title-screen" aria-labelledby="title-name">
@@ -84,7 +121,7 @@ export function TitleScreen({ summary, onBack }: { summary: TitleSummary; onBack
         <HapticFeedback />
       </button>
 
-      <div class="title-body">
+      <div class="title-body" aria-busy={loading}>
         <h1 class="title-name" id="title-name">
           {summary.name}
         </h1>
@@ -153,9 +190,11 @@ export function TitleScreen({ summary, onBack }: { summary: TitleSummary; onBack
               </section>
             )}
           </>
+        ) : loading ? (
+          <TitleSkeleton kind={summary.kind} />
         ) : (
           <p class="tab-notice" role="status">
-            {problem ? explorarProblem(problem, "os detalhes desta obra") : status === "ready" ? "Carregando os detalhes…" : "Sem conexão com a TV."}
+            {problem ? explorarProblem(problem, "os detalhes desta obra") : "Sem conexão com a TV."}
           </p>
         )}
       </div>

@@ -1,7 +1,7 @@
 import { cleanup, fireEvent, render, screen, waitFor } from "@testing-library/preact";
 import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
 import { App } from "../src/app";
-import { page, RECONNECT_DELAYS_MS, TURN_ON_TIMEOUT_MS } from "../src/connection";
+import { page, RECONNECT_DELAYS_MS, RESUME_TIMEOUT_MS, TURN_ON_TIMEOUT_MS } from "../src/connection";
 import { BRIDGE_URL, examples, FakeBridge } from "./fake-bridge";
 
 let bridge: FakeBridge;
@@ -32,6 +32,107 @@ async function press(name: string) {
 async function waitAll(ms: number) {
   await vi.advanceTimersByTimeAsync(ms);
 }
+
+function visibility(state: "visible" | "hidden") {
+  vi.spyOn(document, "visibilityState", "get").mockReturnValue(state);
+  vi.spyOn(document, "hidden", "get").mockReturnValue(state === "hidden");
+  fireEvent(document, new Event("visibilitychange"));
+}
+
+describe("returning from the phone's lock screen", () => {
+  it("opens a fresh connection on return even if the old socket has not reported closing", async () => {
+    bridge = new FakeBridge();
+    render(<App bridgeUrl={BRIDGE_URL} />);
+    await screen.findByText("TV da sala");
+    visibility("hidden");
+    visibility("visible");
+    expect(button("Voltar").matches(":disabled")).toBe(true);
+    await press("Home");
+    await waitAll(100);
+    expect(bridge.received.filter((message) => message.type === "hello")).toHaveLength(2);
+    expect(button("Voltar").matches(":disabled")).toBe(false);
+    expect(bridge.keys()).toEqual([]);
+  });
+
+  it("keeps the controls visible while reconnecting after a background disconnection", async () => {
+    bridge = new FakeBridge();
+    render(<App bridgeUrl={BRIDGE_URL} />);
+    await screen.findByText("TV da sala");
+    visibility("hidden");
+    bridge.goDown();
+    await waitAll(20);
+    bridge.comeBack();
+    visibility("visible");
+    expect(outOfReach()).toBeNull();
+    expect(button("Voltar").matches(":disabled")).toBe(true);
+    await waitAll(100);
+    expect(outOfReach()).toBeNull();
+    expect(button("Voltar").matches(":disabled")).toBe(false);
+  });
+
+  it("shows a real outage after the resume window even if reconnect attempts keep failing", async () => {
+    bridge = new FakeBridge();
+    render(<App bridgeUrl={BRIDGE_URL} />);
+    await screen.findByText("TV da sala");
+    visibility("hidden");
+    bridge.goDown();
+    await waitAll(20);
+    visibility("visible");
+    await waitAll(RESUME_TIMEOUT_MS / 2);
+    expect(outOfReach()).toBeNull();
+    await waitAll(RESUME_TIMEOUT_MS / 2 + 100);
+    expect(outOfReach()).toBeTruthy();
+    expect(button("Voltar").matches(":disabled")).toBe(true);
+    bridge.comeBack();
+    await waitAll(RECONNECT_DELAYS_MS.at(-1)! + 100);
+    expect(outOfReach()).toBeNull();
+    expect(button("Voltar").matches(":disabled")).toBe(false);
+  });
+
+  it("bounds the resume window even if the socket opens without an answer", async () => {
+    bridge = new FakeBridge();
+    render(<App bridgeUrl={BRIDGE_URL} />);
+    await screen.findByText("TV da sala");
+    bridge.answer = "nothing";
+    visibility("hidden");
+    visibility("visible");
+    await waitAll(RESUME_TIMEOUT_MS + 100);
+    expect(outOfReach()).toBeTruthy();
+    expect(button("Voltar").matches(":disabled")).toBe(true);
+  });
+
+  it("starts a new resume window if the phone is locked again during reconnection", async () => {
+    bridge = new FakeBridge();
+    render(<App bridgeUrl={BRIDGE_URL} />);
+    await screen.findByText("TV da sala");
+    visibility("hidden");
+    bridge.goDown();
+    await waitAll(20);
+    visibility("visible");
+    await waitAll(RESUME_TIMEOUT_MS / 2);
+    visibility("hidden");
+    await waitAll(RESUME_TIMEOUT_MS * 2);
+    bridge.comeBack();
+    visibility("visible");
+    expect(outOfReach()).toBeNull();
+    await waitAll(100);
+    expect(outOfReach()).toBeNull();
+    expect(button("Voltar").matches(":disabled")).toBe(false);
+  });
+
+  it("shows revocation immediately on return instead of hiding it behind reconnection", async () => {
+    bridge = new FakeBridge();
+    render(<App bridgeUrl={BRIDGE_URL} />);
+    await screen.findByText("TV da sala");
+    visibility("hidden");
+    bridge.answer = "revoked";
+    visibility("visible");
+    await screen.findByText("Este aparelho não está mais pareado");
+    await waitAll(RESUME_TIMEOUT_MS + 100);
+    expect(screen.getByText("Este aparelho não está mais pareado")).toBeTruthy();
+    expect(outOfReach()).toBeNull();
+  });
+});
 
 describe("Sem conexão", () => {
   it("shows when the bridge can't be reached, with the controls disabled", async () => {

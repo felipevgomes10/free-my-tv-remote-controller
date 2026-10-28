@@ -56,6 +56,10 @@ The compact layout keeps the Touchpad and D-pad visible together at an available
 
 </details>
 
+The Title's loading state keeps its known picture, name and Back button available while the Home brings the facts, synopsis, trailer and Where to Watch. The glass silhouettes follow the lists' pulse and respect reduced motion; errors and disconnection replace them with a message.
+
+<img src="docs/design/title-loading.png" alt="Obra loading: the picture and title remain above silhouettes for the pending details" width="320">
+
 Teclado is excluded after the TV experiments failed to meet the required behavior across apps ([ADR 0007](docs/adr/0007-typing-needs-a-supported-text-field.md)). Its old design frames remain labeled as archived studies.
 
 ## What it does
@@ -90,6 +94,7 @@ The Touchpad and the existing buttons' haptics are physically checked in the Chr
 
 **When the TV is out of reach**
 - **Sem conexão** — the controls dim and the Touchpad says why; FMTV Controller tries again by itself, at once when you come back to it, and returns to the controls without a reload.
+- **Back from the lock screen** — a previously connected page opens a fresh connection immediately, keeping the controls in place and disabled for up to 2 seconds while it reconnects. A persistent outage then shows Sem conexão; pairing revocation is shown immediately.
 - **Tentar ligar a TV** — a best-effort wake: if the Home answers within 5 seconds it sends `wake`, which can turn a TV on but never off; otherwise it says to use the Remote.
 - **Never late keys** — a key pressed while out of reach is dropped, never sent when the TV comes back.
 - **Not linked, revoked** — a Home not yet linked to the TV, or an iPhone the Owner removed, each get a screen saying who fixes it; a revoked iPhone can pair again.
