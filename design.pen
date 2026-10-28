@@ -9085,6 +9085,400 @@
           "name": "Home Indicator"
         }
       ]
+    },
+    {
+      "type": "frame",
+      "id": "x7VN7N",
+      "x": 964,
+      "y": 5000,
+      "name": "Obra — Carregando detalhes",
+      "context": "Preserva capa e nome conhecidos. Fatos, sinopse, trailer e serviços aguardam a TV. Silhuetas sem interação; Voltar continua disponível.",
+      "clip": true,
+      "width": 402,
+      "height": 874,
+      "fill": "$bg",
+      "layout": "vertical",
+      "children": [
+        {
+          "type": "frame",
+          "id": "Y7qTNK",
+          "name": "Imagem da obra",
+          "width": "fill_container",
+          "height": 300,
+          "fill": [
+            {
+              "type": "image",
+              "enabled": true,
+              "url": "images/ultimo-trem.png",
+              "mode": "cover"
+            },
+            {
+              "type": "gradient",
+              "gradientType": "linear",
+              "enabled": true,
+              "rotation": 180,
+              "size": {
+                "height": 1
+              },
+              "colors": [
+                {
+                  "color": "#00000099",
+                  "position": 0
+                },
+                {
+                  "color": "#00000000",
+                  "position": 0.35
+                },
+                {
+                  "color": "#00000000",
+                  "position": 0.6
+                },
+                {
+                  "color": "#000000",
+                  "position": 1
+                }
+              ]
+            }
+          ],
+          "layout": "vertical",
+          "children": [
+            {
+              "id": "o8Y15",
+              "type": "ref",
+              "ref": "TeWJu",
+              "name": "Status Bar"
+            },
+            {
+              "type": "frame",
+              "id": "p4ynpV",
+              "name": "Voltar",
+              "padding": [
+                0,
+                20
+              ],
+              "children": [
+                {
+                  "type": "frame",
+                  "id": "MgNI8",
+                  "name": "Botão voltar",
+                  "width": 40,
+                  "height": 40,
+                  "fill": "#00000080",
+                  "cornerRadius": 20,
+                  "effect": {
+                    "type": "background_blur",
+                    "radius": 12
+                  },
+                  "justifyContent": "center",
+                  "alignItems": "center",
+                  "children": [
+                    {
+                      "type": "icon",
+                      "id": "leCgg",
+                      "name": "Ícone",
+                      "width": 22,
+                      "height": 22,
+                      "icon": "arrow_back",
+                      "library": "Material Symbols Rounded",
+                      "weight": 500,
+                      "fill": "#FFFFFF"
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "type": "frame",
+          "id": "CMXPC",
+          "name": "Conteúdo",
+          "clip": true,
+          "width": "fill_container",
+          "height": "fill_container",
+          "layout": "vertical",
+          "gap": 16,
+          "padding": [
+            0,
+            20,
+            16,
+            20
+          ],
+          "children": [
+            {
+              "type": "text",
+              "id": "vnA1K",
+              "name": "Nome conhecido",
+              "fill": "$text-primary",
+              "textGrowth": "fixed-width",
+              "width": "fill_container",
+              "content": "Último trem",
+              "lineHeight": 1.1,
+              "fontFamily": "$font",
+              "fontSize": 30,
+              "fontWeight": "800"
+            },
+            {
+              "type": "frame",
+              "id": "uynAm",
+              "name": "Detalhes carregando",
+              "width": "fill_container",
+              "layout": "vertical",
+              "gap": 16,
+              "children": [
+                {
+                  "type": "frame",
+                  "id": "y25oC",
+                  "name": "Fatos carregando",
+                  "width": "fill_container",
+                  "height": 26,
+                  "gap": 12,
+                  "alignItems": "center",
+                  "children": [
+                    {
+                      "type": "text",
+                      "id": "xKYSO",
+                      "name": "Tipo conhecido",
+                      "fill": "$text-secondary",
+                      "content": "Filme",
+                      "fontFamily": "$font",
+                      "fontSize": 14,
+                      "fontWeight": "normal"
+                    },
+                    {
+                      "type": "frame",
+                      "id": "bSZb8",
+                      "name": "Ano e gênero",
+                      "width": 130,
+                      "height": 10,
+                      "fill": "$glass",
+                      "cornerRadius": 6
+                    },
+                    {
+                      "type": "frame",
+                      "id": "tszwk",
+                      "name": "Duração",
+                      "width": 64,
+                      "height": 10,
+                      "fill": "$glass",
+                      "cornerRadius": 6
+                    }
+                  ]
+                },
+                {
+                  "type": "frame",
+                  "id": "q0Oflz",
+                  "name": "Sinopse carregando",
+                  "width": "fill_container",
+                  "layout": "vertical",
+                  "gap": 12,
+                  "padding": [
+                    6,
+                    0
+                  ],
+                  "children": [
+                    {
+                      "type": "frame",
+                      "id": "vo7ES",
+                      "name": "Linha da sinopse 1",
+                      "width": "fill_container",
+                      "height": 10,
+                      "fill": "$glass",
+                      "cornerRadius": 6
+                    },
+                    {
+                      "type": "frame",
+                      "id": "jnn45",
+                      "name": "Linha da sinopse 2",
+                      "width": 326,
+                      "height": 10,
+                      "fill": "$glass",
+                      "cornerRadius": 6
+                    },
+                    {
+                      "type": "frame",
+                      "id": "I6Pih",
+                      "name": "Linha da sinopse 3",
+                      "width": 240,
+                      "height": 10,
+                      "fill": "$glass",
+                      "cornerRadius": 6
+                    }
+                  ]
+                },
+                {
+                  "type": "frame",
+                  "id": "rMeXK",
+                  "name": "Trailer carregando",
+                  "width": "fill_container",
+                  "height": 52,
+                  "fill": "$glass",
+                  "cornerRadius": 26
+                },
+                {
+                  "type": "frame",
+                  "id": "G9ns7x",
+                  "name": "Onde assistir carregando",
+                  "width": "fill_container",
+                  "layout": "vertical",
+                  "gap": 12,
+                  "children": [
+                    {
+                      "type": "text",
+                      "id": "Fr3Q2",
+                      "name": "Onde assistir",
+                      "fill": "$text-primary",
+                      "content": "Onde assistir",
+                      "fontFamily": "$font",
+                      "fontSize": 20,
+                      "fontWeight": "700"
+                    },
+                    {
+                      "type": "frame",
+                      "id": "V8RGT",
+                      "name": "Serviços carregando",
+                      "width": "fill_container",
+                      "fill": "$glass-soft",
+                      "cornerRadius": 18,
+                      "layout": "vertical",
+                      "children": [
+                        {
+                          "type": "frame",
+                          "id": "ywLSx",
+                          "name": "Serviço carregando 1",
+                          "width": "fill_container",
+                          "height": 64,
+                          "gap": 12,
+                          "padding": [
+                            12,
+                            14
+                          ],
+                          "alignItems": "center",
+                          "children": [
+                            {
+                              "type": "frame",
+                              "id": "GlH6C",
+                              "name": "Logo carregando",
+                              "width": 56,
+                              "height": 32,
+                              "fill": "$glass",
+                              "cornerRadius": 6
+                            },
+                            {
+                              "type": "frame",
+                              "id": "w30Ga8",
+                              "name": "Nome e oferta carregando",
+                              "width": "fill_container",
+                              "layout": "vertical",
+                              "gap": 8,
+                              "children": [
+                                {
+                                  "type": "frame",
+                                  "id": "KTbjg",
+                                  "name": "Nome carregando",
+                                  "width": 100,
+                                  "height": 10,
+                                  "fill": "$glass",
+                                  "cornerRadius": 6
+                                },
+                                {
+                                  "type": "frame",
+                                  "id": "SQSGP",
+                                  "name": "Oferta carregando",
+                                  "width": 130,
+                                  "height": 9,
+                                  "fill": "$glass",
+                                  "cornerRadius": 6
+                                }
+                              ]
+                            },
+                            {
+                              "type": "frame",
+                              "id": "WmY89",
+                              "name": "Ação carregando",
+                              "width": 84,
+                              "height": 34,
+                              "fill": "$glass",
+                              "cornerRadius": 17
+                            }
+                          ]
+                        },
+                        {
+                          "type": "frame",
+                          "id": "rnX1E",
+                          "name": "Serviço carregando 2",
+                          "width": "fill_container",
+                          "height": 64,
+                          "gap": 12,
+                          "padding": [
+                            12,
+                            14
+                          ],
+                          "alignItems": "center",
+                          "children": [
+                            {
+                              "type": "frame",
+                              "id": "UhPbn",
+                              "name": "Logo carregando",
+                              "width": 56,
+                              "height": 32,
+                              "fill": "$glass",
+                              "cornerRadius": 6
+                            },
+                            {
+                              "type": "frame",
+                              "id": "gfqJ1",
+                              "name": "Nome e oferta carregando",
+                              "width": "fill_container",
+                              "layout": "vertical",
+                              "gap": 8,
+                              "children": [
+                                {
+                                  "type": "frame",
+                                  "id": "JoZWJ",
+                                  "name": "Nome carregando",
+                                  "width": 100,
+                                  "height": 10,
+                                  "fill": "$glass",
+                                  "cornerRadius": 6
+                                },
+                                {
+                                  "type": "frame",
+                                  "id": "YI0C1",
+                                  "name": "Oferta carregando",
+                                  "width": 130,
+                                  "height": 9,
+                                  "fill": "$glass",
+                                  "cornerRadius": 6
+                                }
+                              ]
+                            },
+                            {
+                              "type": "frame",
+                              "id": "GMrI0",
+                              "name": "Ação carregando",
+                              "width": 84,
+                              "height": 34,
+                              "fill": "$glass",
+                              "cornerRadius": 17
+                            }
+                          ]
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "id": "L4HOG",
+          "type": "ref",
+          "ref": "s4ScFK",
+          "name": "Home Indicator"
+        }
+      ]
     }
   ],
   "variables": {
