@@ -1566,3 +1566,107 @@ button {
   outline: 2px solid var(--text-primary);
   outline-offset: 2px;
 }
+
+/* This phone's shortcuts retain the Controls tab's compact glass buttons. */
+.shortcuts {
+  display: flex;
+  flex-direction: column;
+  flex: none;
+  gap: 8px;
+}
+
+.shortcuts-title {
+  margin: 0;
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--text-secondary);
+}
+
+.shortcut-text-button {
+  margin: -8px 0;
+  min-height: 40px;
+  padding: 0 4px;
+  border: 0;
+  background: none;
+  color: var(--text-primary);
+  font: inherit;
+  font-size: 14px;
+}
+
+.shortcut-sheet {
+  width: min(440px, calc(100% - 24px));
+  max-height: calc(100dvh - env(safe-area-inset-top) - env(safe-area-inset-bottom) - 32px);
+  margin: auto auto max(16px, env(safe-area-inset-bottom));
+  padding: 20px;
+  border: 1px solid var(--glass-strong);
+  border-radius: 24px;
+  background: #202020;
+  color: var(--text-primary);
+  overflow-y: auto;
+  overscroll-behavior: contain;
+  touch-action: pan-y;
+}
+
+.shortcut-sheet[open] {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.shortcut-sheet::backdrop { background: #0009; }
+.shortcut-sheet .section-header { align-items: center; }
+.shortcut-sheet .section-title { min-width: 0; overflow-wrap: anywhere; }
+.shortcut-sheet .pill-button { width: 100%; }
+.shortcut-done { background: var(--glass-strong); }
+
+.shortcut-edit-list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.shortcut-edit-list li {
+  display: flex;
+  align-items: center;
+  gap: 2px;
+  padding: 8px 0;
+  border-bottom: 1px solid var(--glass);
+}
+
+.shortcut-edit-label {
+  flex: 1;
+  min-width: 0;
+  font-size: 15px;
+  overflow-wrap: anywhere;
+}
+
+.shortcut-edit-label small {
+  display: block;
+  margin-top: 4px;
+  color: var(--text-secondary);
+  font-size: 12px;
+}
+
+.shortcut-tool {
+  display: inline-grid;
+  flex: none;
+  place-items: center;
+  width: 40px;
+  height: 44px;
+  padding: 0;
+  border: 0;
+  border-radius: 12px;
+  color: var(--text-primary);
+  background: transparent;
+}
+
+.shortcut-tool:active { background: var(--glass); }
+.shortcut-tool:disabled { opacity: 0.25; }
+.shortcut-tool:focus-visible,
+.shortcut-text-button:focus-visible { outline: 2px solid var(--text-primary); outline-offset: 1px; }
+.shortcut-notice,
+.shortcut-warning { margin: 0; font-size: 13px; line-height: 1.4; }
+.shortcut-warning { color: var(--attention); }
+
+.app-tile, .input-card { -webkit-touch-callout: none; }
+.app-banner { -webkit-user-drag: none; }

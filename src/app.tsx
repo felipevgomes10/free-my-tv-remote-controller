@@ -8,6 +8,7 @@ import { PairingScreen } from "./components/PairingScreen";
 import { WatchTab } from "./components/WatchTab";
 import { useConnection } from "./connection";
 import { isIosSafariTab } from "./pairing";
+import { ShortcutsProvider } from "./shortcuts";
 import { CompanionContext } from "./companion";
 import { CredentialContext } from "./pictures";
 import { forgetCredential, loadCredential, saveCredential } from "./storage";
@@ -80,14 +81,16 @@ function Connected({ bridgeUrl, credential, onPairAgain }: { bridgeUrl: string; 
   return (
     <CredentialContext.Provider value={credential}>
       <CompanionContext.Provider value={{ status, lists, request }}>
-        <div class="shell">
-          <div class="shell-content">
-            {tab === "controls" && <Controls tvName={tvName} status={status} send={send} onTryTurnOn={tryTurnOn} />}
-            {tab === "apps" && <AppsTab />}
-            {tab === "watch" && <WatchTab />}
+        <ShortcutsProvider>
+          <div class="shell">
+            <div class="shell-content">
+              {tab === "controls" && <Controls onAddShortcut={() => setTab("apps")} tvName={tvName} status={status} send={send} onTryTurnOn={tryTurnOn} />}
+              {tab === "apps" && <AppsTab />}
+              {tab === "watch" && <WatchTab />}
+            </div>
+            <TabBar tab={tab} onTab={setTab} />
           </div>
-          <TabBar tab={tab} onTab={setTab} />
-        </div>
+        </ShortcutsProvider>
       </CompanionContext.Provider>
     </CredentialContext.Provider>
   );

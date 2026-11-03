@@ -156,6 +156,7 @@ describe("haptic activation from the actual control", () => {
   });
 
   it("does not send a shortcut twice when the label forwards its click to the switch", async () => {
+    localStorage.setItem("fmtv-controller.shortcuts.v1", JSON.stringify([{ kind: "app", target: "com.netflix.ninja", label: "Netflix" }]));
     await open();
     const { label, input } = hapticTarget(await screen.findByRole("button", { name: "Abrir Netflix" }));
     fireEvent.click(label);

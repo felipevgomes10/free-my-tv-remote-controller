@@ -71,7 +71,7 @@ Teclado is excluded after the TV experiments failed to meet the required behavio
 - **Buttons** — Voltar, Home (twice for the App Switcher, held for the Notification Panel, as on the Remote), play/pause, mute, and volume, which keeps changing while held. Power sits apart at the top, away from the thumb.
 - **Multitarefas** — beside the horizontal volume capsule, opens the App Switcher over the app visible on the TV. Touchpad or D-pad navigates it; Voltar dismisses it ([ADR 0008](docs/adr/0008-a-dedicated-button-opens-the-app-switcher-over-the-app.md)).
 - **Haptics** — Safari uses a native switch label for button taps, and a directly dragged native switch for the Touchpad. The switch's coordinates follow the real finger to produce ticks during navigation; no synthetic click is used. Native tracking has an initial delay, and several steps in one touch event may share a tick. Browsers with the Vibration API use that API instead. The controls work the same without haptics.
-- **Shortcut Buttons** — under the Touchpad, a row with the Remote's Netflix, Globoplay, Prime Video, Disney+, YouTube and Input buttons, each named after what the Owner assigned to it and doing what the Remote's button does.
+- **Atalhos** — under the Touchpad, a list of apps and Inputs chosen on this phone. Hold an item in Apps (including Abertos) and choose **Adicionar aos atalhos**. **Editar** lets you move items with the arrows, remove them, or go to Apps to add more. Order and removals survive reopening the page; the list starts empty, is saved in this browser, and is independent of the physical Remote's buttons. A short tap still opens the item on the TV. A right click or Shift+F10 offers the same shortcut action.
 
 The Touchpad and the existing buttons' haptics are physically checked in the Chrome-installed PWA on the owner's iPhone with iOS 26.6.2. The new D-pad reuses the button behavior; its physical haptics have not yet been checked. Native switch props use boolean `true`: an empty string would be coerced to `false` by WebKit and silently turn these controls back into ordinary checkboxes. The regression tests model this writable, attribute-reflecting DOM property.
 
@@ -209,6 +209,7 @@ src/
 ├── pairing.ts       Pairing's request, and telling a Safari tab from the Home Screen app
 ├── protocol.ts      the protocol's messages and version
 ├── service-worker.js  the network-first copy of the page (ADR 0004)
+├── shortcuts.tsx    this phone's ordered app and Input shortcuts, persisted in browser storage
 ├── storage.ts       the Paired Phone's credential and the last TV's name
 └── components/      TabBar, TabPage, Controls, Touchpad, Dpad, RemoteButton, MultitaskingButton, PairingScreen, AddToHomeScreen, MessageScreen, Icon
 protocol/            the protocol's contract and its JSON examples

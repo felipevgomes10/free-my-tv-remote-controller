@@ -8,13 +8,14 @@ import { MultitaskingButton } from "./MultitaskingButton";
 import { Dpad } from "./Dpad";
 
 type Props = {
+  onAddShortcut: () => void;
   tvName: string;
   status: Status;
   send: (key: Key, action: KeyAction) => void;
   onTryTurnOn: () => void;
 };
 
-export function Controls({ tvName, status, send, onTryTurnOn }: Props) {
+export function Controls({ onAddShortcut, tvName, status, send, onTryTurnOn }: Props) {
   const ready = status === "ready";
   const outOfReach = status === "out-of-reach" || status === "turning-on" || status === "turn-on-failed";
 
@@ -31,7 +32,7 @@ export function Controls({ tvName, status, send, onTryTurnOn }: Props) {
 
       {outOfReach ? <OutOfReach status={status} onTryTurnOn={onTryTurnOn} /> : <Touchpad send={send} enabled={ready} />}
 
-      <ShortcutRow />
+      <ShortcutRow onAdd={onAddShortcut} />
 
       <fieldset class="control-group buttons" disabled={!ready}>
         <div class="navigation-controls">
